@@ -1,0 +1,25 @@
+#N canvas 341 282 450 300 10;
+#X obj 133 8 loadbang;
+#X obj 58 45 inlet;
+#X obj 74 190 outlet~;
+#X obj 214 178 soundfiler;
+#X floatatom 213 207 5 0 0 0 - - -;
+#X obj 168 157 print;
+#X obj 322 75 table \$0-\$1-samp;
+#X obj 59 124 tabplay~ \$0-\$1-samp;
+#X obj 143 44 symbol \$2;
+#X obj 156 27 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 182 82 pack s \$1 \$0;
+#X msg 192 110 read -resize \$1 \$3-\$2-samp \;;
+#X obj 222 24 inlet;
+#X connect 0 0 8 0;
+#X connect 1 0 7 0;
+#X connect 3 0 4 0;
+#X connect 7 0 2 0;
+#X connect 8 0 10 0;
+#X connect 9 0 8 0;
+#X connect 10 0 11 0;
+#X connect 11 0 3 0;
+#X connect 11 0 5 0;
+#X connect 12 0 10 0;
