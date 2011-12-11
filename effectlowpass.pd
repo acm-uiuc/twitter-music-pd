@@ -1,8 +1,8 @@
 #N canvas 420 24 203 147 10;
 #X obj 24 11 inlet~;
 #X obj 26 110 outlet~;
-#X obj 93 13 r \$1-hip-cutoff;
 #X obj 29 58 lop~ 50;
-#X connect 0 0 3 0;
-#X connect 2 0 3 1;
-#X connect 3 0 1 0;
+#X obj 92 13 r \$1-lop-cutoff;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 1;
