@@ -1,0 +1,10 @@
+#N canvas 38 142 450 300 10;
+#X obj 85 65 inlet;
+#X obj 91 91 t b f;
+#X obj 74 126 pack \$2 f;
+#X obj 80 151 send \$1-sliderline;
+#X text 122 27 send slider;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 1 2 1;
+#X connect 2 0 3 0;

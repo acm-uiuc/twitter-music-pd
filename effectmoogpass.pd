@@ -5,7 +5,7 @@
 #X obj 174 13 r \$1-moog-q;
 #X obj 175 34 sig~;
 #X obj 59 35 sig~;
-#X obj 30 58 moog~ 22500 0;
+#X obj 30 58 moog~ 22500;
 #X connect 0 0 6 0;
 #X connect 2 0 5 0;
 #X connect 3 0 4 0;
