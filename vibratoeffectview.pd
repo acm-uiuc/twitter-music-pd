@@ -1,0 +1,44 @@
+#N canvas 503 308 690 328 10;
+#X obj 118 101 hsl 100 15 0 127 0 0 empty empty empty -2 -8 0 10 -261234
+-1 -1 0 1;
+#X obj 238 101 hsl 100 15 0 127 0 0 empty empty empty -2 -8 0 10 -261234
+-1 -1 0 1;
+#X obj 115 119 hradio 15 1 0 6 empty empty empty 0 -8 0 10 -261234
+-1 -1 0;
+#X obj 238 118 hsl 100 15 0 127 0 0 empty empty empty -2 -8 0 10 -261234
+-1 -1 0 1;
+#X obj 394 123 / 127;
+#X obj 381 106 / 20;
+#X obj 390 164 / 127;
+#X obj -5 102 r \$1p\$2;
+#X obj -7 122 r \$1p\$3;
+#X obj -7 143 r \$1p\$4;
+#X obj -6 162 r \$1p\$5;
+#X obj 41 103 sp \$1 \$2;
+#X obj 39 123 sp \$1 \$3;
+#X obj 40 144 sp \$1 \$4;
+#X obj 40 163 sp \$1 \$5;
+#X obj 428 104 s \$1-vib-speed;
+#X obj 429 145 s \$1-vib-waveform;
+#X obj 429 124 s \$1-vib-depth;
+#X obj 431 166 s \$1-vib-waveform-x;
+#X text 100 99 Sp;
+#X text 101 119 W;
+#X text 222 99 D;
+#X text 223 119 X;
+#X connect 0 0 5 0;
+#X connect 0 0 11 0;
+#X connect 1 0 4 0;
+#X connect 1 0 12 0;
+#X connect 2 0 13 0;
+#X connect 2 0 16 0;
+#X connect 3 0 6 0;
+#X connect 3 0 14 0;
+#X connect 4 0 17 0;
+#X connect 5 0 15 0;
+#X connect 6 0 18 0;
+#X connect 7 0 0 0;
+#X connect 8 0 1 0;
+#X connect 9 0 2 0;
+#X connect 10 0 3 0;
+#X coords 0 -1 1 1 240 35 2 100 100;

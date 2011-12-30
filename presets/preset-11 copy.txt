@@ -1,9 +1,8 @@
-param 35 100;
-param 34 0;
+param 34 54;
 param 33 127;
-param 32 114;
+param 32 7;
 param 31 0;
-param 30 11;
+param 30 14;
 param 29 10;
 param 28 110;
 param 27 0;

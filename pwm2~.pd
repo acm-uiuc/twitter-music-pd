@@ -1,4 +1,4 @@
-#N canvas 70 257 484 349 10;
+#N canvas 144 365 484 349 10;
 #X obj 91 206 clip~ 0 1e-06;
 #X obj 91 227 *~ 1e+06;
 #X text 166 118 duty (on);
