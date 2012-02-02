@@ -1,11 +1,11 @@
-#N canvas 161 261 945 446 10;
+#N canvas -25 108 945 446 10;
 #X obj 30 378 +~;
 #X obj 34 325 effectdelay \$1-d 44100;
 #X obj 34 347 effectdelay \$1-r 4410;
 #X obj 34 151 effecthighpass \$1;
 #X obj 34 179 effectlowpass \$1;
 #X obj 68 203 effectmoogpass \$1;
-#N canvas 656 22 542 631 controls 0;
+#N canvas 656 22 542 631 controls 1;
 #N canvas 235 259 547 452 synthparams 0;
 #X obj -28 194 / 10;
 #X obj 12 213 / 80;
@@ -26,7 +26,7 @@
 #X obj 126 214 / 127;
 #X obj 98 210 / 5;
 #X obj 234 38 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 11600 1;
+-1 -1 6700 1;
 #X obj 213 212 / 127;
 #X obj 215 92 vradio 15 1 0 5 empty empty empty 0 -8 0 10 -262144 -1
 -1 0;
@@ -77,7 +77,7 @@
 #X obj 280 191 / 127;
 #X obj 305 209 s \$1-synth-tremolo-waveform-x;
 #X obj 9 4 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 12700 1;
+-1 -1 11600 1;
 #X text 144 3 pre volume;
 #X obj 320 26 s \$1-synth-volume;
 #X obj 280 23 / 127;
@@ -135,10 +135,10 @@
 #X restore -21 82 pd synthparams;
 #N canvas 0 23 608 313 filters 0;
 #X obj 114 123 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262130
--1 -1 3900 1;
+-1 -1 2332 1;
 #X floatatom 399 125 5 0 0 0 - - -;
 #X obj 114 103 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262130
--1 -1 6200 1;
+-1 -1 12700 1;
 #X floatatom 399 99 5 0 0 0 - - -;
 #X obj 366 124 / 30;
 #X obj 106 255 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262130
@@ -176,8 +176,8 @@
 #X obj 365 102 + 0;
 #X text 118 136 Moog Cut Vibrato;
 #X text 114 182 Moog Q Vibrato;
-#X obj 103 196 vibratoeffectview \$1-moog-q 40 41 42 43;
-#X obj 103 150 vibratoeffectview \$1-moog-cut 36 37 38 39;
+#X obj 105 150 vibratoeffectview 2-moog-cut 36 37 38 39 \$1;
+#X obj 103 196 vibratoeffectview 2-moog-q 40 41 42 43 \$1;
 #X connect 0 0 4 0;
 #X connect 0 0 17 0;
 #X connect 0 0 22 0;
@@ -210,10 +210,10 @@
 #X restore 234 26 pd filters;
 #N canvas 471 127 681 565 distortions 0;
 #X obj 106 135 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -204786
--1 -1 12700 1;
+-1 -1 4100 1;
 #X obj 347 108 / 127;
 #X obj 106 116 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -204786
--1 -1 0 1;
+-1 -1 11100 1;
 #X obj 346 66 / 127;
 #X text 102 99 bitcrush;
 #X obj 346 85 s \$1-bitcrush-dist;
@@ -226,7 +226,7 @@
 -1 -1 0 1;
 #X obj 335 253 / 127;
 #X obj 106 189 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -204786
--1 -1 400 1;
+-1 -1 0 1;
 #X obj -38 210 r \$1p30;
 #X obj -36 232 sp \$1 30;
 #X obj -39 253 r \$1p31;
@@ -249,7 +249,7 @@
 #X obj 106 255 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -204786
 -1 -1 12700 1;
 #X obj 106 236 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -204786
--1 -1 1900 1;
+-1 -1 6500 1;
 #X text 100 222 fuzz;
 #X obj 329 369 s \$1-fuzz-dist;
 #X obj 360 393 s \$1-fuzz-cutoff;
@@ -260,7 +260,7 @@
 #X obj -80 423 r \$1p34;
 #X obj -31 423 sp \$1 34;
 #X obj 106 275 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -204786
--1 -1 800 1;
+-1 -1 1500 1;
 #X text 241 275 mix;
 #X text 239 233 fuzz;
 #X text 240 254 cutoff;
@@ -274,7 +274,7 @@
 #X obj -96 168 r \$1p45;
 #X obj -44 167 sp \$1 45;
 #X obj 106 154 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -204786
--1 -1 12700 1;
+-1 -1 6300 1;
 #X text 239 152 sample;
 #X obj 341 151 / 127;
 #X obj 346 176 s \$1-bitcrush-samplerate;
@@ -435,7 +435,7 @@
 #X restore 232 411 pd delayverb;
 #N canvas 0 22 450 300 volume 0;
 #X obj 106 119 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 12700 1;
+-1 -1 9800 1;
 #X floatatom 240 118 5 0 0 0 - - -;
 #X obj 363 119 s \$1-volume;
 #X obj 291 119 / 127;
@@ -452,9 +452,9 @@
 #X connect 7 0 0 0;
 #X coords 0 -1 1 1 180 40 1 100 100;
 #X restore -19 26 pd volume;
-#N canvas 0 22 418 325 preset 0;
+#N canvas 870 388 418 325 preset 1;
 #X obj 104 110 hradio 15 1 0 12 empty empty empty 0 -8 0 10 -262144
--1 -1 6;
+-1 -1 3;
 #X obj 292 107 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X text 312 103 save;
@@ -464,10 +464,12 @@
 #X obj 199 89 6;
 #X obj 105 135 s \$1-preset;
 #X obj 292 134 s \$1-save;
+#X obj 108 56 r \$1-presetin;
 #X connect 0 0 6 0;
 #X connect 1 0 7 0;
 #X connect 4 0 5 0;
 #X connect 5 0 0 0;
+#X connect 8 0 0 0;
 #X coords 0 -1 1 1 250 30 2 100 100;
 #X restore 225 564 pd preset;
 #N canvas 167 212 716 459 volenv 0;
@@ -589,28 +591,28 @@
 #X msg 329 254 clear;
 #X obj -34 179 0;
 #X obj -32 205 + 1;
-#X obj -31 230 moses 50;
 #X msg -35 150 0;
 #X obj -105 203 pack f \$1;
 #X msg -119 228 \; \$2p\$1 bang \;;
 #X obj 34 145 print SAVING:;
+#X obj -31 230 moses 60;
 #X connect 1 0 0 0;
 #X connect 2 0 0 0;
 #X connect 3 0 4 0;
-#X connect 3 0 13 0;
+#X connect 3 0 12 0;
 #X connect 4 0 1 0;
-#X connect 4 1 10 0;
+#X connect 4 1 9 0;
 #X connect 4 2 6 0;
 #X connect 5 0 2 0;
 #X connect 6 0 0 0;
 #X connect 7 0 8 0;
-#X connect 7 0 11 0;
-#X connect 8 0 9 0;
+#X connect 7 0 10 0;
+#X connect 8 0 13 0;
 #X connect 9 0 7 0;
-#X connect 10 0 7 0;
-#X connect 11 0 12 0;
+#X connect 10 0 11 0;
+#X connect 13 0 7 0;
 #X restore 76 114 pd save;
-#N canvas 0 22 806 756 load 0;
+#N canvas 698 22 568 365 load 0;
 #X obj 100 41 inlet;
 #X obj 298 150 textfile;
 #X msg 176 169 bang;
@@ -623,10 +625,10 @@
 #X obj 54 110 t b b f f;
 #X msg 62 71 3;
 #X msg 185 34 read presets/preset-\$1.txt cr;
-#X obj 421 293 print;
 #X obj 389 190 unpack f f;
 #X obj 395 214 pack f f \$1;
 #X msg 376 242 \; \$3p\$1 \$2;
+#X obj 420 289 print PRESET:;
 #X connect 0 0 9 0;
 #X connect 1 0 6 0;
 #X connect 1 0 5 0;
@@ -634,7 +636,7 @@
 #X connect 3 0 1 0;
 #X connect 4 0 2 0;
 #X connect 5 0 4 0;
-#X connect 6 0 13 0;
+#X connect 6 0 12 0;
 #X connect 7 0 1 0;
 #X connect 9 0 5 0;
 #X connect 9 1 3 0;
@@ -643,10 +645,10 @@
 #X connect 10 0 9 0;
 #X connect 11 0 1 0;
 #X connect 11 0 8 0;
+#X connect 12 0 13 0;
+#X connect 12 1 13 1;
 #X connect 13 0 14 0;
-#X connect 13 1 14 1;
-#X connect 14 0 15 0;
-#X connect 15 0 12 0;
+#X connect 13 0 15 0;
 #X restore -418 109 pd load;
 #X msg 128 47 3;
 #X msg -384 46 3;
@@ -661,20 +663,19 @@
 #X obj 38 301 *~ 1;
 #X obj 349 265 r \$1-volume;
 #X obj 671 383 hradio 15 1 0 12 empty empty empty 0 -8 0 10 -262144
--1 -1 5;
+-1 -1 3;
 #X obj 859 380 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X text 879 376 save;
 #X obj 861 193 vradio 15 1 0 12 empty empty empty 0 -8 0 10 -262144
 -1 -1 0;
-#N canvas 0 22 730 503 osc 0;
+#N canvas 0 22 730 503 osc 1;
 #X obj 44 41 mrpeach/unpackOSC;
 #X obj 20 104 mrpeach/routeOSC /presets;
 #X obj 40 11 r oscrecvdood;
 #X obj 44 70 mrpeach/routeOSC /\$1;
 #X obj 22 134 mrpeach/routeOSC /1 /2 /3 /4 /5 /6 /7 /8 /9 /10 /11 /12
 ;
-#X obj 47 260 s \$1-preset;
 #X msg 13 163 0;
 #X msg 42 165 1;
 #X msg 67 164 2;
@@ -731,36 +732,38 @@
 #X obj 588 296 s \$1s14;
 #X obj 632 296 s \$1s15;
 #X obj 677 296 s \$1s16;
+#X obj 47 260 s \$1-presetin;
 #X connect 0 0 3 0;
 #X connect 1 0 4 0;
 #X connect 2 0 0 0;
 #X connect 3 0 1 0;
-#X connect 3 0 18 0;
-#X connect 4 0 6 0;
-#X connect 4 1 7 0;
-#X connect 4 2 8 0;
-#X connect 4 3 9 0;
-#X connect 4 4 10 0;
-#X connect 4 5 11 0;
-#X connect 4 6 12 0;
-#X connect 4 7 13 0;
-#X connect 4 8 14 0;
-#X connect 4 9 15 0;
-#X connect 4 10 16 0;
-#X connect 4 11 17 0;
-#X connect 6 0 5 0;
-#X connect 7 0 5 0;
-#X connect 8 0 5 0;
-#X connect 9 0 5 0;
-#X connect 10 0 5 0;
-#X connect 11 0 5 0;
-#X connect 12 0 5 0;
-#X connect 13 0 5 0;
-#X connect 14 0 5 0;
-#X connect 15 0 5 0;
-#X connect 16 0 5 0;
-#X connect 17 0 5 0;
-#X connect 18 0 43 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 4 1 6 0;
+#X connect 4 2 7 0;
+#X connect 4 3 8 0;
+#X connect 4 4 9 0;
+#X connect 4 5 10 0;
+#X connect 4 6 11 0;
+#X connect 4 7 12 0;
+#X connect 4 8 13 0;
+#X connect 4 9 14 0;
+#X connect 4 10 15 0;
+#X connect 4 11 16 0;
+#X connect 5 0 59 0;
+#X connect 6 0 59 0;
+#X connect 7 0 59 0;
+#X connect 8 0 59 0;
+#X connect 9 0 59 0;
+#X connect 10 0 59 0;
+#X connect 11 0 59 0;
+#X connect 12 0 59 0;
+#X connect 13 0 59 0;
+#X connect 14 0 59 0;
+#X connect 15 0 59 0;
+#X connect 16 0 59 0;
+#X connect 17 0 42 0;
+#X connect 26 0 18 0;
 #X connect 27 0 19 0;
 #X connect 28 0 20 0;
 #X connect 29 0 21 0;
@@ -768,31 +771,30 @@
 #X connect 31 0 23 0;
 #X connect 32 0 24 0;
 #X connect 33 0 25 0;
-#X connect 34 0 26 0;
-#X connect 36 0 38 0;
-#X connect 37 0 35 0;
-#X connect 38 0 39 0;
-#X connect 38 1 42 0;
-#X connect 39 0 41 0;
-#X connect 41 0 37 0;
-#X connect 41 0 40 0;
-#X connect 42 0 39 1;
-#X connect 43 0 27 0;
-#X connect 43 1 28 0;
-#X connect 43 2 29 0;
-#X connect 43 3 30 0;
-#X connect 43 4 31 0;
-#X connect 43 5 32 0;
-#X connect 43 6 33 0;
-#X connect 43 7 34 0;
-#X connect 43 8 44 0;
-#X connect 43 9 45 0;
-#X connect 43 10 46 0;
-#X connect 43 11 47 0;
-#X connect 43 12 48 0;
-#X connect 43 13 49 0;
-#X connect 43 14 50 0;
-#X connect 43 15 51 0;
+#X connect 35 0 37 0;
+#X connect 37 0 38 0;
+#X connect 37 1 41 0;
+#X connect 38 0 40 0;
+#X connect 40 0 36 0;
+#X connect 40 0 39 0;
+#X connect 41 0 38 1;
+#X connect 42 0 26 0;
+#X connect 42 1 27 0;
+#X connect 42 2 28 0;
+#X connect 42 3 29 0;
+#X connect 42 4 30 0;
+#X connect 42 5 31 0;
+#X connect 42 6 32 0;
+#X connect 42 7 33 0;
+#X connect 42 8 43 0;
+#X connect 42 9 44 0;
+#X connect 42 10 45 0;
+#X connect 42 11 46 0;
+#X connect 42 12 47 0;
+#X connect 42 13 48 0;
+#X connect 42 14 49 0;
+#X connect 42 15 50 0;
+#X connect 43 0 51 0;
 #X connect 44 0 52 0;
 #X connect 45 0 53 0;
 #X connect 46 0 54 0;
@@ -800,7 +802,6 @@
 #X connect 48 0 56 0;
 #X connect 49 0 57 0;
 #X connect 50 0 58 0;
-#X connect 51 0 59 0;
 #X restore 524 111 pd osc;
 #X obj 674 363 r \$1-preset;
 #X obj 763 340 loadbang;
@@ -817,6 +818,8 @@
 #X obj 334 94 synth2 \$1;
 #X obj 877 357 r \$1-save;
 #X obj 57 251 effectbitcrush2 \$1;
+#X obj 40 40 r;
+#X obj 683 331 r \$1-presetin;
 #X connect 0 0 10 0;
 #X connect 1 0 2 0;
 #X connect 2 0 0 0;
@@ -857,3 +860,4 @@
 #X connect 33 0 7 1;
 #X connect 34 0 17 0;
 #X connect 35 0 25 0;
+#X connect 37 0 16 0;
