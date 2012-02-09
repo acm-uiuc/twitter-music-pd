@@ -1,5 +1,5 @@
 #N canvas 660 379 388 396 10;
-#X obj 8 7 inlet~;
+#X obj 8 10 inlet~;
 #X obj 9 346 outlet~;
 #X obj 125 346 outlet~;
 #X obj 78 12 inlet;
@@ -14,6 +14,8 @@
 #X msg 190 66 damping \$1;
 #X connect 0 0 11 0;
 #X connect 0 0 11 1;
+#X connect 0 0 1 0;
+#X connect 0 0 2 0;
 #X connect 3 0 4 0;
 #X connect 3 0 6 0;
 #X connect 4 0 11 0;

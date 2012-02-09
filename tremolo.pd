@@ -14,6 +14,8 @@
 #X obj 253 109 moses 0.5;
 #X obj 106 92 waveformselector \$1;
 #X obj 268 16 inlet;
+#X obj 345 42 loadbang;
+#X obj 343 68 \$2;
 #X connect 0 0 13 0;
 #X connect 2 0 13 1;
 #X connect 3 0 5 0;
@@ -29,3 +31,5 @@
 #X connect 12 1 10 0;
 #X connect 13 0 6 0;
 #X connect 14 0 13 3;
+#X connect 15 0 16 0;
+#X connect 16 0 12 0;
