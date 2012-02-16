@@ -1,30 +1,25 @@
-#N canvas 29 80 880 684 10;
-#X declare -lib mrpeach;
-#X obj -87 135 dac~;
-#X obj -73 -31 effectbitcrush 0 1 3;
-#X obj 77 -39 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
-#X obj 210 -41 / 127;
-#X obj 77 -20 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
--1 -1 12700 1;
-#X obj 210 -21 / 20;
-#X obj -11 -470 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#N canvas 121 125 1051 674 10;
+#X obj -105 135 dac~;
+#X obj -87 14 effectbitcrush 0 1 3;
+#X obj 270 36 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 1000 1;
+#X obj 403 34 / 127;
+#X obj 270 55 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 100 1;
+#X obj 406 55 / 20;
+#X obj 65 -462 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 47 -466 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 123 -458 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 113 -467 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X obj -19 -449 s \$0-start;
-#X obj 46 -448 s \$0-stop;
-#X obj 106 -448 s \$0-reset;
-#X msg 2 -84 0;
+#X obj 57 -441 s \$0-start;
+#X obj 122 -440 s \$0-stop;
+#X msg -9 -38 0;
 #X obj 380 -189 chiptune_drums;
-#N canvas 205 102 450 300 drumrandom 0;
+#N canvas 197 126 935 512 drumrandom 0;
 #X obj -73 211 outlet;
-#X obj -207 46 r \$0-beat;
 #X obj -210 70 tabread kicknotes;
 #X msg -210 112 0;
-#X obj -93 43 r \$0-beat;
+#X obj -93 7 r \$0-beat;
 #X obj -96 67 tabread snarenotes;
 #X msg -97 108 1;
 #X obj 32 64 tabread highhatnotes;
@@ -32,71 +27,78 @@
 #X obj -94 88 moses 0.1;
 #X obj -209 92 moses 0.1;
 #X obj 34 85 moses 0.1;
-#X obj 35 40 r \$0-halfbeat;
-#X connect 1 0 2 0;
-#X connect 2 0 10 0;
-#X connect 3 0 0 0;
-#X connect 4 0 5 0;
-#X connect 5 0 9 0;
-#X connect 6 0 0 0;
-#X connect 7 0 11 0;
-#X connect 8 0 0 0;
-#X connect 9 1 6 0;
-#X connect 10 1 3 0;
-#X connect 11 1 8 0;
-#X connect 12 0 7 0;
+#X obj 353 76 tabread snarevel;
+#X obj 234 79 tabread kickvel;
+#X obj 485 78 tabread highhatvel;
+#X obj 234 101 outlet;
+#X obj 353 98 outlet;
+#X obj 485 100 outlet;
+#X connect 1 0 9 0;
+#X connect 2 0 0 0;
+#X connect 3 0 4 0;
+#X connect 3 0 6 0;
+#X connect 3 0 1 0;
+#X connect 3 0 11 0;
+#X connect 3 0 12 0;
+#X connect 3 0 13 0;
+#X connect 4 0 8 0;
+#X connect 5 0 0 0;
+#X connect 6 0 10 0;
+#X connect 7 0 0 0;
+#X connect 8 1 5 0;
+#X connect 9 1 2 0;
+#X connect 10 1 7 0;
+#X connect 11 0 15 0;
+#X connect 12 0 14 0;
+#X connect 13 0 16 0;
 #X restore 380 -454 pd drumrandom;
-#X obj -87 -242 / 10;
-#X obj -53 -223 / 80;
-#X obj -112 -183 chiptune_synth 2 2 2;
-#X obj -87 -380 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj -67 -380 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj -12 -380 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 7 -380 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj -49 -320 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
-#X obj -30 -320 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
-#X obj 24 -320 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
-#X obj -3 -223 sig~;
-#X obj 27 -223 / 127;
-#X obj -9 -244 / 5;
-#X obj -87 -222 sig~;
-#X obj 170 -243 / 10;
-#X obj 200 -223 / 80;
-#X obj 170 -381 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 189 -381 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 243 -381 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 261 -381 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 207 -321 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
-#X obj 225 -321 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
-#X obj 280 -321 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
-#X obj 254 -224 sig~;
-#X obj 283 -224 / 127;
-#X obj 255 -245 / 5;
-#X obj 170 -223 sig~;
-#X obj 389 -434 vradio 15 1 1 16 empty empty empty 0 -8 0 10 -262144
--1 -1 4;
-#X obj 423 -434 vradio 15 1 1 16 empty empty empty 0 -8 0 10 -262144
--1 -1 5;
-#X obj 406 -434 vradio 15 1 1 16 empty empty empty 0 -8 0 10 -262144
--1 -1 4;
-#X obj -77 -57 *~ 0.1;
-#X obj 379 -474 table synthkey;
-#X obj 379 -493 table basskey;
-#N canvas 0 22 450 300 beats 0;
+#X obj -87 -226 / 10;
+#X obj -53 -207 / 80;
+#X obj -87 -364 vsl 15 128 0 127 0 0 empty synth-vibrato-speed empty
+0 -9 0 10 -262144 -1 -1 5000 1;
+#X obj -67 -364 vsl 15 128 0 127 0 0 empty synth-vibrato-depth empty
+0 -9 0 10 -262144 -1 -1 1200 1;
+#X obj -12 -364 vsl 15 128 0 127 0 0 empty synth-tremolo-speed empty
+0 -9 0 10 -262144 -1 -1 1000 1;
+#X obj 7 -364 vsl 15 128 0 127 0 0 empty synth-tremolo-depth empty
+0 -9 0 10 -262144 -1 -1 2200 1;
+#X obj -49 -304 vradio 15 1 0 4 empty synth-vibrato-waveform empty
+0 -8 0 10 -262144 -1 -1 2;
+#X obj -30 -304 vradio 15 1 0 4 empty synth-waveform empty 0 -8 0 10
+-262144 -1 -1 1;
+#X obj 24 -304 vradio 15 1 0 4 empty synth-tremolo-waveform empty 0
+-8 0 10 -262144 -1 -1 1;
+#X obj -3 -207 sig~;
+#X obj 27 -207 / 127;
+#X obj -9 -228 / 5;
+#X obj -87 -206 sig~;
+#X obj 166 -205 / 10;
+#X obj 196 -185 / 80;
+#X obj 166 -343 vsl 15 128 0 127 0 0 empty bass-vibrato-speed empty
+0 -9 0 10 -262144 -1 -1 7000 1;
+#X obj 185 -343 vsl 15 128 0 127 0 0 empty bass-vibrato-depth empty
+0 -9 0 10 -262144 -1 -1 1600 1;
+#X obj 239 -343 vsl 15 128 0 127 0 0 empty bass-tremolo-speed empty
+0 -9 0 10 -262144 -1 -1 2000 1;
+#X obj 257 -343 vsl 15 128 0 127 0 0 empty bass-tremolo-depth empty
+0 -9 0 10 -262144 -1 -1 1200 1;
+#X obj 203 -283 vradio 15 1 0 4 empty bass-vibrato-waveform empty 0
+-8 0 10 -262144 -1 -1 2;
+#X obj 221 -283 vradio 15 1 0 4 empty bass-waveform empty 0 -8 0 10
+-262144 -1 -1 2;
+#X obj 276 -283 vradio 15 1 0 4 empty bass-tremolo-waveform empty 0
+-8 0 10 -262144 -1 -1 1;
+#X obj 250 -186 sig~;
+#X obj 279 -186 / 127;
+#X obj 251 -207 / 5;
+#X obj 166 -185 sig~;
+#X obj 389 -434 vradio 15 1 1 16 empty kick-select empty 0 -8 0 10
+-262144 -1 -1 6;
+#X obj 423 -434 vradio 15 1 1 16 empty highhat-select empty 0 -8 0
+10 -262144 -1 -1 5;
+#X obj 406 -434 vradio 15 1 1 16 empty snare-select empty 0 -8 0 10
+-262144 -1 -1 4;
+#N canvas 67 101 450 300 beats 0;
 #X obj 79 92 metro 200;
 #X msg 71 69 bang;
 #X msg 195 69 reset;
@@ -106,39 +108,43 @@
 #X msg 34 70 stop;
 #X obj 8 15 r \$0-stop;
 #X obj 44 262 outlet;
-#X obj 202 248 outlet;
-#X obj 82 176 mod 2;
-#X obj 61 219 spigot;
-#X obj 56 241 / 2;
 #X floatatom 91 245 5 0 0 0 - - -;
-#X obj 87 197 - 1;
-#X floatatom 209 218 5 0 0 0 - - -;
 #X obj 123 67 / 2;
-#X obj 83 125 bangloop 32;
-#X connect 0 0 17 0;
+#X obj 83 125 bangloop 64;
+#X obj 214 40 r \$0-start;
+#X obj 170 162 select 63;
+#X obj 163 259 send phrasedone;
+#X obj 171 210 f;
+#X msg 208 208 0;
+#X obj 186 188 r \$0-start;
+#X obj 255 197 loadbang;
+#X obj 169 230 + 1;
+#X connect 0 0 11 0;
 #X connect 1 0 0 0;
-#X connect 2 0 17 1;
+#X connect 2 0 11 1;
 #X connect 3 0 1 0;
-#X connect 4 0 16 0;
+#X connect 4 0 10 0;
 #X connect 5 0 2 0;
 #X connect 6 0 0 0;
 #X connect 7 0 6 0;
-#X connect 10 0 14 0;
-#X connect 11 0 12 0;
-#X connect 12 0 8 0;
-#X connect 12 0 13 0;
-#X connect 14 0 11 1;
-#X connect 16 0 0 1;
-#X connect 17 0 10 0;
-#X connect 17 0 11 0;
-#X connect 17 0 9 0;
-#X connect 17 0 15 0;
-#X restore 195 -468 pd beats;
+#X connect 10 0 0 1;
+#X connect 11 0 9 0;
+#X connect 11 0 8 0;
+#X connect 11 0 13 0;
+#X connect 12 0 2 0;
+#X connect 13 0 15 0;
+#X connect 15 0 19 0;
+#X connect 16 0 15 1;
+#X connect 17 0 16 0;
+#X connect 18 0 16 0;
+#X connect 19 0 15 1;
+#X connect 19 0 14 0;
+#X restore 195 -508 pd beats;
 #X obj -115 -488 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10
--262144 -1 -1 9000 1;
+-262144 -1 -1 8250 1;
 #X obj -116 -451 s \$0-tempo-ms;
-#X obj 193 -441 s \$0-beat;
-#N canvas 421 255 450 300 synthbeats 0;
+#X obj 195 -486 s \$0-beat;
+#N canvas 413 279 450 300 synthbeats 0;
 #X obj 75 16 r \$0-beat;
 #X obj 80 51 tabread synthnotes;
 #X obj 70 79 moses 0;
@@ -146,23 +152,19 @@
 #X msg 244 188 0;
 #X obj 179 257 outlet;
 #X obj 88 263 outlet;
-#X obj 91 222 + 72;
-#X obj 114 178 + 0;
-#X obj 135 157 r \$0-offset;
-#X obj 115 139 tabread synthkey;
+#X obj 252 53 tabread synthvel;
+#X obj 295 246 outlet;
 #X connect 0 0 1 0;
+#X connect 0 0 7 0;
 #X connect 1 0 2 0;
 #X connect 2 0 4 0;
 #X connect 2 1 3 0;
-#X connect 2 1 10 0;
+#X connect 2 1 6 0;
 #X connect 3 0 5 0;
 #X connect 4 0 5 0;
-#X connect 7 0 6 0;
-#X connect 8 0 7 0;
-#X connect 9 0 8 1;
-#X connect 10 0 8 0;
-#X restore -112 -403 pd synthbeats;
-#N canvas 53 271 450 300 bassbeats 0;
+#X connect 7 0 8 0;
+#X restore -110 -398 pd synthbeats;
+#N canvas 67 283 450 300 bassbeats 0;
 #X obj 85 26 r \$0-beat;
 #X obj 93 90 moses 0;
 #X msg 219 199 1;
@@ -170,373 +172,497 @@
 #X obj 192 270 outlet;
 #X obj 98 273 outlet;
 #X obj 90 60 tabread bassnotes;
-#X obj 97 231 + 36;
-#X obj 124 188 + 0;
-#X obj 145 167 r \$0-offset;
-#X obj 125 149 tabread synthkey;
+#X obj 247 52 tabread bassvel;
+#X obj 279 262 outlet;
 #X connect 0 0 6 0;
+#X connect 0 0 7 0;
 #X connect 1 0 3 0;
 #X connect 1 1 2 0;
-#X connect 1 1 10 0;
+#X connect 1 1 5 0;
 #X connect 2 0 4 0;
 #X connect 3 0 4 0;
 #X connect 6 0 1 0;
-#X connect 7 0 5 0;
-#X connect 8 0 7 0;
-#X connect 9 0 8 1;
-#X connect 10 0 8 0;
-#X restore 146 -404 pd bassbeats;
-#X msg -35 -86 0.2;
-#X obj 378 -146 *~ 1;
-#X obj -74 80 clip~ -0.9 0.9;
-#X obj 413 -145 / 127;
-#X obj 150 -96 *~ 1;
-#X obj 182 -96 / 127;
-#X obj 184 -117 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
--1 -1 5900 1;
-#X obj 368 -167 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
+#X connect 7 0 8 0;
+#X restore 142 -388 pd bassbeats;
+#X obj 381 -83 *~ 1;
+#X obj -105 84 clip~ -0.9 0.9;
+#X obj 416 -82 / 127;
+#X obj 150 -86 *~ 1;
+#X obj 182 -83 / 127;
+#X obj 184 -104 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 3000 1;
+#X obj 371 -104 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
 -1 -1 12700 1;
-#X obj -102 -108 *~ 1;
-#X obj -70 -108 / 127;
-#X obj -68 -131 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
--1 -1 2300 1;
+#X obj -102 -96 *~ 1;
+#X obj -70 -96 / 127;
+#X obj -68 -119 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 10000 1;
 #N canvas 0 22 450 300 (subpatch) 0;
-#X array synthnotes 16 float 3;
-#A 0 1 3 4.87143 4.22858 2.42859 2.17145 2.17145 2.30002 2.55716 2.75002
-3.2643 4.22858 5.51428 6.28571 6.47856 5;
-#X coords 0 8 16 -1 200 140 1;
-#X restore 529 -429 graph;
+#X array synthnotes 64 float 3;
+#A 0 62.4459 91.2312 71.6074 91.2713 88.5454 86.9156 80.8586 60.9983
+61.369 94.5183 63.6982 61.824 63.2951 77.7384 80.0416 63.4821 69.8277
+65.9997 85.4731 87.2642 62.0698 76.3198 78.2469 92.228 77.9927 85.708
+87.5336 91.1035 88.3395 73.3687 85.6286 82.0504 81.7533 2 90.5851 91.1677
+87.4694 81.1264 69.4882 69.4085 82.6628 89.5113 66.3345 61.303 90.2883
+76.7276 77.2319 91.6407 82.0057 66.1134 79.3841 65.0153 79.5283 64.37
+69.0757 86.8838 86.485 82.1707 77.6214 83.5429 86.6359 63.7925 72.9955
+92.1748;
+#X coords 0 127 64 -1 200 140 1 0 0;
+#X restore 529 -502 graph;
 #X obj -120 -470 * 4;
-#X obj 404 -63 r setbassnote;
-#X obj 404 -106 r setsynthnote;
 #N canvas 0 22 450 300 (subpatch) 0;
-#X array bassnotes 16 float 3;
-#A 0 1 1 11.4429 11.4429 11.4429 11.5644 11.5644 11.5644 11.5644 11.5644
-6.58575 5.49289 4.52145 2.82144 2.70001 2.45715;
-#X coords 0 16 16 -1 200 140 1;
-#X restore 528 -270 graph;
-#X obj 404 -22 r setkicknote;
+#X array bassnotes 64 float 3;
+#A 0 40.6988 47.404 40.454 40.9313 43.9911 45.2678 44.7844 48.8688
+40.2195 44.9785 49.2227 40.9474 44.7149 46.5087 44.8591 49.3891 40.0151
+44.0909 46.8108 43.7234 46.8098 45.3517 44.8779 46.4925 41.5431 44.1058
+44.3928 47.7147 45.8707 45.1313 48.7079 42.6757 45.6655 41.7446 47.2678
+40.119 49.767 49.4983 45.711 40.4043 41.1715 41.819 46.9458 45.706
+45.8557 45.9077 44.6471 46.8208 46.932 49.7228 43.1174 43.655 44.328
+43.3642 49.9597 48.9618 42.6876 40.6817 40.5055 47.3999 42.6881 49.4256
+45.4443 44.4814;
+#X coords 0 127 64 -1 200 140 1 0 0;
+#X restore 528 -311 graph;
 #N canvas 0 22 450 300 (subpatch) 0;
-#X array kicknotes 16 float 3;
-#A 0 1 0 -0.0500002 -0.150001 -0.300001 -0.350001 -0.400002 -0.400002
--0.200001 0 0 1 1 1 1 1;
-#X coords 0 1 16 0 200 20 1;
-#X restore 528 -114 graph;
+#X array kicknotes 64 float 3;
+#A 0 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1
+-1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1
+-1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1;
+#X coords 0 1 64 -1 200 20 1 0 0;
+#X restore 528 -111 graph;
 #N canvas 0 22 450 300 (subpatch) 0;
-#X array snarenotes 16 float 3;
-#A 0 0 0 0 0 1 0 1 0 0 0 0 0 1 0 1 0;
-#X coords 0 1 16 0 200 20 1;
-#X restore 531 -71 graph;
+#X array snarenotes 64 float 3;
+#A 0 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1
+-1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1
+-1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1;
+#X coords 0 1 64 -1 200 20 1 0 0;
+#X restore 528 -38 graph;
 #N canvas 0 22 450 300 (subpatch) 0;
-#X array highhatnotes 32 float 3;
-#A 0 1 1 1 1 1 0 0 0 1 0 0 1 1 -0.149999 -0.149999 -0.149999 -0.149999
--0.149999 -0.149999 -0.099999 1 0 0 0 1 0 0 1 1 1 1 1;
-#X coords 0 1 32 0 200 20 1;
-#X restore 527 -30 graph;
-#X obj -56 53 effectreverb;
-#X obj 25 80 clip~ -0.9 0.9;
-#X text 252 -43 crusher;
-#X text 253 -20 depth;
-#X text 133 -67 bitcrusher;
-#X obj 76 11 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
-#X obj 209 9 / 127;
-#X text 251 7 mix;
-#X text 123 -7 reverb;
-#X obj 76 33 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
-#X obj 209 33 / 127;
-#X text 249 28 room;
-#X obj 77 54 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
-#X obj 210 54 / 127;
-#X text 250 49 damping;
+#X array highhatnotes 64 float 3;
+#A 0 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1
+-1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1
+1 -1 1 -1 1 -1 1 -1 1 -1 1 -1;
+#X coords 0 1 64 -1 200 20 1 0 0;
+#X restore 528 38 graph;
+#X obj -87 57 effectreverb;
+#X obj -6 84 clip~ -0.9 0.9;
+#X text 445 32 crusher;
+#X text 446 55 depth;
+#X text 306 18 bitcrusher;
+#X obj 269 86 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 3000 1;
+#X obj 402 84 / 127;
+#X text 444 82 mix;
+#X text 316 68 reverb;
+#X obj 269 108 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 1000 1;
+#X obj 402 108 / 127;
+#X text 442 103 room;
+#X obj 270 129 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 1000 1;
+#X obj 403 129 / 127;
+#X text 443 124 damping;
 #X obj -84 -163 simple_adsr 1 0 0 100 0;
-#X obj 43 -381 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 62 -381 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 81 -381 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 100 -381 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X text 47 -401 a;
-#X text 67 -399 d;
-#X text 85 -401 s;
-#X text 102 -400 r;
-#X obj 36 -245 * 2;
-#X obj 60 -245 * 2;
-#X obj 84 -244 / 1.27;
-#X obj 103 -225 * 2;
+#X obj 43 -365 vsl 15 128 0 127 0 0 empty synth-attack empty 0 -9 0
+10 -262144 -1 -1 1000 1;
+#X obj 62 -365 vsl 15 128 0 127 0 0 empty synth-decay empty 0 -9 0
+10 -262144 -1 -1 1000 1;
+#X obj 81 -365 vsl 15 128 0 127 0 0 empty synth-sustain empty 0 -9
+0 10 -262144 -1 -1 0 1;
+#X obj 100 -365 vsl 15 128 0 127 0 0 empty synth-release empty 0 -9
+0 10 -262144 -1 -1 0 1;
+#X obj 36 -229 * 2;
+#X obj 60 -229 * 2;
+#X obj 84 -228 / 1.27;
+#X obj 103 -209 * 2;
 #X obj 208 -142 simple_adsr 1 0 0 100 0;
-#X obj 298 -384 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 317 -384 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 336 -384 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 355 -384 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 286 -248 * 2;
-#X obj 310 -248 * 2;
-#X obj 334 -247 / 1.27;
-#X obj 357 -223 * 2;
-#X obj 153 -118 *~;
+#X obj 294 -346 vsl 15 128 0 127 0 0 empty bass-attack empty 0 -9 0
+10 -262144 -1 -1 3000 1;
+#X obj 313 -346 vsl 15 128 0 127 0 0 empty bass-decay empty 0 -9 0
+10 -262144 -1 -1 2000 1;
+#X obj 332 -346 vsl 15 128 0 127 0 0 empty bass-sustain empty 0 -9
+0 10 -262144 -1 -1 12700 1;
+#X obj 351 -346 vsl 15 128 0 127 0 0 empty bass-release empty 0 -9
+0 10 -262144 -1 -1 2000 1;
+#X obj 282 -210 * 2;
+#X obj 306 -210 * 2;
+#X obj 330 -209 / 1.27;
+#X obj 353 -185 * 2;
+#X obj 151 -132 *~;
 #X obj -102 -138 *~;
-#X obj -55 0 clip~ -0.9 0.9;
-#X obj -105 -380 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj -111 -227 * 2;
+#X obj -87 33 clip~ -0.9 0.9;
+#X obj -105 -364 vsl 15 128 0 127 0 0 empty synth-glissando empty 0
+-9 0 10 -262144 -1 -1 2000 1;
+#X obj -111 -211 * 2;
 #X obj 146 -163 chiptune_synth 2 2 2;
-#X obj 152 -381 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
-#X obj 152 -201 * 2;
-#X obj 261 -439 s \$0-halfbeat;
-#X obj -76 -85 +~;
-#N canvas 325 80 798 329 osc 1;
-#X obj 107 33 import mrpeach;
-#X obj 65 60 udpreceive 1338;
-#X obj 58 94 unpackOSC;
-#X obj 5 184 send setsynthnote;
-#X obj 68 205 send setbassnote;
-#X obj 112 231 send setkicknote;
-#X obj 151 251 send setsnarenote;
-#X obj 196 271 send sethighhatnote;
-#X obj 12 160 routeOSC /synth /bass /kick /snare /highhat;
-#X obj 414 158 send setmodemanual;
-#X obj 14 119 routeOSC /setnote /setmode /setmodemanual;
-#X obj 304 159 send setmode;
-#X connect 1 0 2 0;
-#X connect 2 0 10 0;
-#X connect 8 0 3 0;
-#X connect 8 1 4 0;
-#X connect 8 2 5 0;
-#X connect 8 3 6 0;
-#X connect 8 4 7 0;
-#X connect 10 0 8 0;
-#X connect 10 1 11 0;
-#X connect 10 2 9 0;
-#X restore 622 -477 pd osc;
-#N canvas 0 22 450 300 setsynthnote 0;
-#X msg -111 84 \; synthnotes \$1 \$2;
-#X obj 13 31 unpack f f;
-#X obj 13 71 pack \$0 f f;
-#X obj 12 51 t b f;
-#X msg 10 88 \; \$1-synpitch\$2 \$3;
-#X obj 84 41 + 1;
-#X obj -102 20 inlet;
-#X connect 1 0 3 0;
-#X connect 1 1 5 0;
-#X connect 2 0 4 0;
-#X connect 3 0 2 0;
-#X connect 3 1 2 1;
-#X connect 5 0 2 2;
-#X connect 6 0 0 0;
-#X connect 6 0 1 0;
-#X restore 404 -84 pd setsynthnote;
-#N canvas 0 22 292 149 setbassnote 0;
-#X msg 18 80 \; bassnotes \$1 \$2;
-#X obj 100 20 unpack f f;
-#X obj 100 60 pack \$0 f f;
-#X obj 99 40 t b f;
-#X obj 171 30 + 1;
-#X msg 142 85 \; \$1-basspitch\$2 \$3;
-#X obj 12 42 inlet;
-#X connect 1 0 3 0;
-#X connect 1 1 4 0;
-#X connect 2 0 5 0;
-#X connect 3 0 2 0;
-#X connect 3 1 2 1;
-#X connect 4 0 2 2;
-#X connect 6 0 0 0;
-#X connect 6 0 1 0;
-#X restore 404 -42 pd setbassnote;
-#N canvas 0 22 450 300 setkicknote 0;
-#X msg -56 -163 \; kicknotes \$1 \$2;
-#X obj -38 -192 inlet;
-#X connect 1 0 0 0;
-#X restore 404 -1 pd setkicknote;
-#X obj 404 21 r setsnarenote;
-#N canvas 0 22 450 300 setsnarenote 0;
-#X obj -38 -192 inlet;
-#X msg -56 -163 \; snarenotes \$1 \$2;
-#X connect 0 0 1 0;
-#X restore 404 41 pd setsnarenote;
-#X obj 404 62 r sethighhatnote;
-#N canvas 0 22 450 300 sethighhatnote 0;
-#X obj -38 -192 inlet;
-#X msg -56 -163 \; highhatnotes \$1 \$2;
-#X connect 0 0 1 0;
-#X restore 404 83 pd sethighhatnote;
-#X text 618 -495 control OSC here;
-#X obj 33 -487 loadbang;
-#N canvas 90 65 791 597 melodymood 0;
-#X msg -121 252 \; synthkey \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8;
-#X msg 92 251 \; basskey \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8;
-#X obj -158 104 pack 0 2 4 5 7 9 11 12;
-#X obj -127 64 t b;
-#X obj -158 84 t b;
-#X msg -147 -171 majorscale;
-#X msg -59 -169 majorchord;
-#X msg 27 -170 pentatonic;
-#X obj -102 62 pack 0 3 5 8 11 13 16 21 23;
-#X obj -102 41 t b;
-#X obj -49 -194 loadbang;
-#X obj -127 83 pack 0 4 7 12 16 19 24 26 29;
-#X obj -73 21 t b;
-#X obj -75 41 pack 0 4 7 11 12 16 19 23 24;
-#X msg 105 -164 majorseventh;
-#X obj -46 0 t b;
-#X obj -46 19 pack 0 3 7 12 15 19 24 26 29;
-#X msg 201 -165 minorchord;
-#X obj -192 -180 inlet;
-#X msg 285 -161 harmonicminorscale;
-#X obj -204 -118 route majorscale majorchord pentatonic majorseventh
-minorchord harmonicminor;
-#X obj -20 -2 pack 0 2 4 5 7 9 11 12;
-#X obj -20 -22 t b;
-#X obj 451 -183 inlet;
-#X msg 352 -84 \; synthkey \$1 \$2;
-#X msg 460 -83 \; basskey \$1 \$2;
-#X connect 2 0 0 0;
-#X connect 2 0 1 0;
-#X connect 3 0 11 0;
-#X connect 4 0 2 0;
-#X connect 5 0 20 0;
-#X connect 6 0 20 0;
-#X connect 7 0 20 0;
-#X connect 8 0 1 0;
-#X connect 8 0 0 0;
-#X connect 9 0 8 0;
-#X connect 10 0 5 0;
-#X connect 11 0 0 0;
-#X connect 11 0 1 0;
+#X obj 148 -343 vsl 15 128 0 127 0 0 empty bass-glissando empty 0 -9
+0 10 -262144 -1 -1 100 1;
+#X obj 140 -185 * 2;
+#X obj -83 -56 +~;
+#N canvas 147 336 798 463 osc 0;
+#X obj -89 178 send setsynthnote;
+#X obj 22 178 send setbassnote;
+#X obj 130 179 send setkicknote;
+#X obj 356 180 send sethighhatnote;
+#X obj 5 9 mrpeach/udpreceive 1338;
+#X obj -68 151 mrpeach/routeOSC /synth /bass /kick /snare /highhat
+;
+#X obj -2 43 mrpeach/unpackOSC;
+#X msg -89 198 \; synthnotes \$1 \$2;
+#X msg 22 198 \; bassnotes \$1 \$2;
+#X msg 129 198 \; kicknotes \$1 \$2;
+#X msg 235 199 \; snarenotes \$1 \$2;
+#X msg 356 199 \; highhatnotes \$1 \$2;
+#X obj -68 253 mrpeach/routeOSC /synth /bass /kick /snare /highhat
+;
+#X obj -89 280 send setsynthvel;
+#X obj 22 280 send setbassvel;
+#X obj 130 281 send setkickvel;
+#X obj 235 281 send setsnarevel;
+#X obj 356 282 send sethighhatvel;
+#X msg -89 300 \; synthvel \$1 \$2;
+#X msg 22 300 \; bassvel \$1 \$2;
+#X msg 129 300 \; kickvel \$1 \$2;
+#X msg 235 301 \; snarevel \$1 \$2;
+#X msg 356 301 \; highhatvel \$1 \$2;
+#X msg 306 123 \; \$1 \$2;
+#X obj 202 98 print PARAM;
+#X obj 235 179 send setsnarenote;
+#X obj 285 78 unpack s f;
+#X obj 289 102 pack s f;
+#X obj -46 68 mrpeach/routeOSC /setnote /setvel /setparam;
+#X obj 484 37 r phrasedone;
+#X obj 495 165 udpsend;
+#X msg 488 138 disconnect;
+#X obj 434 91 loadbang;
+#X msg 466 116 connect 127.0.0.1 1339;
+#X obj 517 91 mrpeach/packOSC;
+#X msg 508 59 send /phrasedone \$1;
+#X obj 405 72 print PHRASEDONE;
+#X connect 4 0 6 0;
+#X connect 5 0 0 0;
+#X connect 5 0 7 0;
+#X connect 5 1 1 0;
+#X connect 5 1 8 0;
+#X connect 5 2 2 0;
+#X connect 5 2 9 0;
+#X connect 5 3 10 0;
+#X connect 5 3 25 0;
+#X connect 5 4 3 0;
+#X connect 5 4 11 0;
+#X connect 6 0 28 0;
+#X connect 12 0 18 0;
 #X connect 12 0 13 0;
-#X connect 13 0 0 0;
-#X connect 13 0 1 0;
-#X connect 14 0 20 0;
-#X connect 15 0 16 0;
-#X connect 16 0 0 0;
-#X connect 16 0 1 0;
-#X connect 17 0 20 0;
-#X connect 18 0 20 0;
-#X connect 19 0 20 0;
-#X connect 20 0 4 0;
-#X connect 20 1 3 0;
-#X connect 20 2 9 0;
-#X connect 20 3 12 0;
-#X connect 20 4 15 0;
-#X connect 20 5 22 0;
-#X connect 21 0 0 0;
-#X connect 21 0 1 0;
-#X connect 22 0 21 0;
-#X connect 23 0 25 0;
-#X connect 23 0 24 0;
-#X restore 538 28 pd melodymood;
-#X obj 538 4 r setmode;
-#X obj 613 5 r setmodemanual;
-#X connect 1 0 113 0;
+#X connect 12 1 19 0;
+#X connect 12 1 14 0;
+#X connect 12 2 20 0;
+#X connect 12 2 15 0;
+#X connect 12 3 21 0;
+#X connect 12 3 16 0;
+#X connect 12 4 22 0;
+#X connect 12 4 17 0;
+#X connect 26 0 27 0;
+#X connect 26 1 27 1;
+#X connect 27 0 23 0;
+#X connect 28 0 5 0;
+#X connect 28 1 12 0;
+#X connect 28 2 24 0;
+#X connect 28 2 26 0;
+#X connect 29 0 35 0;
+#X connect 31 0 30 0;
+#X connect 32 0 33 0;
+#X connect 33 0 30 0;
+#X connect 34 0 30 0;
+#X connect 35 0 34 0;
+#X connect 35 0 36 0;
+#X restore 258 -486 pd osc;
+#X text 254 -504 control OSC here;
+#X obj 20 -488 loadbang;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array synthvel 64 float 3;
+#A 0 0 0.125 0.25 0.375 0.5 0.625 0.75 0.875 0 0.125 0.25 0.375 0.5
+0.625 0.75 0.875 0 0.125 0.25 0.375 0.5 0.625 0.75 0.875 0 0.125 0.25
+0.375 0.5 0.625 0.75 0.875 0 0.125 0.25 0.375 0.5 0.625 0.75 0.875
+0 0.125 0.25 0.375 0.5 0.625 0.75 0.875 0 0.125 0.25 0.375 0.5 0.625
+0.75 0.875 0 0.125 0.25 0.375 0.5 0.625 0.75 0.875;
+#X coords 0 1 64 0 200 20 1 0 0;
+#X restore 529 -348 graph;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array bassvel 64 float 3;
+#A 0 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75
+0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25
+0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5
+0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75;
+#X coords 0 1 64 0 200 20 1 0 0;
+#X restore 528 -157 graph;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array kickvel 64 float 3;
+#A 0 0.5 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 0.5 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1;
+#X coords 0 1 64 0 200 20 1 0 0;
+#X restore 528 -74 graph;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array snarevel 64 float 3;
+#A 0 1 1 1 1 1 1 1 1 1 1 1 1 0.5 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5
+1 1 1;
+#X coords 0 1 64 0 200 20 1 0 0;
+#X restore 528 -1 graph;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array highhatvel 64 float 3;
+#A 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1;
+#X coords 0 1 64 0 200 20 1 0 0;
+#X restore 528 75 graph;
+#X obj -101 -118 *~ 1;
+#X obj 151 -110 *~ 1;
+#X obj 150 35 r bitcrusher-crush;
+#X obj 150 55 r bitcrusher-depth;
+#X obj 150 86 r reverb-mix;
+#X obj 150 106 r reverb-room;
+#X obj 150 127 r reverb-damping;
+#X obj 437 56 - 127;
+#X obj 473 56 abs;
+#X text 28 -394 attack decay;
+#X text 47 -383 sustain release;
+#X text -50 -420 respond to synth-;
+#X text 255 -376 attack decay;
+#X text 278 -365 sustain release;
+#X text 210 -403 respond to bass-;
+#X text -39 -385 waveform;
+#X text 201 -362 waveform;
+#X obj -116 -510 r tempo-ms;
+#N canvas 67 83 450 300 bpmconvo 0;
+#X obj 104 59 inlet;
+#X obj 105 171 outlet;
+#X obj 106 103;
+#X restore -94 -471 pd bpmconvo;
+#X obj 74 -487 r start;
+#X obj 133 -485 r stop;
+#X obj 25 -60 r \$0-stop;
+#X obj -44 -60 r \$0-start;
+#X text 346 -469 kick/snare/highhat-select;
+#X obj -47 -510 / 4;
+#X obj 182 -124 r bass-volume;
+#X obj -72 -139 r synth-volume;
+#X obj -104 108 *~ 1;
+#X obj -6 106 *~ 1;
+#X obj -3 127 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 10000 1;
+#X obj -43 127 / 127;
+#X obj 30 105 r global-volume;
+#X obj -87 -8 *~ 0.3;
+#X msg -39 -36 0.3;
+#X obj 390 -127 r drums-volume;
+#X obj -112 -183 chiptune_synth 2 2 2;
+#N canvas 245 112 441 651 backphrases 1;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array synthnotes1 64 float 3;
+#A 0 62.4459 91.2312 71.6074 91.2713 88.5454 86.9156 80.8586 60.9983
+61.369 94.5183 69.4085 69.4085 69.4085 69.4085 69.4085 69.4085 69.4085
+69.4085 69.4085 69.4085 69.4085 69.4085 69.4085 69.4085 69.4085 69.4085
+69.4085 69.4085 69.4085 69.4085 69.4085 69.4085 69.4085 69.4085 69.4085
+69.4085 69.4085 69.4085 69.4085 69.4085 82.6628 89.5113 66.3345 61.303
+90.2883 76.7276 77.2319 91.6407 82.0057 66.1134 79.3841 65.0153 79.5283
+64.37 69.0757 86.8838 86.485 82.1707 77.6214 83.5429 86.6359 63.7925
+72.9955 92.1748;
+#X coords 0 127 64 -1 200 140 1 0 0;
+#X restore -338 -195 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array bassnotes1 64 float 3;
+#A 0 40.6988 47.404 40.454 40.9313 43.9911 45.2678 44.7844 48.8688
+40.2195 44.9785 49.2227 40.9474 44.7149 46.5087 44.8591 49.3891 40.0151
+44.0909 46.8108 43.7234 46.8098 45.3517 44.8779 46.4925 41.5431 44.1058
+44.3928 47.7147 45.8707 45.1313 48.7079 42.6757 45.6655 41.7446 47.2678
+40.119 49.767 49.4983 45.711 40.4043 41.1715 41.819 46.9458 45.706
+45.8557 45.9077 44.6471 46.8208 46.932 49.7228 43.1174 43.655 44.328
+43.3642 49.9597 48.9618 42.6876 40.6817 40.5055 47.3999 42.6881 49.4256
+45.4443 44.4814;
+#X coords 0 127 64 -1 200 140 1 0 0;
+#X restore -339 -4 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array kicknotes1 64 float 3;
+#A 0 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1
+-1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1
+-1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1;
+#X coords 0 1 64 -1 200 20 1 0 0;
+#X restore -339 196 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array snarenotes1 64 float 3;
+#A 0 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1
+-1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1
+-1 -1 -1 -1 -1 -1 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1;
+#X coords 0 1 64 -1 200 20 1 0 0;
+#X restore -339 269 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array highhatnotes1 64 float 3;
+#A 0 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1
+-1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 1 -1
+1 -1 1 -1 1 -1 1 -1 1 -1 1 -1;
+#X coords 0 1 64 -1 200 20 1 0 0;
+#X restore -339 345 graph;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array synthvel1 64 float 3;
+#A 0 0 0.125 0.25 0.375 0.5 0.625 0.75 0.875 0 0.125 0.25 0.375 0.5
+0.625 0.75 0.875 0 0.125 0.25 0.375 0.5 0.625 0.75 0.875 0 0.125 0.25
+0.375 0.5 0.625 0.75 0.875 0 0.125 0.25 0.375 0.5 0.625 0.75 0.875
+0 0.125 0.25 0.375 0.5 0.625 0.75 0.875 0 0.125 0.25 0.375 0.5 0.625
+0.75 0.875 0 0.125 0.25 0.375 0.5 0.625 0.75 0.875;
+#X coords 0 1 64 0 200 20 1 0 0;
+#X restore -338 -41 graph;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array bassvel1 64 float 3;
+#A 0 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75
+0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25
+0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5
+0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75 0 0.25 0.5 0.75;
+#X coords 0 1 64 0 200 20 1 0 0;
+#X restore -339 150 graph;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array kickvel1 64 float 3;
+#A 0 0.5 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 0.5 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1;
+#X coords 0 1 64 0 200 20 1 0 0;
+#X restore -339 233 graph;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array snarevel1 64 float 3;
+#A 0 1 1 1 1 1 1 1 1 1 1 1 1 0.5 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5
+1 1 1;
+#X coords 0 1 64 0 200 20 1 0 0;
+#X restore -339 306 graph;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array highhatvel1 64 float 3;
+#A 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1;
+#X coords 0 1 64 0 200 20 1 0 0;
+#X restore -339 382 graph;
+#X msg -84 45 \; synthnotes 33 2;
+#X restore 532 110 pd backphrases;
+#X connect 1 0 99 0;
 #X connect 2 0 3 0;
 #X connect 3 0 1 1;
-#X connect 4 0 5 0;
+#X connect 4 0 121 0;
 #X connect 5 0 1 2;
-#X connect 6 0 9 0;
-#X connect 7 0 10 0;
-#X connect 8 0 11 0;
-#X connect 12 0 45 1;
-#X connect 13 0 55 0;
-#X connect 14 0 13 0;
-#X connect 15 0 28 0;
-#X connect 16 0 17 3;
-#X connect 17 0 112 0;
-#X connect 18 0 15 0;
-#X connect 19 0 16 0;
-#X connect 20 0 27 0;
-#X connect 21 0 26 0;
-#X connect 22 0 17 4;
-#X connect 23 0 17 5;
-#X connect 24 0 17 8;
-#X connect 25 0 17 6;
-#X connect 26 0 17 7;
-#X connect 27 0 25 0;
-#X connect 28 0 17 2;
-#X connect 29 0 41 0;
-#X connect 30 0 116 3;
-#X connect 31 0 29 0;
-#X connect 32 0 30 0;
-#X connect 33 0 40 0;
-#X connect 34 0 39 0;
-#X connect 35 0 116 4;
-#X connect 36 0 116 5;
-#X connect 37 0 116 8;
-#X connect 38 0 116 6;
-#X connect 39 0 116 7;
-#X connect 40 0 38 0;
-#X connect 41 0 116 2;
-#X connect 42 0 13 1;
-#X connect 43 0 13 3;
-#X connect 44 0 13 2;
-#X connect 45 0 1 0;
-#X connect 48 0 51 0;
-#X connect 48 1 119 0;
-#X connect 49 0 66 0;
-#X connect 52 0 17 0;
-#X connect 52 1 89 0;
-#X connect 53 0 116 0;
-#X connect 53 1 102 0;
-#X connect 54 0 45 1;
-#X connect 55 0 120 1;
-#X connect 56 0 0 0;
-#X connect 57 0 55 1;
-#X connect 58 0 120 1;
-#X connect 59 0 58 1;
-#X connect 60 0 59 0;
-#X connect 61 0 57 0;
-#X connect 62 0 120 0;
-#X connect 63 0 62 1;
-#X connect 64 0 63 0;
-#X connect 66 0 50 0;
-#X connect 67 0 123 0;
-#X connect 68 0 122 0;
-#X connect 70 0 124 0;
-#X connect 74 0 56 0;
-#X connect 74 1 75 0;
-#X connect 75 0 0 1;
-#X connect 79 0 80 0;
-#X connect 80 0 74 1;
-#X connect 83 0 84 0;
-#X connect 84 0 74 2;
-#X connect 86 0 87 0;
-#X connect 87 0 74 3;
-#X connect 89 0 112 1;
-#X connect 90 0 98 0;
-#X connect 91 0 99 0;
-#X connect 92 0 100 0;
-#X connect 93 0 101 0;
-#X connect 98 0 89 2;
-#X connect 99 0 89 3;
-#X connect 100 0 89 4;
-#X connect 101 0 89 5;
-#X connect 102 0 111 1;
-#X connect 103 0 107 0;
-#X connect 104 0 108 0;
-#X connect 105 0 109 0;
-#X connect 106 0 110 0;
-#X connect 107 0 102 2;
-#X connect 108 0 102 3;
-#X connect 109 0 102 4;
-#X connect 110 0 102 5;
-#X connect 111 0 58 0;
-#X connect 112 0 62 0;
-#X connect 113 0 74 0;
-#X connect 114 0 115 0;
-#X connect 115 0 17 1;
-#X connect 116 0 111 0;
-#X connect 117 0 118 0;
-#X connect 118 0 116 1;
-#X connect 120 0 45 0;
-#X connect 125 0 126 0;
-#X connect 127 0 128 0;
-#X connect 130 0 6 0;
-#X connect 132 0 131 0;
-#X connect 133 0 131 1;
+#X connect 6 0 8 0;
+#X connect 7 0 9 0;
+#X connect 10 0 146 1;
+#X connect 11 0 48 0;
+#X connect 12 0 11 0;
+#X connect 12 1 11 4;
+#X connect 12 2 11 5;
+#X connect 12 3 11 6;
+#X connect 13 0 25 0;
+#X connect 14 0 149 3;
+#X connect 15 0 13 0;
+#X connect 16 0 14 0;
+#X connect 17 0 24 0;
+#X connect 18 0 23 0;
+#X connect 19 0 149 4;
+#X connect 20 0 149 5;
+#X connect 21 0 149 8;
+#X connect 22 0 149 6;
+#X connect 23 0 149 7;
+#X connect 24 0 22 0;
+#X connect 25 0 149 2;
+#X connect 26 0 38 0;
+#X connect 27 0 102 3;
+#X connect 28 0 26 0;
+#X connect 29 0 27 0;
+#X connect 30 0 37 0;
+#X connect 31 0 36 0;
+#X connect 32 0 102 4;
+#X connect 33 0 102 5;
+#X connect 34 0 102 8;
+#X connect 35 0 102 6;
+#X connect 36 0 102 7;
+#X connect 37 0 35 0;
+#X connect 38 0 102 2;
+#X connect 39 0 11 1;
+#X connect 40 0 11 3;
+#X connect 41 0 11 2;
+#X connect 42 0 45 0;
+#X connect 43 0 59 0;
+#X connect 46 0 149 0;
+#X connect 46 1 79 0;
+#X connect 46 2 114 1;
+#X connect 47 0 102 0;
+#X connect 47 1 88 0;
+#X connect 47 2 115 1;
+#X connect 48 0 105 1;
+#X connect 49 0 141 0;
+#X connect 50 0 48 1;
+#X connect 51 0 105 1;
+#X connect 52 0 51 1;
+#X connect 53 0 52 0;
+#X connect 54 0 50 0;
+#X connect 55 0 105 0;
+#X connect 56 0 55 1;
+#X connect 57 0 56 0;
+#X connect 59 0 44 0;
+#X connect 64 0 49 0;
+#X connect 64 1 65 0;
+#X connect 65 0 142 0;
+#X connect 69 0 70 0;
+#X connect 70 0 64 1;
+#X connect 73 0 74 0;
+#X connect 74 0 64 2;
+#X connect 76 0 77 0;
+#X connect 77 0 64 3;
+#X connect 79 0 98 1;
+#X connect 80 0 84 0;
+#X connect 81 0 85 0;
+#X connect 82 0 86 0;
+#X connect 83 0 87 0;
+#X connect 84 0 79 2;
+#X connect 85 0 79 3;
+#X connect 86 0 79 4;
+#X connect 87 0 79 5;
+#X connect 88 0 97 1;
+#X connect 89 0 93 0;
+#X connect 90 0 94 0;
+#X connect 91 0 95 0;
+#X connect 92 0 96 0;
+#X connect 93 0 88 2;
+#X connect 94 0 88 3;
+#X connect 95 0 88 4;
+#X connect 96 0 88 5;
+#X connect 97 0 115 0;
+#X connect 98 0 114 0;
+#X connect 99 0 64 0;
+#X connect 100 0 101 0;
+#X connect 101 0 149 1;
+#X connect 102 0 97 0;
+#X connect 103 0 104 0;
+#X connect 104 0 102 1;
+#X connect 105 0 146 0;
+#X connect 108 0 6 0;
+#X connect 114 0 55 0;
+#X connect 115 0 51 0;
+#X connect 116 0 2 0;
+#X connect 117 0 4 0;
+#X connect 118 0 69 0;
+#X connect 119 0 73 0;
+#X connect 120 0 76 0;
+#X connect 121 0 122 0;
+#X connect 122 0 5 0;
+#X connect 131 0 44 0;
+#X connect 131 0 138 0;
+#X connect 133 0 6 0;
+#X connect 134 0 7 0;
+#X connect 135 0 10 0;
+#X connect 136 0 147 0;
+#X connect 138 0 43 0;
+#X connect 139 0 53 0;
+#X connect 140 0 57 0;
+#X connect 141 0 0 0;
+#X connect 142 0 0 1;
+#X connect 143 0 144 0;
+#X connect 144 0 142 1;
+#X connect 144 0 141 1;
+#X connect 145 0 143 0;
+#X connect 146 0 1 0;
+#X connect 147 0 146 1;
+#X connect 148 0 54 0;
+#X connect 149 0 98 0;
