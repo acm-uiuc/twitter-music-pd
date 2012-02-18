@@ -1,15 +1,15 @@
-#N canvas 0 22 528 383 10;
+#N canvas 67 83 804 515 10;
 #X obj 21 14 inlet;
 #X obj 17 352 outlet~;
-#X obj 94 209 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#X obj 94 241 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X obj 95 169 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#X obj 95 175 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X obj 96 128 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#X obj 96 100 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X obj 93 226 sampler 3 drums/kick/8.aiff;
-#X obj 94 186 sampler 2 drums/snare/14.aiff;
-#X obj 95 145 sampler 1 drums/hhat/12.aiff;
+#X obj 93 258 sampler 3 drums/kick/8.aiff;
+#X obj 94 192 sampler 2 drums/snare/14.aiff;
+#X obj 95 117 sampler 1 drums/hhat/12.aiff;
 #X obj 22 38 route 0 1;
 #X obj 22 330 +~;
 #X obj 259 17 inlet;
@@ -18,13 +18,19 @@
 #X msg 304 210 drums/kick/\$1.aiff;
 #X msg 323 178 drums/snare/\$1.aiff;
 #X msg 352 140 drums/hhat/\$1.aiff;
+#X obj 94 283 *~ 1;
+#X obj 467 22 inlet;
+#X obj 525 23 inlet;
+#X obj 577 24 inlet;
+#X obj 95 215 *~ 1;
+#X obj 93 140 *~ 1;
 #X connect 0 0 8 0;
 #X connect 2 0 5 0;
 #X connect 3 0 6 0;
 #X connect 4 0 7 0;
-#X connect 5 0 9 0;
-#X connect 6 0 9 0;
-#X connect 7 0 9 0;
+#X connect 5 0 16 0;
+#X connect 6 0 20 0;
+#X connect 7 0 21 0;
 #X connect 8 0 2 0;
 #X connect 8 1 3 0;
 #X connect 8 2 4 0;
@@ -35,3 +41,9 @@
 #X connect 13 0 5 1;
 #X connect 14 0 6 1;
 #X connect 15 0 7 1;
+#X connect 16 0 9 0;
+#X connect 17 0 16 1;
+#X connect 18 0 20 1;
+#X connect 19 0 21 1;
+#X connect 20 0 9 0;
+#X connect 21 0 9 0;

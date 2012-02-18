@@ -1,4 +1,4 @@
-#N canvas 346 234 653 431 10;
+#N canvas 340 252 653 431 10;
 #X obj 22 368 outlet~;
 #X obj 22 167 mtof~;
 #X msg 115 137 2;
@@ -29,7 +29,7 @@
 #X obj 22 34 pack f 0;
 #X obj 64 8 inlet;
 #X obj 110 7 inlet~;
-#X obj 22 308 tremolo \$3 0;
+#X obj 22 308 tremolo \$3 0.5;
 #X connect 1 0 23 0;
 #X connect 2 0 22 3;
 #X connect 3 0 22 3;
