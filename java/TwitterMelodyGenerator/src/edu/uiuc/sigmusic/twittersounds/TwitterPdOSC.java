@@ -27,33 +27,30 @@ public class TwitterPdOSC {
 		sendArray("/setnote/"+instrument, values);
 	}
 	
-	
 	/**
-	 * Send notes to the PD instrument, where 0-7 map to notes 1-8 in the scale set by setMode
-	 * @param instrument
-	 * @param values
+	 * Right now we have majorscale, harmonicminorscale, and that's it.
+	 * @param mode
 	 * @throws IOException
 	 */
-	public void setVelocities(String instrument, float[] values) throws IOException {
-		sendArray("/setvel/"+instrument, values);
-	}
-	
-	/**
-	 * The vast majority of parameters are from 0 - 127 (just laziness on my part)
-	 * @param param
-	 * @param value
-	 * @throws IOException
-	 */
-	public void setParameter(String param, float value) throws IOException {
-		OSCMessage oscmessage = new OSCMessage("/setparam");
-		oscmessage.addArgument(param);
-		oscmessage.addArgument((float)value);
+	public void setMode(String mode) throws IOException {
+		OSCMessage oscmessage = new OSCMessage("/setmode");
+		oscmessage.addArgument(mode);
 		oscout.send(oscmessage);
 	}
 	
-
-
-
+	/**
+	 * Manually set the mode
+	 * @param values
+	 * @throws IOException 
+	 */
+	public void setMode(float[] values) throws IOException {
+		for (int i=0; i<values.length; i++) {
+			OSCMessage oscmessage = new OSCMessage("/setmodemanual");
+			oscmessage.addArgument((float)i);
+			oscmessage.addArgument(values[i]);
+			oscout.send(oscmessage);
+		}
+	}
 	
 	public void sendArray(String message, float[] values) throws IOException {
 		for (int i=0; i<values.length; i++) {
@@ -77,95 +74,15 @@ public class TwitterPdOSC {
 	public static void main(String[] args) {
 		try {
 			TwitterPdOSC pdosc = new TwitterPdOSC();
-			
-			float[] synthnotes = new float[64];
-			float[] bassnotes = new float[64];
-			float[] kicknotes = new float[64];
-			float[] snarenotes = new float[64];
-			float[] highhatnotes = new float[64];
-			float[] synthvel = new float[64];
-			float[] bassvel = new float[64];
-			float[] kickvel = new float[64];
-			float[] snarevel = new float[64];
-			float[] highhatvel = new float[64];
-			for (int i=0; i<synthnotes.length; i++) {
-				synthnotes[i] = ((float)Math.random()*35)+60f;
-				synthvel[i] = i%8 / 8f;
-				bassnotes[i] = ((float)Math.random()*10)+40f;
-				bassvel[i] = i%4 / 4f;
-				kicknotes[i] = (i%8 == 0) ? 1 : -1;
-				kickvel[i] = (i%16 == 0) ? 0.5f : 1;
-				snarenotes[i] = ((i+4)%8 == 0) ? 1 : -1;
-				snarevel[i] = ((i+4)%16 == 0) ? 0.5f : 1;
-				highhatnotes[i] = (i%2 == 0) ? 1 : -1;
-				highhatvel[i] = 1;
-			}
-			
-			pdosc.setParameter("tempo-ms", 330);
+			pdosc.setMode("majorscale");
+			pdosc.setMode(new float[] {0,2,4,5,7,9,11,12});
 
-			
-			
-			
-			pdosc.setNotes("synth", synthnotes);
-			pdosc.setVelocities("synth", synthvel);
-			pdosc.setParameter("synth-attack", 10);
-			pdosc.setParameter("synth-decay", 10);
-			pdosc.setParameter("synth-sustain", 0);
-			pdosc.setParameter("synth-release", 0);
-			pdosc.setParameter("synth-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("synth-glissando", 20); 
-			pdosc.setParameter("synth-vibrato-depth", 12);
-			pdosc.setParameter("synth-vibrato-speed", 50);
-			pdosc.setParameter("synth-vibrato-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("synth-tremolo-depth", 22);
-			pdosc.setParameter("synth-tremolo-speed", 10);
-			pdosc.setParameter("synth-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("synth-volume", 100);
-
-			pdosc.setNotes("bass", bassnotes);
-			pdosc.setVelocities("bass", bassvel);
-			pdosc.setParameter("bass-attack", 30);
-			pdosc.setParameter("bass-decay", 20);
-			pdosc.setParameter("bass-sustain", 127);
-			pdosc.setParameter("bass-release", 20);
-			pdosc.setParameter("bass-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("bass-glissando", 1); 
-			pdosc.setParameter("bass-vibrato-depth", 16);
-			pdosc.setParameter("bass-vibrato-speed", 70);
-			pdosc.setParameter("bass-vibrato-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("bass-tremolo-depth", 12);
-			pdosc.setParameter("bass-tremolo-speed", 20);
-			pdosc.setParameter("bass-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("bass-volume", 30);
-
-			
-			pdosc.setNotes("kick", kicknotes);
-			pdosc.setVelocities("kick", kickvel);
-			pdosc.setParameter("kick-select", 6);
-			
-			pdosc.setNotes("snare", snarenotes);
-			pdosc.setVelocities("snare", snarevel);
-			pdosc.setParameter("snare-select", 4);
-			
-			pdosc.setNotes("highhat", highhatnotes);
-			pdosc.setVelocities("highhat", highhatvel);
-			pdosc.setParameter("highhat-select", 5);
-			
-			pdosc.setParameter("drums-volume", 200);
-
-			
-			pdosc.setParameter("bitcrusher-crush", 10);
-			pdosc.setParameter("bitcrusher-depth", 1);
-			
-			pdosc.setParameter("reverb-mix", 30);
-			pdosc.setParameter("reverb-room", 10);
-			pdosc.setParameter("reverb-damping", 10);
-			
-			
-			
-			pdosc.setParameter("global-volume", 100);
-			pdosc.setParameter("start", 1);
-
+			pdosc.setNotes("synth", new float[] {1,3,5,1,2,  -1,-1,2, 3,4,5,6, 7,1,3,5});
+			pdosc.setNotes("bass",  new float[] {1,1,1,3,    5,5,5,5, 6,6,6,6, 7,7,8,8});
+			pdosc.setNotes("kick",  new float[] {1,0,0,0,    1,0,0,0, 1,0,0,1, 1,1,1,1});
+			pdosc.setNotes("snare",  new float[] {0,0,0,0,  1,0,1,0,  0,0,0,0, 1,0,1,0});
+			pdosc.setNotes("highhat",new float[] {1,1,1,1,  1,0,0,0,  1,0,0,1, 1,1,1,1,
+					                              1,1,1,1,  1,0,0,0,  1,0,0,1, 1,1,1,1});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
