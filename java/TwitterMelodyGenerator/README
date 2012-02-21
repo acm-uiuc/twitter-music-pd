@@ -1,0 +1,8 @@
+Update Notes 2/21/2012 (Alex)
+
+- Added and implemented compatibility with chord progressions
+- Now fully transposes correctly (I think) into MIDI values 0-127
+- Added a debug flag for generating simple scales for transpose testing
+- GeneratorTest.java now outputs the instruments nicer in the console
+
+I will add File I/O in the next day or two, then all that's left should be working with attributes and fine-tuning a random melody to be generated... This update is mainly so we can get something between Java and Puredata that sounds coherent, the debug mode should come in handy to make sure we know everything works right with the transpose function and the MIDI values. 

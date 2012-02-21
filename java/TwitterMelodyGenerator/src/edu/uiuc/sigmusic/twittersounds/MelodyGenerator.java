@@ -1,5 +1,8 @@
+
+
 package edu.uiuc.sigmusic.twittersounds;
 
+//import java.nio.*;
 /**
  * @author SIGMusic Spring 2012
  * 
@@ -9,15 +12,26 @@ package edu.uiuc.sigmusic.twittersounds;
  */
 
 public class MelodyGenerator {
+	
+	/**
+	 * Default DEBUG values...
+	 * Key is generated (for now, C)
+	 * Chord Progression is generated (for now, I IV I V)
+	 * Synth and Bass will just play scales
+	 * Drums will be generated
+	 */
+	boolean DEBUG = true; // false To generate a random melody, true to generate straight scales for testing
+	
 	public int[] synth; // The main melody, higher synth
 	public int[] bass;  // Bass line, the lower synth
 	public int[] snare; // Snare drum
 	public int[] kick; // Kick (Bass) drum
 	public int[] hihat; // Hi-hat
 	
-	public int key = 0; // The key
+	public int key = 0; // The key, this defines the root of the chord progression
 	public int scale = 0; // Major, minor, etc(?)
-	//public int[] chordProgression; // The chord progression (if it becomes implemented)
+	public int[] chordProgression; // The chord progression
+	public int scaleType;
 	
 	public int happiness = 0; // Happiness parameter, from 0 to 100, 0 = depressed, 100 = elated
 	public int excitement = 0; // Excitement parameter, from 0 to 100, 0 = bored, 100 = excited
@@ -41,11 +55,22 @@ public class MelodyGenerator {
 		excitement = e;
 		confusion = c;
 		
+		/**
+		 * Melody is generated 4 measures at a time, each value in the respective array represents the MIDI
+		 * value to be played at that time (0-127, -1 for rest), drums are  defined 0 for rest, 1 for played.
+		 * Each value is worth one 16th note in 4/4 time.
+		 */
+		
+		key = 0;
+		scaleType = 1;
+		
 		synth = new int[64];
 		bass = new int[64];
 		snare = new int[64];
 		kick = new int[64];
 		hihat = new int[64];
+		
+		chordProgression = new int[4];
 		
 		for(int i = 0; i < 64; i++){
 			synth[i] = i % 8;
@@ -53,6 +78,10 @@ public class MelodyGenerator {
 			snare[i] = 1;
 			kick[i] = 1;
 			hihat[i] = 1;
+			
+			if(i < 4){
+				chordProgression[i] = 0;
+			}
 		}
 	}
 	
@@ -61,24 +90,57 @@ public class MelodyGenerator {
 	 */
 	
 	public void generateMelody(){
-		generateKey();
-		generateScale();
-		generateSynth();
-		generateDrums();
+		if(!DEBUG){
+			generateKey();
+			generateScale();
+			generateProgression();
+			generateSynth();
+			generateDrums();
+			transpose();
+		}
+		else{
+			generateProgression();
+			generateDrums();
+			transpose();
+		}
 	}
 	
 	/**
 	 * Choose which key to be played
+	 * 0 = C, 1 = C#, 2 = D, 3 = D#, 4 = E, 5 = F, 6 = F#, 7 = G,
+	 * 8 = G#, 9 = A, 10 = A#, 11 = B
 	 */
+	
 	public void generateKey(){
-		
+		key = 0; // Default C for now
 	}
 	
 	/**
 	 * Choose which scale (major or minor) to be played
+	 * 
 	 */
+	
 	public void generateScale(){
-		
+		scaleType = 1;
+	}
+	
+	/**
+	 * Generates the progression
+	 * 
+	 * Some popular 4 chord progressions:
+	 * I - IV - V - V
+	 * I - I - IV - V
+	 * I - IV - I - V
+	 * I - IV - V - IV
+	 * 
+	 * NOTE: I = 0, IV = 3, and such, it'll make transposing much easier.
+	 */
+	
+	public void generateProgression(){
+		chordProgression[0] = 0;
+		chordProgression[1] = 3;
+		chordProgression[2] = 0;
+		chordProgression[3] = 4;
 	}
 	
 	/**
@@ -89,12 +151,9 @@ public class MelodyGenerator {
 		//double chance = Math.random();
 		
 		for(int i = 0; i < 64; i++){
-			if(i == 0 && Math.random() > .1){ // Logic for the first note
-				synth[0] = 0;
-			}
-			if(i != 0 && i % 2 == 0){ // Logic for eigth notes
+			if(i % 2 == 0){ // Logic for eighth notes
 				
-				//if(i % 4 == 0){
+				//if(i % 2 == 0){
 					if(Math.random() * happiness > 20){
 						double noteChooser = Math.random();
 							if(noteChooser < .25)
@@ -106,10 +165,18 @@ public class MelodyGenerator {
 							if(noteChooser > .75)
 								synth[1] = 6;
 					}
-					
+					else{
+						synth[i] = (int)(Math.random() * 7);
+					}
+				//}	
 			}
-			else{
-				synth[i] = (int)(Math.random() * 7);
+			else
+			{
+				synth[i] = -1;
+			}
+			
+			if(i == 0 && Math.random() > .1){ // Logic for the first note
+				synth[0] = 0;
 			}
 		}
 }
@@ -187,6 +254,36 @@ public class MelodyGenerator {
   		}
   	}
   	
+  	/**
+  	 * Takes notes 0-7 in the instrument arrays and transposes everything into values 0 - 127 representing 
+  	 * the correct actual MIDI note to be played, this is for synth and bass only.
+  	 */
+  	public void transpose(){
+  		int[] scaleValues = {0, 2, 4, 5, 7, 9, 11, 12}; // Parallel array that will transpose notes 0 - 7 into a major or minor scale
+  		int c = -1; // Current place in the progression that the note will be transposed to
+  		
+  		if(scaleType == 0) // If we're playing minor scales, flat the third
+  			scaleValues[2] = 3;
+  			
+  		for(int i = 0; i < 64; i++){
+  			
+  			if(i % 16 == 0) // Current place in chord progression
+  				c++;
+  				
+  			if(synth[i] != -1){ // Unless it's a rest, transpose the raw 0 - 7 into the proper note within a scale
+  				synth[i] = scaleValues[synth[i]];
+  				synth[i] += (chordProgression[c] + 12*5); // Move the note up to the proper scale and octave
+  			}
+  			
+  			if(bass[i] != -1){
+  				bass[i] = scaleValues[bass[i]];
+  				bass[i] += (chordProgression[c] + 12*5); // Move the note up to the proper scale and octave
+  			}
+  			
+  			// Octave is currently constant, but it should be made variable later (thus the 12 * 5)
+  		}
+  	}
+  	
   	public void saveToFile(){
   	  	
   	}
@@ -194,6 +291,7 @@ public class MelodyGenerator {
   	public void loadFromFile(){
   		
   	}
+  	
   	
   	
   	/**
