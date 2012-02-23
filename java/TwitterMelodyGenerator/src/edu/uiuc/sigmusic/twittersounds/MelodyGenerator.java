@@ -306,21 +306,21 @@ public class MelodyGenerator {
   	 * the correct actual MIDI note to be played, this is for synth and bass only.
   	 */
   	public void transpose(){
-  		int[] scaleValues;
-  		if (scaleType == 0) // Parallel array that will transpose notes 0 - 7 into a diatonic scale
-  			scaleValues = new int[] {0, 2, 4, 6, 7, 9, 11, 12};
+  		int[] scaleValues = new int[] {0, 2, 4, 5, 7, 9, 11, 12}; // Parallel array that will transpose notes 0 - 7 into a diatonic scale
+  		if (scaleType == 0)
+  			scaleValues = new int[] {0, 2, 4, 6, 7, 9, 11, 12}; // Lydian - "brightest"
   		if (scaleType == 1)
-  			scaleValues = new int[]{0, 2, 4, 5, 7, 9, 11, 12};
+  			scaleValues = new int[]{0, 2, 4, 5, 7, 9, 11, 12}; // Ionian (major)
   		if (scaleType == 2)
-  			scaleValues = new int[]{0, 2, 4, 5, 7, 9, 10, 12};
+  			scaleValues = new int[]{0, 2, 4, 5, 7, 9, 10, 12}; // Mixolydian
   		if (scaleType == 3)
-  			scaleValues = new int[]{0, 2, 3, 5, 7, 9, 10, 12};
+  			scaleValues = new int[]{0, 2, 3, 5, 7, 9, 10, 12}; // Dorian
   		if (scaleType == 4)
-  			scaleValues = new int[]{0, 2, 3, 5, 7, 8, 10, 12};
+  			scaleValues = new int[]{0, 2, 3, 5, 7, 8, 10, 12}; // Aeolian (natural minor)
   		if (scaleType == 5)
-  			scaleValues = new int[]{0, 1, 3, 5, 7, 8, 10, 12};
+  			scaleValues = new int[]{0, 1, 3, 5, 7, 8, 10, 12}; // Phrygian
   		if (scaleType == 6)
-  			scaleValues = new int[]{0, 1, 3, 5, 6, 8, 10, 12};
+  			scaleValues = new int[]{0, 1, 3, 5, 6, 8, 10, 12}; // Locrian - "darkest"
   		int c = -1; // Current place in the progression that the note will be transposed to
   		
   		if(scaleType == 0) // If we're playing minor scales, flat the third
