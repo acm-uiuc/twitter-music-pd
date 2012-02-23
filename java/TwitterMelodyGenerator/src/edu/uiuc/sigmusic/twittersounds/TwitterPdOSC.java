@@ -27,6 +27,9 @@ public class TwitterPdOSC {
 		sendArray("/setnote/"+instrument, values);
 	}
 	
+	public void setNotes(String instrument, int[] values) throws IOException {
+		sendArray("/setnote/"+instrument, values);
+	}
 	
 	/**
 	 * Send notes to the PD instrument, where 0-7 map to notes 1-8 in the scale set by setMode
@@ -35,6 +38,10 @@ public class TwitterPdOSC {
 	 * @throws IOException
 	 */
 	public void setVelocities(String instrument, float[] values) throws IOException {
+		sendArray("/setvel/"+instrument, values);
+	}
+	
+	public void setVelocities(String instrument, int[] values) throws IOException {
 		sendArray("/setvel/"+instrument, values);
 	}
 	
@@ -51,11 +58,26 @@ public class TwitterPdOSC {
 		oscout.send(oscmessage);
 	}
 	
+	public void setParameter(String param, int value) throws IOException {
+		OSCMessage oscmessage = new OSCMessage("/setparam");
+		oscmessage.addArgument(param);
+		oscmessage.addArgument((float)value);
+		oscout.send(oscmessage);
+	}
+	
 
 
 
 	
 	public void sendArray(String message, float[] values) throws IOException {
+		for (int i=0; i<values.length; i++) {
+			OSCMessage oscmessage = new OSCMessage(message);
+			oscmessage.addArgument((float)i);
+			oscmessage.addArgument(values[i]);
+			oscout.send(oscmessage);
+		}
+	}
+	public void sendArray(String message, int[] values) throws IOException {
 		for (int i=0; i<values.length; i++) {
 			OSCMessage oscmessage = new OSCMessage(message);
 			oscmessage.addArgument((float)i);
@@ -78,6 +100,10 @@ public class TwitterPdOSC {
 		try {
 			TwitterPdOSC pdosc = new TwitterPdOSC();
 			
+			MelodyGenerator m = new MelodyGenerator(50, 50, 50);
+			m.generateMelody();
+			
+			/*
 			float[] synthnotes = new float[64];
 			float[] bassnotes = new float[64];
 			float[] kicknotes = new float[64];
@@ -88,6 +114,8 @@ public class TwitterPdOSC {
 			float[] kickvel = new float[64];
 			float[] snarevel = new float[64];
 			float[] highhatvel = new float[64];
+			
+			
 			for (int i=0; i<synthnotes.length; i++) {
 				synthnotes[i] = ((float)Math.random()*35)+60f;
 				synthvel[i] = i%8 / 8f;
@@ -100,14 +128,13 @@ public class TwitterPdOSC {
 				highhatnotes[i] = (i%2 == 0) ? 1 : -1;
 				highhatvel[i] = 1;
 			}
+			*/
 			
-			pdosc.setParameter("tempo-ms", 330);
+			
+			pdosc.setParameter("tempo-ms", 500);
 
-			
-			
-			
-			pdosc.setNotes("synth", synthnotes);
-			pdosc.setVelocities("synth", synthvel);
+			pdosc.setNotes("synth", m.synth);
+			pdosc.setVelocities("synth", m.synthvel);
 			pdosc.setParameter("synth-attack", 10);
 			pdosc.setParameter("synth-decay", 10);
 			pdosc.setParameter("synth-sustain", 0);
@@ -122,8 +149,8 @@ public class TwitterPdOSC {
 			pdosc.setParameter("synth-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
 			pdosc.setParameter("synth-volume", 100);
 
-			pdosc.setNotes("bass", bassnotes);
-			pdosc.setVelocities("bass", bassvel);
+			pdosc.setNotes("bass", m.bass);
+			pdosc.setVelocities("bass", m.bassvel);
 			pdosc.setParameter("bass-attack", 30);
 			pdosc.setParameter("bass-decay", 20);
 			pdosc.setParameter("bass-sustain", 127);
@@ -138,30 +165,26 @@ public class TwitterPdOSC {
 			pdosc.setParameter("bass-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
 			pdosc.setParameter("bass-volume", 30);
 
-			
-			pdosc.setNotes("kick", kicknotes);
-			pdosc.setVelocities("kick", kickvel);
+			pdosc.setNotes("kick", m.kick);
+			pdosc.setVelocities("kick", m.kickvel);
 			pdosc.setParameter("kick-select", 6);
 			
-			pdosc.setNotes("snare", snarenotes);
-			pdosc.setVelocities("snare", snarevel);
+			pdosc.setNotes("snare", m.snare);
+			pdosc.setVelocities("snare", m.snarevel);
 			pdosc.setParameter("snare-select", 4);
 			
-			pdosc.setNotes("highhat", highhatnotes);
-			pdosc.setVelocities("highhat", highhatvel);
+			pdosc.setNotes("highhat", m.hihat);
+			pdosc.setVelocities("highhat", m.hihatvel);
 			pdosc.setParameter("highhat-select", 5);
 			
 			pdosc.setParameter("drums-volume", 200);
 
-			
 			pdosc.setParameter("bitcrusher-crush", 10);
 			pdosc.setParameter("bitcrusher-depth", 1);
 			
 			pdosc.setParameter("reverb-mix", 30);
 			pdosc.setParameter("reverb-room", 10);
 			pdosc.setParameter("reverb-damping", 10);
-			
-			
 			
 			pdosc.setParameter("global-volume", 100);
 			pdosc.setParameter("start", 1);

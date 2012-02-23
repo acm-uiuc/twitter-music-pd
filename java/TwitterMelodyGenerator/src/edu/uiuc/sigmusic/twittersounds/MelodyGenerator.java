@@ -20,6 +20,7 @@ public class MelodyGenerator {
 	 * Synth and Bass will just play scales
 	 * Drums will be generated
 	 */
+	
 	boolean DEBUG = true; // false To generate a random melody, true to generate straight scales for testing
 	
 	public int[] synth; // The main melody, higher synth
@@ -27,6 +28,12 @@ public class MelodyGenerator {
 	public int[] snare; // Snare drum
 	public int[] kick; // Kick (Bass) drum
 	public int[] hihat; // Hi-hat
+	
+	public float[] synthvel; // The main melody, higher synth velocity
+	public float[] bassvel;  // Bass line, the lower synth velocity
+	public float[] snarevel; // Snare drum velocity
+	public float[] kickvel; // Kick (Bass) drum velocity
+	public float[] hihatvel; // Hi-hat velocity
 	
 	public int key = 0; // The key, this defines the root of the chord progression
 	public int scale = 0; // Major, minor, etc(?)
@@ -69,15 +76,41 @@ public class MelodyGenerator {
 		snare = new int[64];
 		kick = new int[64];
 		hihat = new int[64];
+
+		synthvel = new float[64];
+		bassvel = new float[64];
+		snarevel = new float[64];
+		kickvel = new float[64];
+		hihatvel = new float[64];
 		
 		chordProgression = new int[4];
 		
+		boolean up = false;
+		
 		for(int i = 0; i < 64; i++){
-			synth[i] = i % 8;
-			bass[i] = i % 8;
-			snare[i] = 1;
-			kick[i] = 1;
-			hihat[i] = 1;
+			
+			if(i % 8 == 0) up = !up;
+			
+			if(up){
+				synth[i] = i % 8;
+				bass[i] = i % 8;
+				snare[i] = 1;
+				kick[i] = 1;
+				hihat[i] = 1;
+			}
+			else{
+				synth[i] = 7 - (i % 8);
+				bass[i] = 7 - (i % 8);
+				snare[i] = 1;
+				kick[i] = 1;
+				hihat[i] = 1;
+			}
+				
+			synthvel[i] = .5f;
+			bassvel[i] = .5f;
+			snarevel[i] = .5f;
+			kickvel[i] = .5f;
+			hihatvel[i] = .5f;
 			
 			if(i < 4){
 				chordProgression[i] = 0;
@@ -138,9 +171,9 @@ public class MelodyGenerator {
 	
 	public void generateProgression(){
 		chordProgression[0] = 0;
-		chordProgression[1] = 3;
+		chordProgression[1] = 4;
 		chordProgression[2] = 0;
-		chordProgression[3] = 4;
+		chordProgression[3] = 6;
 	}
 	
 	/**
@@ -272,12 +305,12 @@ public class MelodyGenerator {
   				
   			if(synth[i] != -1){ // Unless it's a rest, transpose the raw 0 - 7 into the proper note within a scale
   				synth[i] = scaleValues[synth[i]];
-  				synth[i] += (chordProgression[c] + 12*5); // Move the note up to the proper scale and octave
+  				synth[i] += (chordProgression[c] + 12*4); // Move the note up to the proper scale and octave
   			}
   			
   			if(bass[i] != -1){
   				bass[i] = scaleValues[bass[i]];
-  				bass[i] += (chordProgression[c] + 12*5); // Move the note up to the proper scale and octave
+  				bass[i] += (chordProgression[c] + 12*3); // Move the note up to the proper scale and octave
   			}
   			
   			// Octave is currently constant, but it should be made variable later (thus the 12 * 5)
