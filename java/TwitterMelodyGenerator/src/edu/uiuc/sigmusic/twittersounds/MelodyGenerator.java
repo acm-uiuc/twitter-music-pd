@@ -154,7 +154,21 @@ public class MelodyGenerator {
 	 */
 	
 	public void generateScale(){
-		scaleType = 1;
+		if (happiness > 85)
+			scaleType = 0;
+		else if (happiness > 71)
+			scaleType = 1;
+		else if (happiness > 57)
+			scaleType = 2;
+		else if (happiness > 42)
+			scaleType = 3;
+		else if (happiness > 28)
+			scaleType = 4;
+		else if (happiness > 14)
+			scaleType = 5;
+		else
+			scaleType = 6;
+		
 	}
 	
 	/**
@@ -292,7 +306,21 @@ public class MelodyGenerator {
   	 * the correct actual MIDI note to be played, this is for synth and bass only.
   	 */
   	public void transpose(){
-  		int[] scaleValues = {0, 2, 4, 5, 7, 9, 11, 12}; // Parallel array that will transpose notes 0 - 7 into a major or minor scale
+  		int[] scaleValues;
+  		if (scaleType == 0) // Parallel array that will transpose notes 0 - 7 into a diatonic scale
+  			scaleValues = new int[] {0, 2, 4, 6, 7, 9, 11, 12};
+  		if (scaleType == 1)
+  			scaleValues = new int[]{0, 2, 4, 5, 7, 9, 11, 12};
+  		if (scaleType == 2)
+  			scaleValues = new int[]{0, 2, 4, 5, 7, 9, 10, 12};
+  		if (scaleType == 3)
+  			scaleValues = new int[]{0, 2, 3, 5, 7, 9, 10, 12};
+  		if (scaleType == 4)
+  			scaleValues = new int[]{0, 2, 3, 5, 7, 8, 10, 12};
+  		if (scaleType == 5)
+  			scaleValues = new int[]{0, 1, 3, 5, 7, 8, 10, 12};
+  		if (scaleType == 6)
+  			scaleValues = new int[]{0, 1, 3, 5, 6, 8, 10, 12};
   		int c = -1; // Current place in the progression that the note will be transposed to
   		
   		if(scaleType == 0) // If we're playing minor scales, flat the third
