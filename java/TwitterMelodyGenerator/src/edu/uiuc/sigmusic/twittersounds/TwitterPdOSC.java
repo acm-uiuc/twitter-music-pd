@@ -131,13 +131,13 @@ public class TwitterPdOSC {
 			*/
 			
 			
-			pdosc.setParameter("tempo-ms", 500);
+			pdosc.setParameter("tempo-ms", 200);
 
 			pdosc.setNotes("synth", m.synth);
 			pdosc.setVelocities("synth", m.synthvel);
 			pdosc.setParameter("synth-attack", 10);
 			pdosc.setParameter("synth-decay", 10);
-			pdosc.setParameter("synth-sustain", 0);
+			pdosc.setParameter("synth-sustain", 75);
 			pdosc.setParameter("synth-release", 0);
 			pdosc.setParameter("synth-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
 			pdosc.setParameter("synth-glissando", 20); 
@@ -153,8 +153,8 @@ public class TwitterPdOSC {
 			pdosc.setVelocities("bass", m.bassvel);
 			pdosc.setParameter("bass-attack", 30);
 			pdosc.setParameter("bass-decay", 20);
-			pdosc.setParameter("bass-sustain", 127);
-			pdosc.setParameter("bass-release", 20);
+			pdosc.setParameter("bass-sustain", 100);
+			pdosc.setParameter("bass-release", 50);
 			pdosc.setParameter("bass-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
 			pdosc.setParameter("bass-glissando", 1); 
 			pdosc.setParameter("bass-vibrato-depth", 16);
@@ -167,7 +167,7 @@ public class TwitterPdOSC {
 
 			pdosc.setNotes("kick", m.kick);
 			pdosc.setVelocities("kick", m.kickvel);
-			pdosc.setParameter("kick-select", 6);
+			pdosc.setParameter("kick-select", 8);
 			
 			pdosc.setNotes("snare", m.snare);
 			pdosc.setVelocities("snare", m.snarevel);

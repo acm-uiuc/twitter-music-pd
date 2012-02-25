@@ -2,7 +2,13 @@
 
 package edu.uiuc.sigmusic.twittersounds;
 
-//import java.nio.*;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * @author SIGMusic Spring 2012
  * 
@@ -21,41 +27,111 @@ public class MelodyGenerator {
 	 * Drums will be generated
 	 */
 	
-	boolean DEBUG = true; // false To generate a random melody, true to generate straight scales for testing
+	public boolean DEBUG = true; // false To generate a random melody, true to generate straight scales for testing
+	public boolean fileRead = false; // Flag to see if file reading was successful
+	MelodyGenerator prev;
 	
-	public int[] synth; // The main melody, higher synth
-	public int[] bass;  // Bass line, the lower synth
-	public int[] snare; // Snare drum
-	public int[] kick; // Kick (Bass) drum
-	public int[] hihat; // Hi-hat
-	
-	public float[] synthvel; // The main melody, higher synth velocity
-	public float[] bassvel;  // Bass line, the lower synth velocity
-	public float[] snarevel; // Snare drum velocity
-	public float[] kickvel; // Kick (Bass) drum velocity
-	public float[] hihatvel; // Hi-hat velocity
-	
-	public int key = 0; // The key, this defines the root of the chord progression
-	public int scale = 0; // Major, minor, etc(?)
-	public int[] chordProgression; // The chord progression
-	public int scaleType;
+	/**
+	 * Mood Attributes
+	 */
 	
 	public int happiness = 0; // Happiness parameter, from 0 to 100, 0 = depressed, 100 = elated
 	public int excitement = 0; // Excitement parameter, from 0 to 100, 0 = bored, 100 = excited
 	public int confusion = 0; // Confusion parameter, from 0 to 100, 0 = logical, 100 = confused
 	
-	/*
-	int bitcrush = 0;
-	int tempo = 0;
-	And other PD attributes
+	/**
+	 * Progression Values
 	 */
+	
+	public int key; // The key, this defines the root of the chord progression
+	public int scaleType; // Major, minor, etc(?)
+	public int[] chordProgression; // The chord progression
+	public int start;
+	
+	/**
+	 * Effect Values
+	 */
+	
+	public int bitCrusherCrush;
+	public int bitCrusherDepth;
+	public int reverbMix;
+	public int reverbRoom;
+	public int reverbDamping;
+	public int globalVolume;
+	public int tempo;
+	
+	/**
+	 * Synth Values
+	 */
+	
+	public int[] synth; // The main melody, higher synth
+	public float[] synthvel; // The main melody, higher synth velocity
+	public int synthAttack;
+	public int synthDecay;
+	public int synthSustain;
+	public int synthRelease;
+	public int synthWaveform;
+	public int synthGlissando;
+	public int synthVibratoDepth;
+	public int synthVibratoSpeed;
+	public int synthVibratoWaveform;
+	public int synthTremeloDepth;
+	public int synthTremeloWaveform;
+	
+	/**
+	 * Bass Values
+	 */
+	
+	public int[] bass;  // Bass line, the lower synth
+	public float[] bassvel;  // Bass line, the lower synth velocity
+	public int bassAttack;
+	public int bassDecay;
+	public int bassSustain;
+	public int bassRelease;
+	public int bassWaveform;
+	public int bassGlissando;
+	public int bassVibratoDepth;
+	public int bassVibratoSpeed;
+	public int bassVibratoWaveform;
+	public int bassTremeloDepth;
+	public int bassTremeloWaveform;
+	
+	/**
+	 * Drum Values
+	 */
+	
+	public int[] snare; // Snare drum
+	public float[] snarevel; // Snare drum velocity
+	public int snareSound;
+	
+	public int[] kick; // Kick (Bass) drum
+	public float[] kickvel; // Kick (Bass) drum velocity
+	public int kickSound;
+	
+	public int[] hihat; // Hi-hat
+	public float[] hihatvel; // Hi-hat velocity
+	public int hihatSound;
+	
+	public int drumsVolume;
+	
 	
 	/**
 	 * MelodyGenerator Constructor
 	 * @param h - The happiness parameter
 	 * @param e - The excitement parameter
 	 * @param c - The confusion parameter
+	 * @throws Exception 
 	 */
+	
+	MelodyGenerator() throws Exception{
+		try{
+			loadFromFile();
+		}
+		catch(Exception e){
+			fileRead = false;
+		}
+	}
+	
 	MelodyGenerator(int h, int e, int c){
 		
 		happiness = h;
@@ -68,8 +144,8 @@ public class MelodyGenerator {
 		 * Each value is worth one 16th note in 4/4 time.
 		 */
 		
-		key = 0;
-		scaleType = 1;
+		key = 1;
+		scaleType = 0;
 		
 		synth = new int[64];
 		bass = new int[64];
@@ -101,7 +177,7 @@ public class MelodyGenerator {
 			else{
 				synth[i] = 7 - (i % 8);
 				bass[i] = 7 - (i % 8);
-				snare[i] = 1;
+				snare[i] = 1; 
 				kick[i] = 1;
 				hihat[i] = 1;
 			}
@@ -120,9 +196,10 @@ public class MelodyGenerator {
 	
 	/**
 	 * When this function is called, it takes care of all the work of generating music.
+	 * @throws Exception 
 	 */
 	
-	public void generateMelody(){
+	public void generateMelody() throws Exception{
 		if(!DEBUG){
 			generateKey();
 			generateScale();
@@ -135,6 +212,13 @@ public class MelodyGenerator {
 			generateProgression();
 			generateDrums();
 			transpose();
+			
+		}
+		try{
+			saveToFile();
+		}
+		catch (Exception e){
+			System.out.println("Error Saving");
 		}
 	}
 	
@@ -145,7 +229,7 @@ public class MelodyGenerator {
 	 */
 	
 	public void generateKey(){
-		key = 0; // Default C for now
+		key = 1; // Default C for now
 	}
 	
 	/**
@@ -168,7 +252,6 @@ public class MelodyGenerator {
 			scaleType = 5;
 		else
 			scaleType = 6;
-		
 	}
 	
 	/**
@@ -306,9 +389,9 @@ public class MelodyGenerator {
   	 * the correct actual MIDI note to be played, this is for synth and bass only.
   	 */
   	public void transpose(){
-  		int[] scaleValues;
+  		int[] scaleValues = {0, 2, 4, 6, 7, 9, 11, 12};
   		if (scaleType == 0) // Parallel array that will transpose notes 0 - 7 into a diatonic scale
-  			scaleValues = new int[] {0, 2, 4, 6, 7, 9, 11, 12};
+  			scaleValues = new int[] {0, 2, 4, 6, 7, 9, 11, 12}; 
   		if (scaleType == 1)
   			scaleValues = new int[]{0, 2, 4, 5, 7, 9, 11, 12};
   		if (scaleType == 2)
@@ -323,8 +406,6 @@ public class MelodyGenerator {
   			scaleValues = new int[]{0, 1, 3, 5, 6, 8, 10, 12};
   		int c = -1; // Current place in the progression that the note will be transposed to
   		
-  		if(scaleType == 0) // If we're playing minor scales, flat the third
-  			scaleValues[2] = 3;
   			
   		for(int i = 0; i < 64; i++){
   			
@@ -333,7 +414,7 @@ public class MelodyGenerator {
   				
   			if(synth[i] != -1){ // Unless it's a rest, transpose the raw 0 - 7 into the proper note within a scale
   				synth[i] = scaleValues[synth[i]];
-  				synth[i] += (chordProgression[c] + 12*4); // Move the note up to the proper scale and octave
+  				synth[i] += (chordProgression[c] + 12*5); // Move the note up to the proper scale and octave
   			}
   			
   			if(bass[i] != -1){
@@ -345,52 +426,88 @@ public class MelodyGenerator {
   		}
   	}
   	
-  	public void saveToFile(){
-  	  	
+  	public void saveToFile() throws IOException{
+  		try{
+  			FileWriter fstream = new FileWriter("melody.txt");
+  			BufferedWriter out = new BufferedWriter(fstream);
+  			StringBuilder output = new StringBuilder();
+  			
+  			output.append(happiness + " ");
+  			output.append(excitement + " ");
+  			output.append(confusion + " ");
+  			output.append(key + " ");
+  			output.append(scaleType + " ");
+  			for(int i = 0; i < 4; i++){
+  				output.append(chordProgression[i] + " ");
+  			}
+  			output.append(start + " ");
+  			output.append(bitCrusherCrush + " ");
+  			output.append(bitCrusherDepth + " ");
+  			output.append(reverbMix + " ");
+  			output.append(reverbDamping + " ");
+  			output.append(globalVolume + " ");
+  			output.append(tempo + " ");
+  			
+  			output.append(synthAttack + " ");
+  			output.append(synthDecay + " ");
+  			output.append(synthSustain + " ");
+  			output.append(synthRelease + " ");
+  			output.append(synthWaveform + " ");
+  			output.append(synthGlissando + " ");
+  			output.append(synthVibratoDepth + " ");
+  			output.append(synthVibratoSpeed + " ");
+  			output.append(synthVibratoWaveform + " ");
+  			output.append(synthTremeloDepth + " ");
+  			output.append(synthTremeloWaveform + " ");
+  			
+  			output.append(bassAttack + " ");
+  			output.append(bassDecay + " ");
+  			output.append(bassSustain + " ");
+  			output.append(bassRelease + " ");
+  			output.append(bassWaveform + " ");
+  			output.append(bassGlissando + " ");
+  			output.append(bassVibratoDepth + " ");
+  			output.append(bassVibratoSpeed + " ");
+  			output.append(bassVibratoWaveform + " ");
+  			output.append(bassTremeloDepth + " ");
+  			output.append(bassTremeloWaveform + " ");
+  			
+  			output.append(snareSound + " ");
+  			output.append(kickSound + " ");
+  			output.append(hihatSound + " ");
+  			output.append(drumsVolume + " ");
+  			
+  			for(int i = 0; i < 64; i++)
+  			{
+  				output.append(synth[i] + " "
+  						+ bass[i] + " "
+  						+ snare[i] + " "
+  						+ kick[i] + " "
+  						+ hihat[i] + " "
+  						+ (int)(synthvel[i]*100) + " " /*To save as an int*/
+  						+ (int)(bassvel[i]*100) + " "
+  						+ (int)(snarevel[i]*100) + " "
+  						+ (int)(kickvel[i]*100) + " "
+  						+ (int)(hihatvel[i]*100) + " ");
+  			}
+  			
+  			out.write(output.toString());
+  			System.out.println("Success");
+  			out.close();
+  		}
+  		catch(IOException e){
+  			
+  		}
   	}
   	
-  	public void loadFromFile(){
-  		
+  	public void loadFromFile() throws FileNotFoundException{
+  		try{
+  			FileReader fstream = new FileReader("melody.txt");
+  			BufferedReader in = new BufferedReader(fstream);
+  		}
+  		catch(FileNotFoundException e){
+  			fileRead = false;
+  		}
   	}
   	
-  	
-  	
-  	/**
-  	 *  Future implementable functions
-  	 */
-  	
-  	/*
-  	 
-	// For easier outputting in sending packets
-	
-  	public void toString(){
-  		
-  	}
-  	
-  	// Allow MelodyGenerator to adjust the PD Attributes, such as bitcrush and tempo. This would help
-  	// take advantage of MelodyGenerator's logic and create more effective attribute changes
-  	 
-  	public void adjustPDAttributes(){
-  	
-  	}
-  	
-  	// Allow saving a formatted file of the previous measure's key, synth, bass, and drum lines
-  	// to help better judge what to generate next, this would also allow chord/song progression,
-  	// smarter adjustment of PD attributes/parameters over time
- 
-  	
-  	
-  	public void getPastSynth(){
-  	
-  	}
-  	
-  	public void getPastBass(){
-  	
-  	}
-  	
-  	public void getPastDrums(){
-  	
-  	}
-  	
-  	*/
 };

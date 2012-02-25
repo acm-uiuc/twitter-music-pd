@@ -1,10 +1,14 @@
 package edu.uiuc.sigmusic.twittersounds;
 
 public class GeneratorTest {
-	public static void main(String args[]){
+	public static void main(String args[]) throws Exception{
 		MelodyGenerator m = new MelodyGenerator(50, 50, 50);
-		m.generateMelody();
-		
+		try{
+			m.generateMelody();
+		}
+		catch(Exception e){
+			System.out.println("Error Generating Melody");
+		}
 		System.out.print("Synth: \n");
 		for(int i = 0; i < 64; i++){
 			System.out.print(m.synth[i]);
