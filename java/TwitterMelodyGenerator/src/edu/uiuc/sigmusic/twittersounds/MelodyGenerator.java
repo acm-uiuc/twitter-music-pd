@@ -394,32 +394,70 @@ public class MelodyGenerator {
 	 */
 	public void generateSynth() {
 		// synth = A sweet line
-
-		for (int i = 0; i < 64; i++) {
+		int i;
+		for (i = 0; i < 16; i++) { // Logic for first measure
+			double noteChooser = Math.random();
 			if (i % 2 == 0) { // Logic for eighth notes
-
-				// if(i % 2 == 0){
-				if (Math.random() * happiness > 20) {
-					double noteChooser = Math.random();
-					if (noteChooser < .25)
-						synth[1] = 0;
-					if (noteChooser > .25 && noteChooser < .5)
-						synth[1] = 2;
-					if (noteChooser > .5 && noteChooser < .75)
-						synth[1] = 4;
-					if (noteChooser > .75)
-						synth[1] = 6;
-				} else {
-					synth[i] = (int) (Math.random() * 7);
+				if (noteChooser < .5) {
+					if (noteChooser < .05)
+						synth[i] = 0;
+					else if (noteChooser < .1)
+						synth[i] = 1;
+					else if (noteChooser < .15)
+						synth[i] = 2;
+					else if (noteChooser < .2)
+						synth[i] = 3;
+					else if (noteChooser < .25)
+						synth[i] = 4;
+					else if (noteChooser < .3)
+						synth[i] = 5;
+					else if (noteChooser < .35)
+						synth[i] = 6;
+					else if (noteChooser < .4)
+						synth[i] = 7;
 				}
-				// }
-			} else {
+				else
+					synth[i] = -1;
+			}
+			else
 				synth[i] = -1;
-			}
-
-			if (i == 0 && Math.random() > .1) { // Logic for the first note
-				synth[0] = 0;
-			}
+			if (i % 4 == 0) { // Logic for quarter notes
+				if (noteChooser < .10)
+					synth[i] = 0;
+				else if (noteChooser < .20)
+					synth[i] = 1;
+				else if (noteChooser < .30)
+					synth[i] = 2;
+				else if (noteChooser < .40)
+					synth[i] = 3;
+				else if (noteChooser < .50)
+					synth[i] = 4;
+				else if (noteChooser < .60)
+					synth[i] = 5;
+				else if (noteChooser < .70)
+					synth[i] = 6;
+				else if (noteChooser < .80)
+					synth[i] = 7;
+			} 
+			if (i % 8 == 0) { // Logic for beats 1 and 3
+				if (noteChooser < .33)
+					synth[i] = 0;
+				else if (noteChooser < .66)
+					synth[i] = 2;
+				else if (noteChooser > .66)
+					synth[i] = 4;
+			} 
+			if (i == 0 || i == 16 && Math.random() > .1) // Logic for the first note
+				synth[i] = 0;
+		}
+		for (i = 16; i < 32; i++) { // Logic for second measure (as is, same as first)
+			synth[i] = synth[i - 16];
+		}
+		for (i = 32; i < 48; i++) { // Logic for third measure (as is, same as first)
+			synth[i] = synth[i - 32];
+		}
+		for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
+			synth[i] = synth[i - 48];
 		}
 	}
 
@@ -432,7 +470,7 @@ public class MelodyGenerator {
 			if (i == 0 && Math.random() > .1) { // Logic for the first note
 				synth[0] = 0;
 			}
-			if (i != 0 && i % 2 == 0) { // Logic for eigth notes
+			if (i != 0 && i % 2 == 0) { // Logic for eighth notes
 
 				// if(i % 4 == 0){
 				if (Math.random() * happiness > 20) {
