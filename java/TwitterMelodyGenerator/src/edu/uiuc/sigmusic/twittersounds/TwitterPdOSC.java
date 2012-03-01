@@ -2,20 +2,27 @@ package edu.uiuc.sigmusic.twittersounds;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.SocketException;
 
+import com.illposed.osc.OSCListener;
 import com.illposed.osc.OSCMessage;
-import com.illposed.osc.OSCPacket;
+import com.illposed.osc.OSCPortIn;
 import com.illposed.osc.OSCPortOut;
 
 public class TwitterPdOSC {
 	OSCPortOut oscout;
+	OSCPortIn oscin;
 	
 	public TwitterPdOSC() throws IOException {
    		//InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 255,(byte) 255,(byte) 255,(byte) 255});
    		InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 127,(byte) 0,(byte) 0,(byte) 1});
 		//InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 192,(byte) 17,(byte) 96,(byte) 105}); //if broadcasting doesn't work, hardcode it here.
    		oscout = new OSCPortOut(out, 1338);
+   		oscin = new OSCPortIn(1339);
+   		oscin.startListening();
+	}
+	
+	public void addPhraseDoneListener(OSCListener l ) {
+		oscin.addListener("/phrasedone", l);
 	}
 	
 	/**
@@ -88,7 +95,71 @@ public class TwitterPdOSC {
 	}
 
 	
-	
+	public void writeMelodyGenerator(MelodyGenerator m) {
+		try {
+			TwitterPdOSC pdosc = this;
+			pdosc.setParameter("tempo-ms", 300);
+
+			pdosc.setNotes("synth", m.synth);
+			pdosc.setVelocities("synth", m.synthvel);
+			pdosc.setParameter("synth-attack", 10);
+			pdosc.setParameter("synth-decay", 10);
+			pdosc.setParameter("synth-sustain", 75);
+			pdosc.setParameter("synth-release", 0);
+			pdosc.setParameter("synth-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("synth-glissando", 20); 
+			pdosc.setParameter("synth-vibrato-depth", 12);
+			pdosc.setParameter("synth-vibrato-speed", 50);
+			pdosc.setParameter("synth-vibrato-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("synth-tremolo-depth", 22);
+			pdosc.setParameter("synth-tremolo-speed", 10);
+			pdosc.setParameter("synth-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("synth-volume", 100);
+
+			pdosc.setNotes("bass", m.bass);
+			pdosc.setVelocities("bass", m.bassvel);
+			pdosc.setParameter("bass-attack", 30);
+			pdosc.setParameter("bass-decay", 20);
+			pdosc.setParameter("bass-sustain", 100);
+			pdosc.setParameter("bass-release", 50);
+			pdosc.setParameter("bass-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("bass-glissando", 1); 
+			pdosc.setParameter("bass-vibrato-depth", 16);
+			pdosc.setParameter("bass-vibrato-speed", 70);
+			pdosc.setParameter("bass-vibrato-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("bass-tremolo-depth", 12);
+			pdosc.setParameter("bass-tremolo-speed", 20);
+			pdosc.setParameter("bass-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("bass-volume", 30);
+
+			pdosc.setNotes("kick", m.kick);
+			pdosc.setVelocities("kick", m.kickvel);
+			pdosc.setParameter("kick-select", 8);
+			
+			pdosc.setNotes("snare", m.snare);
+			pdosc.setVelocities("snare", m.snarevel);
+			pdosc.setParameter("snare-select", 5);
+			
+			pdosc.setNotes("highhat", m.hihat);
+			pdosc.setVelocities("highhat", m.hihatvel);
+			pdosc.setParameter("highhat-select", 2);
+			
+			pdosc.setParameter("drums-volume", 200);
+
+			pdosc.setParameter("bitcrusher-crush", 10);
+			pdosc.setParameter("bitcrusher-depth", 1);
+			
+			pdosc.setParameter("reverb-mix", 30);
+			pdosc.setParameter("reverb-room", 20);
+			pdosc.setParameter("reverb-damping", 10);
+			
+			pdosc.setParameter("global-volume", 100);
+			//pdosc.setParameter("start", 1);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
