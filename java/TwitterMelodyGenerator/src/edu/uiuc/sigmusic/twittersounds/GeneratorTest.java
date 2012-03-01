@@ -2,7 +2,7 @@ package edu.uiuc.sigmusic.twittersounds;
 
 public class GeneratorTest {
 	public static void main(String args[]) throws Exception{
-		MelodyGenerator m = new MelodyGenerator(0, 0, 0);
+		MelodyGenerator m = new MelodyGenerator(50, 100, 0);
 		try{
 			m.generateMelody();
 		}

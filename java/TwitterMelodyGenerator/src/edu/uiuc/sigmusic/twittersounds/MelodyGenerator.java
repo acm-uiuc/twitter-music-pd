@@ -188,33 +188,19 @@ public class MelodyGenerator {
 		chordProgression = new int[4];
 		scaleType = new int[4];
 
-		boolean up = false;
-
 		for (int i = 0; i < 64; i++) {
-
-			if (i % 8 == 0)
-				up = !up;
-
-			if (up) {
-				synth[i] = i % 8;
-				bass[i] = i % 8;
-				snare[i] = 1;
-				kick[i] = 1;
-				hihat[i] = 1;
-			} else {
-				synth[i] = 7 - (i % 8);
-				bass[i] = 7 - (i % 8);
-				snare[i] = 1;
-				kick[i] = 1;
-				hihat[i] = 1;
-			}
-
+			
+			synth[i] = -1;
+			bass[i] = -1;
+			snare[i] = -1;
+			kick[i] = -1;
+			hihat[i] = -1;
+			
 			synthvel[i] = .5f;
 			bassvel[i] = .5f;
 			snarevel[i] = .5f;
 			kickvel[i] = .5f;
 			hihatvel[i] = .5f;
-
 			if (i < 4) {
 				chordProgression[i] = 0;
 				scaleType[i] = 0;
@@ -232,9 +218,9 @@ public class MelodyGenerator {
 	public void generateMelody() throws Exception {
 		if (!DEBUG) {
 			generateKey();
-			generateScale();
 			generateProgression();
 			generateSynth();
+			generateBass();
 			generateDrums();
 			transpose();
 		} else {
@@ -257,7 +243,7 @@ public class MelodyGenerator {
 	 */
 
 	public void generateKey() {
-		double random = Math.random();
+		//double random = Math.random();
 		if (!fileRead) { // If we can't read the melody generated from before
 			key = 0;
 		}
@@ -281,15 +267,6 @@ public class MelodyGenerator {
 	 * Choose which scale (major or minor) to be played
 	 */
 
-	public void generateScale() {
-		/*
-		 * if (happiness > 85) scaleType = 0; else if (happiness > 71) scaleType
-		 * = 1; else if (happiness > 57) scaleType = 2; else if (happiness > 42)
-		 * scaleType = 3; else if (happiness > 28) scaleType = 4; else if
-		 * (happiness > 14) scaleType = 5; else scaleType = 6;
-		 */
-	}
-
 	/**
 	 * Generates the progression
 	 * 
@@ -300,15 +277,14 @@ public class MelodyGenerator {
 	 */
 
 	public void generateProgression() {
-		double random = Math.random()*100;
 		if (!fileRead || currentMelody == 1) {
 			if (happiness > 66) { // Things are pretty happy!
 				chordProgression[0] = 0; // Always start with the root
-				scaleType[0] = 1; // Major scale 
-				
+				scaleType[0] = 1; // Major scale
+
 				// Generate a semi-random progressions of I, IV, and V
 				for (int i = 1; i < 4; i++) {
-					double chordPicker = Math.random()*100;
+					double chordPicker = Math.random() * 100;
 					if (i == 1) {
 						if (chordPicker > 50)
 							chordProgression[i] = 0;
@@ -326,65 +302,54 @@ public class MelodyGenerator {
 					scaleType[i] = 1; // All major scales
 				}
 
-			}
-			else if (happiness > 33){
+			} else if (happiness > 33) {
 				chordProgression[0] = 0; // Always start with the root
 				scaleType[0] = 0;
-				for(int i = 1; i < 4; i++) {
-					double chordPicker = Math.random()*100;
-					if(chordPicker < 25){
+				for (int i = 1; i < 4; i++) {
+					double chordPicker = Math.random() * 100;
+					if (chordPicker < 25) {
 						chordProgression[i] = 2;
-						if(Math.random() > 50)
+						if (Math.random() > 50)
 							scaleType[i] = 4;
 						else
 							scaleType[i] = 6;
-					}
-					else if(chordPicker < 50){
+					} else if (chordPicker < 50) {
 						chordProgression[i] = 4;
-						if(Math.random() > .5)
+						if (Math.random() > .5)
 							scaleType[i] = 4;
 						else
 							scaleType[i] = 0;
-					}
-					else if(chordPicker < 75){
+					} else if (chordPicker < 75) {
 						chordProgression[i] = 0;
 						scaleType[i] = 0;
-					}
-					else{
+					} else {
 						chordProgression[i] = 6;
 						scaleType[i] = 0;
 					}
 				}
-			}
-			else{
-				for(int i = 0; i < 4; i++){
-					double chordPicker = Math.random()*100;
-					if(chordPicker < 20){
+			} else {
+				for (int i = 0; i < 4; i++) {
+					double chordPicker = Math.random() * 100;
+					if (chordPicker < 20) {
 						chordProgression[i] = 0;
-					}
-					else if(chordPicker < 40){
+					} else if (chordPicker < 40) {
 						chordProgression[i] = 2;
-					}
-					else if(chordPicker < 60){
+					} else if (chordPicker < 60) {
 						chordProgression[i] = 4;
-					}
-					else if(chordPicker < 80){
+					} else if (chordPicker < 80) {
 						chordProgression[i] = 6;
-					}
-					else{
-						if(Math.random() > .5){
+					} else {
+						if (Math.random() > .5) {
 							chordProgression[i] = 1;
-						}
-						else{
+						} else {
 							chordProgression[i] = 3;
 						}
 					}
-					scaleType[i] = (int)(Math.random()*7);
+					scaleType[i] = (int) (Math.random() * 7);
 				}
 			}
-		}
-		else{
-			for(int i = 0; i < 4; i++)
+		} else {
+			for (int i = 0; i < 4; i++)
 				chordProgression[i] = prev.chordProgression[i];
 		}
 	}
@@ -392,74 +357,281 @@ public class MelodyGenerator {
 	/**
 	 * Generate the synth line
 	 */
+
 	public void generateSynth() {
-		// synth = A sweet line
-		int i;
-		for (i = 0; i < 16; i++) { // Logic for first measure
-			double noteChooser = Math.random();
-			if (i % 2 == 0) { // Logic for eighth notes
-				if (noteChooser < .5) {
-					if (noteChooser < .05)
-						synth[i] = 0;
-					else if (noteChooser < .1)
-						synth[i] = 1;
-					else if (noteChooser < .15)
-						synth[i] = 2;
-					else if (noteChooser < .2)
-						synth[i] = 3;
-					else if (noteChooser < .25)
-						synth[i] = 4;
-					else if (noteChooser < .3)
-						synth[i] = 5;
-					else if (noteChooser < .35)
-						synth[i] = 6;
-					else if (noteChooser < .4)
-						synth[i] = 7;
+		/*
+		 * Notes 0 - 15 will be generated one by one based on the attributes,
+		 * then the rest will be put through a loop to be generated based off of
+		 * notes 0 - 15.
+		 */
+		double noteChooser = 0.0;
+		//double hModifier = 0.0;
+
+		if (!fileRead || currentMelody == 1) { // Generate a new melody
+			
+			for(int i = 0; i < 16; i++){
+				double frequencyModifier = 0.0;
+				if(i % 4 == 0){
+					if(i == 0){
+						if (confusion > 80) { // Still play the root at the beginning all
+							// time, unless things get really confusing
+							if (Math.random() < .75) {
+								synth[0] = 0;
+							} else {
+								if (Math.random() > .5)
+									synth[0] = 2;
+								else
+									synth[0] = 4;
+							}
+						} 
+						else {
+							synth[0] = 0;
+						}
+					}
+					else{
+						if(synth[i - 4] == -1){ // If the quarter note previous isn't resting
+							frequencyModifier = .25;
+						}
+						if(Math.random() < ((double)happiness)/100){ // See if we're going to choose a happy or sad note
+							if(Math.random() < .75 + frequencyModifier + ((double)excitement)/400){ // See if we're going to play a note or not
+								noteChooser = Math.random();
+									if(noteChooser < .30){
+										synth[i] = 0;
+									}
+									else if(noteChooser < .60){
+										synth[i] = 2;
+									}
+									else if(noteChooser < .80){
+										synth[i] = 4;
+									}
+									else if(noteChooser < .90){
+										synth[i] = 6;
+									}
+									else{
+										synth[i] = 7;
+									}
+							}
+							else{
+									synth[i] = -1;
+							}
+						}
+
+						else{ // Sad tier of notes
+							if(Math.random() < .6 + ((double)excitement)/400){ // Less of a chance to play a note
+								noteChooser = Math.random();
+								if(noteChooser < .30){
+									synth[i] = 1;
+								}
+								else if(noteChooser < .60){
+									synth[i] = 2;
+								}
+								else if(noteChooser < .90){
+									synth[i] = 3;
+								}
+								else{
+									synth[i] = 5;
+								}
+							}
+						}
+					}
 				}
-				else
-					synth[i] = -1;
+				// Logic for eighth notes
+				else if(i % 2 == 0){
+					// Increase the chances if previous notes are already being played.
+					if(synth[i - 2] != -1){
+						frequencyModifier += .1;
+					}
+					if(i == 2 || synth[i - 4] != -1){
+						frequencyModifier += .1;
+					}
+					if(synth[i - 1] != -1){
+						frequencyModifier += .2;
+					}
+					if(Math.random() < frequencyModifier + ((double)excitement)/400 + .6){ // Will this eighth note be played?
+						if(i != 2 && synth[i - 4] != -1){ // Give it a high probability to equal the previous off-beat eighth note if one exists
+							if(Math.random() < .5){
+								synth[i] = synth[i - 4];
+							}
+						}
+						else if(Math.random() < ((double)(100 - confusion))/150){
+							synth[i] = synth[i - 2];
+						}
+						else if(Math.random() < ((double)happiness)/100){ // See if we're going to choose a happy or sad note
+							if(Math.random() < .75 + frequencyModifier + ((double)excitement)/400){ // See if we're going to play a note or not
+								noteChooser = Math.random();
+									if(noteChooser < .30){
+										synth[i] = 0;
+									}
+									else if(noteChooser < .60){
+										synth[i] = 2;
+									}
+									else if(noteChooser < .80){
+										synth[i] = 4;
+									}
+									else if(noteChooser < .90){
+										synth[i] = 6;
+									}
+									else{
+										synth[i] = 7;
+									}
+							}
+							else{
+									synth[i] = -1;
+							}
+						}
+						else{ // Sad tier of notes
+							if(Math.random() < .5 + ((double)excitement)/400){ // Less of a chance to play a note
+								noteChooser = Math.random();
+								if(noteChooser < .30){
+									synth[i] = 1;
+								}
+								else if(noteChooser < .60){
+									synth[i] = 2;
+								}
+								else if(noteChooser < .90){
+									synth[i] = 3;
+								}
+								else{
+									synth[i] = 5;
+								}
+							}
+						}
+					}
+					else{
+						synth[i] = -1;
+					}
+				}
+				// LOGIC FOR SIXTEENTH NOTES
+				else{
+					if(synth[i - 1] != -1){
+						frequencyModifier += .2;
+					}
+					if(Math.random() < frequencyModifier + ((double)excitement)/200){ // Are we going to play this note or not
+						if(synth[i - 1] != -1){
+							if(Math.random() < .25){
+								if(synth[i - 1] <= 6)
+									synth[i] = synth[i - 1] + 1;
+								else
+									synth[i] = synth[i - 1];
+							}
+							else if(Math.random() < .5){
+								if(synth[i - 1] <= 5)
+									synth[i] = synth[i - 1] + 2;
+								else
+									synth[i] = synth[i - 1];
+							}
+							else if(Math.random() < .75){
+								if(synth[i] > 0)
+									synth[i] = synth[i - 1] - 1;
+								else
+									synth[i] = synth[i - 1];
+							}
+							else{
+								synth[i] = synth[i - 1];
+							}
+						}
+						else{
+							if(excitement > 80 && confusion > 80){
+								if(Math.random() < ((double)happiness)/100){ // See if we're going to choose a happy or sad note
+									noteChooser = Math.random();
+									if(noteChooser < .30){
+										synth[i] = 0;
+									}
+									else if(noteChooser < .60){
+										synth[i] = 2;
+									}
+									else if(noteChooser < .80){
+										synth[i] = 4;
+									}
+									else if(noteChooser < .90){
+										synth[i] = 6;
+									}
+									else{
+										synth[i] = 7;
+									}
+								}
+								else{ // sad tier
+									noteChooser = Math.random();
+									if(noteChooser < .30){
+										synth[i] = 1;
+									}
+									else if(noteChooser < .60){
+										synth[i] = 2;
+									}
+									else if(noteChooser < .90){
+										synth[i] = 3;
+									}
+									else{
+										synth[i] = 5;
+									}
+								}
+							}
+						}
+					}
+				}
 			}
-			else
-				synth[i] = -1;
-			if (i % 4 == 0) { // Logic for quarter notes
-				if (noteChooser < .10)
-					synth[i] = 0;
-				else if (noteChooser < .20)
-					synth[i] = 1;
-				else if (noteChooser < .30)
-					synth[i] = 2;
-				else if (noteChooser < .40)
-					synth[i] = 3;
-				else if (noteChooser < .50)
-					synth[i] = 4;
-				else if (noteChooser < .60)
-					synth[i] = 5;
-				else if (noteChooser < .70)
-					synth[i] = 6;
-				else if (noteChooser < .80)
-					synth[i] = 7;
-			} 
-			if (i % 8 == 0) { // Logic for beats 1 and 3
-				if (noteChooser < .33)
-					synth[i] = 0;
-				else if (noteChooser < .66)
-					synth[i] = 2;
-				else if (noteChooser > .66)
-					synth[i] = 4;
-			} 
-			if (i == 0 || i == 16 && Math.random() > .1) // Logic for the first note
-				synth[i] = 0;
+			
+			for(int i = 0; i < 48; i++){
+				synth[i + 16] = synth[i % 16];
+				
+				if(Math.random() < .2 && synth[i + 16] != -1){
+					noteChooser = Math.random();
+					if(noteChooser < .3 && synth[i + 16] <= 5){
+						synth[i + 16] += 2;
+					}
+					else if(noteChooser < .6 && synth[i + 16] >=2){
+						synth[i + 16] -= 2;
+					}
+				}
+			}
 		}
-		for (i = 16; i < 32; i++) { // Logic for second measure (as is, same as first)
-			synth[i] = synth[i - 16];
-		}
-		for (i = 32; i < 48; i++) { // Logic for third measure (as is, same as first)
-			synth[i] = synth[i - 32];
-		}
-		for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
-			synth[i] = synth[i - 48];
-		}
+		/*
+//>>>>>>> Fully working synth, bass, and drum generation, read the README in the java project
 	}
+	else
+		synth[i] = -1;
+	if (i % 4 == 0) { // Logic for quarter notes
+		if (noteChooser < .10)
+			synth[i] = 0;
+		else if (noteChooser < .20)
+			synth[i] = 1;
+		else if (noteChooser < .30)
+			synth[i] = 2;
+		else if (noteChooser < .40)
+			synth[i] = 3;
+		else if (noteChooser < .50)
+			synth[i] = 4;
+		else if (noteChooser < .60)
+			synth[i] = 5;
+		else if (noteChooser < .70)
+			synth[i] = 6;
+		else if (noteChooser < .80)
+			synth[i] = 7;
+	} 
+	if (i % 8 == 0) { // Logic for beats 1 and 3
+		if (noteChooser < .33)
+			synth[i] = 0;
+		else if (noteChooser < .66)
+			synth[i] = 2;
+		else if (noteChooser > .66)
+			synth[i] = 4;
+	} 
+	if (i == 0 || i == 16 && Math.random() > .1) // Logic for the first note
+		synth[i] = 0;
+}
+for (i = 16; i < 32; i++) { // Logic for second measure (as is, same as first)
+	synth[i] = synth[i - 16];
+}
+for (i = 32; i < 48; i++) { // Logic for third measure (as is, same as first)
+	synth[i] = synth[i - 32];
+}
+for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
+	synth[i] = synth[i - 48];
+}
+}
+*/
+	}
+
 
 	/**
 	 * Generate the bass line
@@ -467,6 +639,7 @@ public class MelodyGenerator {
 	public void generateBass() {
 		// bass = A sick groove
 		for (int i = 0; i < 64; i++) {
+/*<<<<<<< HEAD
 			if (i == 0 && Math.random() > .1) { // Logic for the first note
 				synth[0] = 0;
 			}
@@ -483,11 +656,34 @@ public class MelodyGenerator {
 						synth[1] = 4;
 					if (noteChooser > .75)
 						synth[1] = 6;
+=======*/
+			if(bass[i] == -1){
+				if(Math.random() < .7){
+					bass[i] = synth[i];
 				}
-
-			} else {
-				synth[i] = (int) (Math.random() * 7);
+				else{
+					if(Math.random() < .5 && synth[i] <= 5){
+						bass[i] = synth[i] + 2;
+					}
+					else if(synth[i] >= 2){
+						bass[i] = synth[i] - 2;
+					}
+				}
+				if(Math.random() < .5){
+					if(i != 63 && i != 0 && synth[i - 1] != -1 && synth[i + 1] != 1 && excitement > 70){
+						bass[i] = (Math.max(synth[i + 1], synth[i - 1]) - Math.min(synth[i + 1], synth[i - 1])) + Math.min(synth[i + 1], synth[i - 1]);
+						if(i % 2 == 1){
+							bass[i + 1] = bass[i];
+						}
+					}
+				}
+				if(i % 2 == 1){
+					if(Math.random() > ((double)excitement)/125){
+						bass[i] = -1;
+					}
+				}
 			}
+			
 		}
 
 	}
@@ -496,36 +692,83 @@ public class MelodyGenerator {
 	 * Generate the hihat, snare, and kick
 	 */
 	public void generateDrums() {
-		generateHihat();
-		generateKick();
-		generateSnare();
+		int selector = (int)(10 * (Math.random()/80 + ((double)excitement)/150 + ((double)happiness)/350));
+		generateHihat(selector);
+		generateSnare(selector);
+		generateKick(selector);
+		
 
 	}
 
-	public void generateHihat() {
+	public void generateHihat(int selector) {
+		int[][] hiHatGrooves = {{1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+				{1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0},
+				{1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1},
+				{1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0},
+				{1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+				{1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1},
+				{1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0},
+				{1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0},
+				{1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0},
+				{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+		};		
+		
+		if(selector != 0){
+			if(Math.random() < .5){
+				selector--;
+			}
+		}
+		
+		for(int i = 0; i < 64; i++){
+			hihat[i] = hiHatGrooves[selector][i % 16];
+		}
+		
+	}
+
+	public void generateSnare(int selector) {
+		int[][] snareGrooves = {{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+				{0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},
+				{0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0},
+				{0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0}
+		};
+		
+		selector = selector/2;
+		if(selector != 0){
+			if(Math.random() < .3){
+				selector--;
+			}
+		}
 		for (int i = 0; i < 64; i++) {
-			if (i % 2 == 0)
-				hihat[i] = 1;
-			else
-				hihat[i] = 0;
+			snare[i] = snareGrooves[selector/2][i % 16];
 		}
 	}
 
-	public void generateSnare() {
-		for (int i = 0; i < 64; i++) {
-			if (i % 4 == 0 && i % 8 != 0)
-				snare[i] = 1;
-			else
-				snare[i] = 0;
+	public void generateKick(int selector) {
+		
+		int[][] kickGrooves = {{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+				{1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+				{1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0},
+				{1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+				{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+				{1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1},
+				{1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0},
+				{1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0},
+				{1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0},
+				{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+		};
+		
+		if(selector >= 4){
+			if(Math.random() < .3){
+				selector--;
+			}
+			else if(Math.random() < .6){
+				selector = selector - 2;
+			}
 		}
-	}
-
-	public void generateKick() {
+		
 		for (int i = 0; i < 64; i++) {
-			if (i % 8 == 0)
-				kick[i] = 1;
-			else
-				kick[i] = 0;
+			kick[i] = kickGrooves[selector/2][i % 16];
 		}
 	}
 

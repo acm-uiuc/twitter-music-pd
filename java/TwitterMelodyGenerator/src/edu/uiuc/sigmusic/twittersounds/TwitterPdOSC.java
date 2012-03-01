@@ -103,35 +103,7 @@ public class TwitterPdOSC {
 			MelodyGenerator m = new MelodyGenerator(50, 50, 50);
 			m.generateMelody();
 			
-			/*
-			float[] synthnotes = new float[64];
-			float[] bassnotes = new float[64];
-			float[] kicknotes = new float[64];
-			float[] snarenotes = new float[64];
-			float[] highhatnotes = new float[64];
-			float[] synthvel = new float[64];
-			float[] bassvel = new float[64];
-			float[] kickvel = new float[64];
-			float[] snarevel = new float[64];
-			float[] highhatvel = new float[64];
-			
-			
-			for (int i=0; i<synthnotes.length; i++) {
-				synthnotes[i] = ((float)Math.random()*35)+60f;
-				synthvel[i] = i%8 / 8f;
-				bassnotes[i] = ((float)Math.random()*10)+40f;
-				bassvel[i] = i%4 / 4f;
-				kicknotes[i] = (i%8 == 0) ? 1 : -1;
-				kickvel[i] = (i%16 == 0) ? 0.5f : 1;
-				snarenotes[i] = ((i+4)%8 == 0) ? 1 : -1;
-				snarevel[i] = ((i+4)%16 == 0) ? 0.5f : 1;
-				highhatnotes[i] = (i%2 == 0) ? 1 : -1;
-				highhatvel[i] = 1;
-			}
-			*/
-			
-			
-			pdosc.setParameter("tempo-ms", 200);
+			pdosc.setParameter("tempo-ms", 300);
 
 			pdosc.setNotes("synth", m.synth);
 			pdosc.setVelocities("synth", m.synthvel);
@@ -171,11 +143,11 @@ public class TwitterPdOSC {
 			
 			pdosc.setNotes("snare", m.snare);
 			pdosc.setVelocities("snare", m.snarevel);
-			pdosc.setParameter("snare-select", 4);
+			pdosc.setParameter("snare-select", 5);
 			
 			pdosc.setNotes("highhat", m.hihat);
 			pdosc.setVelocities("highhat", m.hihatvel);
-			pdosc.setParameter("highhat-select", 5);
+			pdosc.setParameter("highhat-select", 2);
 			
 			pdosc.setParameter("drums-volume", 200);
 
@@ -183,7 +155,7 @@ public class TwitterPdOSC {
 			pdosc.setParameter("bitcrusher-depth", 1);
 			
 			pdosc.setParameter("reverb-mix", 30);
-			pdosc.setParameter("reverb-room", 10);
+			pdosc.setParameter("reverb-room", 20);
 			pdosc.setParameter("reverb-damping", 10);
 			
 			pdosc.setParameter("global-volume", 100);
