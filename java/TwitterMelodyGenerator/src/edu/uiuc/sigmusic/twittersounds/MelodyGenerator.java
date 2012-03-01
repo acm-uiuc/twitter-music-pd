@@ -80,6 +80,7 @@ public class MelodyGenerator {
 	public int synthVibratoSpeed;
 	public int synthVibratoWaveform;
 	public int synthTremeloDepth;
+	public int synthTremeloSpeed;
 	public int synthTremeloWaveform;
 
 	/**
@@ -98,6 +99,7 @@ public class MelodyGenerator {
 	public int bassVibratoSpeed;
 	public int bassVibratoWaveform;
 	public int bassTremeloDepth;
+	public int bassTremeloSpeed;
 	public int bassTremeloWaveform;
 
 	/**
@@ -772,6 +774,56 @@ for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
 		}
 	}
 
+	public void modifyAttributes(){
+		//if(!fileRead){
+			start = 1;
+			bitCrusherCrush = ((100 - happiness) + excitement)/50;
+			bitCrusherDepth = bitCrusherCrush;
+			reverbMix = confusion + (50 - happiness);	
+			reverbDamping = (100 - confusion);
+			globalVolume = 50 + happiness + excitement;
+			
+			tempo = 400 - (happiness + excitement);
+
+			synthAttack = excitement;
+			synthDecay = 100-confusion;
+			synthSustain = 80 - happiness + 80 - excitement;
+			synthRelease = confusion/4;
+			synthWaveform = confusion/2 - happiness/4;
+			synthGlissando = confusion/2;
+			synthVibratoDepth = confusion/2;
+			synthVibratoSpeed = confusion/2 + excitement/2;
+			if(happiness < 50 && excitement < 50){
+				synthVibratoWaveform = 0;
+				synthTremeloWaveform = 0;
+			}
+			else{
+				synthVibratoWaveform = 1;
+				synthTremeloWaveform = 1;
+			}
+			synthTremeloDepth = confusion/2;
+			synthTremeloSpeed = excitement/2;
+
+			bassAttack = excitement;
+			bassDecay = 100-confusion;
+			bassSustain = 80 - happiness + 80 - excitement;
+			bassRelease = confusion/4;
+			bassWaveform = confusion/2 - happiness/4;
+			bassGlissando = confusion/2;
+			bassVibratoDepth = confusion/2;
+			bassVibratoSpeed = confusion/2 + excitement/2;
+			if(happiness < 50 && excitement < 50){
+				bassVibratoWaveform = 0;
+				bassTremeloWaveform = 0;
+			}
+			else{
+				bassVibratoWaveform = 1;
+				bassTremeloWaveform = 1;
+			}
+			bassTremeloDepth = confusion/2;
+			bassTremeloSpeed = excitement/2;
+		//}
+	}
 	/**
 	 * Takes notes 0-7 in the instrument arrays and transposes everything into
 	 * values 0 - 127 representing the correct actual MIDI note to be played,

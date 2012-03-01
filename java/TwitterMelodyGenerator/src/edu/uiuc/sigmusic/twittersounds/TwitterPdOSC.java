@@ -12,7 +12,8 @@ public class TwitterPdOSC {
 	OSCPortOut oscout;
 	
 	public TwitterPdOSC() throws IOException {
-   		InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 255,(byte) 255,(byte) 255,(byte) 255});
+   		//InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 255,(byte) 255,(byte) 255,(byte) 255});
+   		InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 127,(byte) 0,(byte) 0,(byte) 1});
 		//InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 192,(byte) 17,(byte) 96,(byte) 105}); //if broadcasting doesn't work, hardcode it here.
    		oscout = new OSCPortOut(out, 1338);
 	}
@@ -65,10 +66,6 @@ public class TwitterPdOSC {
 		oscout.send(oscmessage);
 	}
 	
-
-
-
-	
 	public void sendArray(String message, float[] values) throws IOException {
 		for (int i=0; i<values.length; i++) {
 			OSCMessage oscmessage = new OSCMessage(message);
@@ -107,35 +104,35 @@ public class TwitterPdOSC {
 
 			pdosc.setNotes("synth", m.synth);
 			pdosc.setVelocities("synth", m.synthvel);
-			pdosc.setParameter("synth-attack", 10);
-			pdosc.setParameter("synth-decay", 10);
-			pdosc.setParameter("synth-sustain", 75);
-			pdosc.setParameter("synth-release", 0);
-			pdosc.setParameter("synth-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("synth-glissando", 20); 
-			pdosc.setParameter("synth-vibrato-depth", 12);
-			pdosc.setParameter("synth-vibrato-speed", 50);
-			pdosc.setParameter("synth-vibrato-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("synth-tremolo-depth", 22);
-			pdosc.setParameter("synth-tremolo-speed", 10);
-			pdosc.setParameter("synth-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("synth-attack", m.synthAttack);
+			pdosc.setParameter("synth-decay", m.synthDecay);
+			pdosc.setParameter("synth-sustain", m.synthSustain);
+			pdosc.setParameter("synth-release", m.synthRelease);
+			pdosc.setParameter("synth-waveform", m.synthWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("synth-glissando", m.synthGlissando); 
+			pdosc.setParameter("synth-vibrato-depth", m.synthVibratoDepth);
+			pdosc.setParameter("synth-vibrato-speed", m.synthVibratoSpeed);
+			pdosc.setParameter("synth-vibrato-waveform", m.synthVibratoWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("synth-tremolo-depth", m.synthTremeloDepth);
+			pdosc.setParameter("synth-tremolo-speed", m.synthTremeloSpeed);
+			pdosc.setParameter("synth-tremolo-waveform", m.synthTremeloWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
 			pdosc.setParameter("synth-volume", 100);
 
 			pdosc.setNotes("bass", m.bass);
 			pdosc.setVelocities("bass", m.bassvel);
-			pdosc.setParameter("bass-attack", 30);
-			pdosc.setParameter("bass-decay", 20);
-			pdosc.setParameter("bass-sustain", 100);
-			pdosc.setParameter("bass-release", 50);
-			pdosc.setParameter("bass-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("bass-glissando", 1); 
-			pdosc.setParameter("bass-vibrato-depth", 16);
-			pdosc.setParameter("bass-vibrato-speed", 70);
-			pdosc.setParameter("bass-vibrato-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("bass-tremolo-depth", 12);
-			pdosc.setParameter("bass-tremolo-speed", 20);
-			pdosc.setParameter("bass-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("bass-volume", 30);
+			pdosc.setParameter("bass-attack", m.bassAttack);
+			pdosc.setParameter("bass-decay", m.bassDecay);
+			pdosc.setParameter("bass-sustain", m.bassSustain);
+			pdosc.setParameter("bass-release", m.bassRelease);
+			pdosc.setParameter("bass-waveform", m.bassWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("bass-glissando", m.bassGlissando); 
+			pdosc.setParameter("bass-vibrato-depth", m.bassVibratoDepth);
+			pdosc.setParameter("bass-vibrato-speed", m.bassVibratoSpeed);
+			pdosc.setParameter("bass-vibrato-waveform", m.bassVibratoWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("bass-tremolo-depth", m.bassTremeloDepth);
+			pdosc.setParameter("bass-tremolo-speed", m.bassTremeloSpeed);
+			pdosc.setParameter("bass-tremolo-waveform", m.synthTremeloWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("bass-volume", 70);
 
 			pdosc.setNotes("kick", m.kick);
 			pdosc.setVelocities("kick", m.kickvel);
@@ -151,15 +148,15 @@ public class TwitterPdOSC {
 			
 			pdosc.setParameter("drums-volume", 200);
 
-			pdosc.setParameter("bitcrusher-crush", 10);
-			pdosc.setParameter("bitcrusher-depth", 1);
+			pdosc.setParameter("bitcrusher-crush", m.bitCrusherCrush);
+			pdosc.setParameter("bitcrusher-depth", m.bitCrusherDepth);
 			
-			pdosc.setParameter("reverb-mix", 30);
-			pdosc.setParameter("reverb-room", 20);
-			pdosc.setParameter("reverb-damping", 10);
+			pdosc.setParameter("reverb-mix", m.reverbMix);
+			pdosc.setParameter("reverb-room", m.reverbRoom);
+			pdosc.setParameter("reverb-damping", m.reverbDamping);
 			
-			pdosc.setParameter("global-volume", 100);
-			pdosc.setParameter("start", 1);
+			pdosc.setParameter("global-volume", m.globalVolume);
+			pdosc.setParameter("start", m.start);
 
 		} catch (Exception e) {
 			e.printStackTrace();
