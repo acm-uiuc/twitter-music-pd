@@ -122,7 +122,7 @@ public class TwitterPdOSC {
 			pdosc.setParameter("bass-decay", 20);
 			pdosc.setParameter("bass-sustain", 100);
 			pdosc.setParameter("bass-release", 50);
-			pdosc.setParameter("bass-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("bass-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
 			pdosc.setParameter("bass-glissando", 1); 
 			pdosc.setParameter("bass-vibrato-depth", 16);
 			pdosc.setParameter("bass-vibrato-speed", 70);
@@ -130,7 +130,7 @@ public class TwitterPdOSC {
 			pdosc.setParameter("bass-tremolo-depth", 12);
 			pdosc.setParameter("bass-tremolo-speed", 20);
 			pdosc.setParameter("bass-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("bass-volume", 30);
+			pdosc.setParameter("bass-volume", 50);
 
 			pdosc.setNotes("kick", m.kick);
 			pdosc.setVelocities("kick", m.kickvel);
@@ -146,8 +146,8 @@ public class TwitterPdOSC {
 			
 			pdosc.setParameter("drums-volume", 200);
 
-			pdosc.setParameter("bitcrusher-crush", 10);
-			pdosc.setParameter("bitcrusher-depth", 1);
+			pdosc.setParameter("bitcrusher-crush", 0);
+			pdosc.setParameter("bitcrusher-depth", 0);
 			
 			pdosc.setParameter("reverb-mix", 30);
 			pdosc.setParameter("reverb-room", 20);
