@@ -71,7 +71,7 @@ public class OSCPortOut extends OSCPort {
 	 * @param aPacket OSCPacket
 	 */
 	public void send(OSCPacket aPacket) throws IOException {
-		System.out.println("OSCPortOut is sending packet");
+		//System.out.println("OSCPortOut is sending packet");
 		byte[] byteArray = aPacket.getByteArray();
 		DatagramPacket packet = 
 			new DatagramPacket(byteArray, byteArray.length,address,port);
