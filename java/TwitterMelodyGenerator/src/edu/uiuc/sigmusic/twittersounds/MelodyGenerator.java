@@ -33,7 +33,7 @@ public class MelodyGenerator {
 	 * Mood Attributes
 	 */
 
-	public int happiness = 0; // Happiness parameter, from 0 to 100, 0 =
+	public int happiness = 100; // Happiness parameter, from 0 to 100, 0 =
 								// depressed, 100 = elated
 	public int excitement = 0; // Excitement parameter, from 0 to 100, 0 =
 								// bored, 100 = excited
@@ -305,7 +305,7 @@ public class MelodyGenerator {
 			} else if (happiness > 33) {
 				chordProgression[0] = 0; // Always start with the root
 				scaleType[0] = 0;
-				for (int i = 1; i < 4; i++) {
+				for (int i = 1; i < 3; i++) {
 					double chordPicker = Math.random() * 100;
 					if (chordPicker < 25) {
 						chordProgression[i] = 2;
@@ -327,6 +327,7 @@ public class MelodyGenerator {
 						scaleType[i] = 0;
 					}
 				}
+				scaleType[3] = scaleType[0];
 			} else {
 				for (int i = 0; i < 4; i++) {
 					double chordPicker = Math.random() * 100;
@@ -377,7 +378,8 @@ public class MelodyGenerator {
 							// time, unless things get really confusing
 							if (Math.random() < .75) {
 								synth[0] = 0;
-							} else {
+							} 
+							else {
 								if (Math.random() > .5)
 									synth[0] = 2;
 								else
@@ -471,12 +473,12 @@ public class MelodyGenerator {
 									else if(noteChooser < .90){
 										synth[i] = 6;
 									}
-									else{
+									else {
 										synth[i] = 7;
 									}
 							}
-							else{
-									synth[i] = -1;
+							else {
+								synth[i] = -1;
 							}
 						}
 						else{ // Sad tier of notes
@@ -571,7 +573,7 @@ public class MelodyGenerator {
 				}
 			}
 			
-			for(int i = 0; i < 48; i++){
+			for(int i = 0; i < 32; i++){
 				synth[i + 16] = synth[i % 16];
 				
 				if(Math.random() < .2 && synth[i + 16] != -1){
@@ -579,12 +581,39 @@ public class MelodyGenerator {
 					if(noteChooser < .3 && synth[i + 16] <= 5){
 						synth[i + 16] += 2;
 					}
-					else if(noteChooser < .6 && synth[i + 16] >=2){
+					else if (noteChooser < .6 && synth[i + 16] >=2){
 						synth[i + 16] -= 2;
 					}
 				}
 			}
+
+			for (int i = 4; i < 60; i++) { // Randomly elongates each note of the melody
+				if (synth[i] == -1) {
+					double frequencyModifier = .0;
+					if (synth[i + 1] == -1 && synth[i- 1] == -1)
+						frequencyModifier += 0.1;
+					if (synth[i + 2] == -1 && synth[i - 2] == -1 && frequencyModifier > 0)
+						frequencyModifier += 0.1;
+					if (synth[i + 3] == -1 && synth[i - 3] == -1 && frequencyModifier > 0)
+						frequencyModifier += 0.1;
+					if (Math.random() > .7 - frequencyModifier && synth[i] == -1) {
+						if (synth[i - 1] != -1)
+							synth[i] = synth[i - 1];
+						else if (synth[i - 2] != -1)
+							synth[i] = synth[i - 2];
+						else if (synth[i - 3] != -1)
+							synth[i] = synth[i - 3];
+						else if (synth[i - 4] != -1)
+							synth[i] = synth[i - 4];
+					}
+				}
+			}
+			for (int i = 0; i < 15; i++){ // Last measure mirrors the first, offset by one beat to the left
+				synth[i + 48] = synth[14 - i];
+			}
+
 		}
+	}
 		/*
 //>>>>>>> Fully working synth, bass, and drum generation, read the README in the java project
 	}
@@ -630,7 +659,6 @@ for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
 }
 }
 */
-	}
 
 
 	/**
@@ -662,11 +690,11 @@ for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
 					bass[i] = synth[i];
 				}
 				else{
-					if(Math.random() < .5 && synth[i] <= 5){
-						bass[i] = synth[i] + 2;
-					}
-					else if(synth[i] >= 2){
-						bass[i] = synth[i] - 2;
+					if(Math.random() < .5)
+						if (synth[i] <= 3)
+							bass[i] = synth[i] + 3;
+						else if(synth[i] > 3){
+							bass[i] = synth[i] - 3;
 					}
 				}
 				if(Math.random() < .5){
@@ -682,10 +710,12 @@ for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
 						bass[i] = -1;
 					}
 				}
-			}
-			
+			}	
 		}
-
+			for (int i = 1; i < 64; i++)
+			if (bass[i] == -1)
+				if (bass[i - 1] != -1)
+					bass[i] = bass[i - 1];
 	}
 
 	/**
