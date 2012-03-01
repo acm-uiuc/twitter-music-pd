@@ -225,6 +225,7 @@ public class MelodyGenerator {
 			generateBass();
 			generateDrums();
 			transpose();
+			modifyAttributes();
 		} else {
 			generateProgression();
 			generateDrums();
@@ -789,7 +790,7 @@ for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
 				{1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0},
 				{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 		};
-		
+		selector = selector*2;
 		if(selector >= 4){
 			if(Math.random() < .3){
 				selector--;
@@ -819,7 +820,7 @@ for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
 			synthDecay = 100-confusion;
 			synthSustain = 80 - happiness + 80 - excitement;
 			synthRelease = confusion/4;
-			synthWaveform = confusion/2 - happiness/4;
+			synthWaveform = 0;
 			synthGlissando = confusion/2;
 			synthVibratoDepth = confusion/2;
 			synthVibratoSpeed = confusion/2 + excitement/2;
@@ -828,8 +829,8 @@ for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
 				synthTremeloWaveform = 0;
 			}
 			else{
-				synthVibratoWaveform = 1;
-				synthTremeloWaveform = 1;
+				synthVibratoWaveform = 0;
+				synthTremeloWaveform = 0;
 			}
 			synthTremeloDepth = confusion/2;
 			synthTremeloSpeed = excitement/2;
@@ -838,7 +839,7 @@ for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
 			bassDecay = 100-confusion;
 			bassSustain = 80 - happiness + 80 - excitement;
 			bassRelease = confusion/4;
-			bassWaveform = confusion/2 - happiness/4;
+			bassWaveform = 0;
 			bassGlissando = confusion/2;
 			bassVibratoDepth = confusion/2;
 			bassVibratoSpeed = confusion/2 + excitement/2;

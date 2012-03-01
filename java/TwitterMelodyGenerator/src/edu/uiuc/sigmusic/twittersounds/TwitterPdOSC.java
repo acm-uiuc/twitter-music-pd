@@ -14,7 +14,7 @@ public class TwitterPdOSC {
 	
 	public TwitterPdOSC() throws IOException {
    		//InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 255,(byte) 255,(byte) 255,(byte) 255});
-   		InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 127,(byte) 0,(byte) 0,(byte) 1});
+   		InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 127, (byte) 0, (byte) 0, (byte) 1});
 		//InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 192,(byte) 17,(byte) 96,(byte) 105}); //if broadcasting doesn't work, hardcode it here.
    		oscout = new OSCPortOut(out, 1338);
    		oscin = new OSCPortIn(1339);
@@ -168,7 +168,7 @@ public class TwitterPdOSC {
 		try {
 			TwitterPdOSC pdosc = new TwitterPdOSC();
 			
-			MelodyGenerator m = new MelodyGenerator(50, 50, 50);
+			MelodyGenerator m = new MelodyGenerator(100, 100, 0);
 			m.generateMelody();
 			
 			pdosc.setParameter("tempo-ms", 300);
