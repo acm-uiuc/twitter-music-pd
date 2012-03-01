@@ -12,7 +12,8 @@ public class TwitterPdOSC {
 	OSCPortOut oscout;
 	
 	public TwitterPdOSC() throws IOException {
-   		InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 255,(byte) 255,(byte) 255,(byte) 255});
+   		//InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 255,(byte) 255,(byte) 255,(byte) 255});
+   		InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 127,(byte) 0,(byte) 0,(byte) 1});
 		//InetAddress out = InetAddress.getByAddress(new byte[] {(byte) 192,(byte) 17,(byte) 96,(byte) 105}); //if broadcasting doesn't work, hardcode it here.
    		oscout = new OSCPortOut(out, 1338);
 	}
