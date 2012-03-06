@@ -816,21 +816,22 @@ for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
 			
 			tempo = 400 - (happiness + excitement);
 
-			synthAttack = excitement;
+			synthAttack = 20 + confusion + (((100 - happiness)/4));
 			synthDecay = 100-confusion;
 			synthSustain = 80 - happiness + 80 - excitement;
 			synthRelease = confusion/4;
-			synthWaveform = 0;
 			synthGlissando = confusion/2;
 			synthVibratoDepth = confusion/2;
 			synthVibratoSpeed = confusion/2 + excitement/2;
-			if(happiness < 50 && excitement < 50){
+			if(happiness < 50 && excitement < 30){
 				synthVibratoWaveform = 0;
 				synthTremeloWaveform = 0;
+				synthWaveform = 0;
 			}
 			else{
-				synthVibratoWaveform = 0;
-				synthTremeloWaveform = 0;
+				synthVibratoWaveform = 1;
+				synthTremeloWaveform = 1;
+				synthWaveform = 1;
 			}
 			synthTremeloDepth = confusion/2;
 			synthTremeloSpeed = excitement/2;
@@ -839,17 +840,19 @@ for (i = 48; i < 64; i++) { // Logic for fourth measure (as is, same as first)
 			bassDecay = 100-confusion;
 			bassSustain = 80 - happiness + 80 - excitement;
 			bassRelease = confusion/4;
-			bassWaveform = 0;
+			
 			bassGlissando = confusion/2;
 			bassVibratoDepth = confusion/2;
 			bassVibratoSpeed = confusion/2 + excitement/2;
-			if(happiness < 50 && excitement < 50){
+			if(happiness < 50 && excitement < 30){
 				bassVibratoWaveform = 0;
 				bassTremeloWaveform = 0;
+				bassWaveform = 0;
 			}
 			else{
 				bassVibratoWaveform = 1;
 				bassTremeloWaveform = 1;
+				bassWaveform = 1;
 			}
 			bassTremeloDepth = confusion/2;
 			bassTremeloSpeed = excitement/2;
