@@ -33,8 +33,9 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 	@Override
 	public void inRequest(JSONObject json) {
 		try {
-			generator = new MelodyGenerator();
+			generator = new MelodyGenerator(50, 50, 50);
 			generator.generateMelody();
+			//GeneratorTest.testGenerator(generator);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -48,6 +49,7 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 			System.out.println("Params:" +Arrays.toString(message.getArguments()));
 			generator = new MelodyGenerator(50,50,50);
 			generator.generateMelody();
+			//GeneratorTest.testGenerator(generator);
 			tpo.writeMelodyGenerator(generator);
 		} catch (Exception e) {
 			e.printStackTrace();

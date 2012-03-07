@@ -1,15 +1,21 @@
 package edu.uiuc.sigmusic.twittersounds;
 
 public class GeneratorTest {
+	
 	public static void main(String args[]) throws Exception{
-		MelodyGenerator m = new MelodyGenerator(50, 100, 0);
 		try{
+			MelodyGenerator m = new MelodyGenerator(50, 50, 50);
 			m.generateMelody();
+			testGenerator(m);
 		}
 		catch(Exception e){
-			System.out.println("Error Generating Melody");
+			System.out.println("Error testing MelodyGenerator");
 		}
+	}
+	public static void testGenerator(MelodyGenerator m) throws Exception{
 		
+		System.out.print("Current Happiness, Excitement, Confusion: " + m.happiness + ", " + m.excitement + ", " + m.confusion + '\n');
+		System.out.print("Current Melody: " + m.currentMelody + '\n');
 		System.out.print("Chord Progression: \n");
 		for(int i = 0; i < 4; i++){
 			System.out.print(m.chordProgression[i] + " ");
@@ -107,6 +113,7 @@ public class GeneratorTest {
 		System.out.print('\n');
 		System.out.print('\n');
 		
+		System.out.print("Previous Happiness, Excitement, Confusion: " + m.prev.happiness + ", " + m.prev.excitement + ", " + m.prev.confusion + '\n');
 		System.out.print("Previous Chord Progression: \n");
 		for(int i = 0; i < 4; i++){
 			System.out.print(m.prev.chordProgression[i] + " ");
