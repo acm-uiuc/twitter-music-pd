@@ -305,7 +305,7 @@ public class MelodyGenerator {
 
 			} else if (happiness > 33) {
 				chordProgression[0] = 0; // Always start with the root
-				scaleType[0] = 4;
+				scaleType[0] = 1;
 				for (int i = 1; i < 2; i++) {
 					double chordPicker = Math.random() * 100;
 					if (chordPicker < 25) {
@@ -321,6 +321,7 @@ public class MelodyGenerator {
 			} else {
 				for (int i = 0; i < 4; i++) {
 					double chordPicker = Math.random() * 100;
+					scaleType[0] = 4;
 					if (chordPicker < 20) {
 						chordProgression[i] = 0;
 					} else if (chordPicker < 40) {
@@ -343,12 +344,14 @@ public class MelodyGenerator {
 				chordProgression[i] = prev.chordProgression[i];
 		}
 		for (int i = 0; i < 4; i++) { // Determines scale type
-			if (i == 0 || i == 3) { // First and last measure are always in the major scale
+			if ((i == 0 || i == 3) && happiness > 15) { // First and last measure are always in the major scale
 				scaleType[i] = 1;
 			}
+			else if (i == 1 && happiness * Math.random() > .4)
+				scaleType[i] = 1;
 			else 
-				scaleType[i] = (int)(7 - ((double)((101 - happiness)/100))); // Second and third measure are in a mode
-		}																 	 // determined by the current happiness level
+				scaleType[i] = (int)(Math.random() * 3 + happiness/25); // Second and third measure are in a mode
+		}																// determined by the current happiness level
 	}
 
 	/**
@@ -417,14 +420,20 @@ public class MelodyGenerator {
 						else{ // Sad tier of notes
 							if(Math.random() < .6 + ((double)excitement)/400){ // Less of a chance to play a note
 								noteChooser = Math.random();
+								if(noteChooser < .15){
+									synth[i] = 0;
+								}
 								if(noteChooser < .30){
 									synth[i] = 1;
 								}
-								else if(noteChooser < .60){
+								else if(noteChooser < .45){
 									synth[i] = 2;
 								}
-								else if(noteChooser < .90){
+								else if(noteChooser < .60){
 									synth[i] = 3;
+								}
+								else if(noteChooser < .85){
+									synth[i] = 4;
 								}
 								else{
 									synth[i] = 5;
@@ -592,7 +601,7 @@ public class MelodyGenerator {
 						frequencyModifier += 0.1;
 					if (synth[i + 3] == -1 && synth[i - 3] == -1 && frequencyModifier > 0)
 						frequencyModifier += 0.1;
-					if (Math.random() > .7 - frequencyModifier && synth[i] == -1) {
+					if (Math.random() > (excitement/100 - frequencyModifier) && synth[i] == -1) {
 						if (synth[i - 1] != -1)
 							synth[i] = synth[i - 1];
 						else if (synth[i - 2] != -1)
@@ -604,10 +613,11 @@ public class MelodyGenerator {
 					}
 				}
 			}
-			for (int i = 0; i < 15; i++){ // Last measure mirrors the first and is offset by one beat
-				synth[i + 48] = synth[14 - i];
+			for (int i = 0; i < 13; i++){ // Last measure mirrors the first and is offset by one beat
+				synth[i + 48] = synth[12 - i];
 			}
-
+			for (int i = 13; i < 15; i++)
+				synth[i + 48] = synth[i + 47];
 		}
 	}
 	/**
@@ -653,7 +663,7 @@ public class MelodyGenerator {
 	 * Generate the hihat, snare, and kick
 	 */
 	public void generateDrums() {
-		int selector = (int)(10 * ((((double)excitement)/150 + (((double)happiness)/300)))) - 1;
+		int selector = (int)(10 * ((((double)excitement)/151 + (((double)happiness)/301))));
 		generateHihat(selector);
 		generateSnare(selector);
 		generateKick(selector);
@@ -758,6 +768,21 @@ public class MelodyGenerator {
 		}
 		for (int i = 0; i < 64; i++) {
 			kick[i] = kickGrooves[selector/2][i % 16];
+			if (kick[i] != 0) {
+				if (i % 4 == 0)
+					kickvel[i] = kickvel[i] + .1f; // Quarter notes are amplified
+				else
+					kickvel[i] = kickvel[i] - .05f; // Sixteenth notes are quieted
+			}
+		}
+		for (int i = 16; i < 64; i++) { // Same is done to the last three measures
+			kick[i] = kick[i - 16];
+			if (kick[i] != 0) {
+				if (i % 4 == 0)
+					kickvel[i] = kickvel[i] + .1f;
+				else 
+					kickvel[i] = kickvel[i] - .05f; 
+			}
 		}
 	}
 
@@ -773,12 +798,12 @@ public class MelodyGenerator {
 			tempo = 400 - (happiness + excitement);
 
 			synthAttack = 20 + confusion + (((100 - happiness)/4));
-			synthDecay = 100-confusion;
+			synthDecay = 100 - confusion;
 			synthSustain = 80 - happiness + 80 - excitement;
 			synthRelease = confusion/4;
-			synthGlissando = confusion/2;
-			synthVibratoDepth = confusion/2;
-			synthVibratoSpeed = confusion/2 + excitement/2;
+			synthGlissando = confusion/8; 					// I minimized the range of these three attributes
+			synthVibratoDepth = confusion/8; 				// because they seem to muddy up the pitch a bit
+			synthVibratoSpeed = confusion/8 + excitement/8; // too much.
 			if(happiness < 50 && excitement < 30){
 				synthVibratoWaveform = 0;
 				synthTremeloWaveform = 0;
