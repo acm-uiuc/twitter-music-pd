@@ -24,6 +24,9 @@ public class TwitterPdOSC {
 	public void addPhraseDoneListener(OSCListener l ) {
 		oscin.addListener("/phrasedone", l);
 	}
+	public void addBeatListener(OSCListener l ) {
+		oscin.addListener("/beat", l);
+	}
 	
 	/**
 	 * Send notes to the PD instrument, where 0-7 map to notes 1-8 in the scale set by setMode

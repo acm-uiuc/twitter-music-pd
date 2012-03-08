@@ -72,7 +72,7 @@ public class OSCPacketDispatcher {
 	}
 	
 	private void dispatchMessage(OSCMessage message, Date time) {
-		System.out.println(message.getAddress());
+		//System.out.println(message.getAddress());
 		Enumeration keys = addressToClassTable.keys();
 		while (keys.hasMoreElements()) {
 			String key = (String) keys.nextElement();
@@ -80,7 +80,7 @@ public class OSCPacketDispatcher {
 			// only works in JDK 1.4, so don't support it right now
 			//if (key.matches(message.getAddress())) {
 			if (key.equals(message.getAddress())) {
-				System.out.println("Found listener: "+message.getAddress());
+				//System.out.println("Found listener: "+message.getAddress());
 				ArrayList<OSCListener> listenerlist = addressToClassTable.get(key);
 				for (OSCListener listener : listenerlist) {
 					listener.acceptMessage(time, message);
