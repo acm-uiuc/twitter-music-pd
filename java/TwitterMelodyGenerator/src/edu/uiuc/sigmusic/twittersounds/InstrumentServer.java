@@ -71,7 +71,7 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 	}
 
 	
-	
+	//this is what runs it	
 	public static void main(String[] args) {
 		System.out.println("STARTING");
 		new InstrumentServer().run();
