@@ -323,9 +323,8 @@ public class MelodyGenerator {
 		if (!fileRead || currentMelody == 1) {
 			if (happiness > 66) { // Things are pretty happy!
 				chordProgression[0] = 0; // Always start with the root
-
 				// Generate a semi-random progressions of I, IV, and V
-				for (int i = 1; i < 4; i++) {
+				for (int i = 1; i < 3; i++) {
 					double chordPicker = Math.random() * 100;
 					if (i == 1) {
 						if (chordPicker > 50)
@@ -345,8 +344,8 @@ public class MelodyGenerator {
 
 			} else if (happiness > 33) {
 				chordProgression[0] = 0; // Always start with the root
-				scaleType[0] = 1;
-				for (int i = 1; i < 2; i++) {
+				//scaleType[0] = 1;
+				for (int i = 1; i < 3; i++) {
 					double chordPicker = Math.random() * 100;
 					if (chordPicker < 25) {
 						chordProgression[i] = 2;
@@ -359,24 +358,59 @@ public class MelodyGenerator {
 					}
 				}
 			} else {
-				for (int i = 0; i < 4; i++) {
+				chordProgression[0] = 1;
+				for (int i = 1; i < 3; i++){
+					if(chordProgression[i - 1] == 0){
+						if(Math.random() > .4){
+							chordProgression[i] = 1;
+						}
+						else if(Math.random() > .8){
+							chordProgression[i] = 4;
+						}
+						else{
+							chordProgression[i] = 0;
+						}
+					}
+					else if(chordProgression[i - 1] == 1){
+						if(Math.random() > .4){
+							chordProgression[i] = 4;
+						}
+						else if(Math.random() > .8){
+							chordProgression[i] = 1;
+						}
+						else{
+							chordProgression[i] = 1;
+						}
+					}
+					else if(chordProgression[i - 1] == 4){
+						if(Math.random() > .4){
+							chordProgression[i] = 1;
+						}
+						else if(Math.random() > .8){
+							chordProgression[i] = 0;
+						}
+						else{
+							chordProgression[i] = 4;
+						}
+					}
+					/*
 					double chordPicker = Math.random() * 100;
-					scaleType[0] = 4;
 					if (chordPicker < 20) {
 						chordProgression[i] = 0;
 					} else if (chordPicker < 40) {
 						chordProgression[i] = 2;
 					} else if (chordPicker < 60) {
-						chordProgression[i] = 4;
+						chordProgression[i] = 3;
 					} else if (chordPicker < 80) {
-						chordProgression[i] = 6;
+						chordProgression[i] = 1;
 					} else {
 						if (Math.random() > .5) {
 							chordProgression[i] = 1;
 						} else {
-							chordProgression[i] = 3;
+							chordProgression[i] = 0;
 						}
 					}
+					*/
 				}
 			}
 			if(happiness > 50){
@@ -660,19 +694,22 @@ public class MelodyGenerator {
 			 */
 			if (excitement > 20 && excitement < 80) {
 				for (int i = 4; i < 60; i++) { // Randomly elongates each note of the melody
-					if (synth[i] == -1) {
-						double frequencyModifier = .0;
-						if (synth[i + 1] == -1 && synth[i- 1] == -1)
-							frequencyModifier += 0.05;
-						if (synth[i + 2] == -1 && synth[i - 2] == -1 && frequencyModifier > 0)
-							frequencyModifier += 0.05;
-						if (synth[i + 3] == -1 && synth[i - 3] == -1 && frequencyModifier > 0)
-							frequencyModifier += 0.05;
-						if (Math.random() > -excitement/200 + frequencyModifier && synth[i] == -1) {
-							if (synth[i - 1] != -1)
-								synth[i] = synth[i - 1];
+					if(Math.random() > Math.abs(50 - excitement))
+					{
+						if (synth[i] == -1) {
+							double frequencyModifier = .0;
+							if (synth[i + 1] == -1 && synth[i- 1] == -1)
+								frequencyModifier += 0.05;
+							if (synth[i + 2] == -1 && synth[i - 2] == -1 && frequencyModifier > 0)
+								frequencyModifier += 0.05;
+							if (synth[i + 3] == -1 && synth[i - 3] == -1 && frequencyModifier > 0)
+								frequencyModifier += 0.05;
+							if (Math.random() > -excitement/200 + frequencyModifier && synth[i] == -1) {
+								if (synth[i - 1] != -1)
+									synth[i] = synth[i - 1];
 							}
 						}
+					}
 				}
 			}
 			
@@ -1154,4 +1191,31 @@ public class MelodyGenerator {
 			fileRead = false;
 		}
 	}
+	
+	public static int[] getLastAttributes() throws FileNotFoundException {
+		try {
+			int[] atts = new int[3];
+			FileReader fstream = new FileReader("melody.txt");
+			Scanner in = new Scanner(fstream);
+			for(int i = 0; i < 3; i++){
+				atts[i] = in.nextInt();
+			}
+			return atts;
+		}
+		catch(Exception e){
+			System.out.println("Error getting the past 3 attributes, going to default values...");
+			int[] a = {50, 50, 20};
+			return a;
+		}
+	}
+	
+	public void print(){
+		System.out.println("\n------ MELODY GENERATED ------");
+		System.out.println("Current Melody: " + prev.currentMelody);
+		System.out.println("Happiness: " + happiness + ", Excitement: " + excitement + ", Confusion: " + confusion);
+		System.out.println("Chord Progressions: " + chordProgression[0] + " " + chordProgression[1] + " " + chordProgression[2] + " " + chordProgression[3]);
+		System.out.println("Scale Types: " + scaleType[0] + " " + scaleType[1] + " " + scaleType[2] + " " + scaleType[3]);
+		System.out.println("------------------------------\n");
+	}
+			
 };
