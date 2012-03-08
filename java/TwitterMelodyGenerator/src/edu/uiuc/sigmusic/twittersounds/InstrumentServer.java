@@ -20,7 +20,7 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 	TwitterPdOSC tpo;
 	BasicAnimation animation;
 	ChromaInterface chromaint;
-	
+	Queue<JSONObject> inQueue = new Queue<JSONObject>();
 	
 	public void run() {
 		try {
@@ -40,8 +40,17 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 	
 	@Override
 	public void inRequest(JSONObject json) {
+		inQueue.add(json);
+	}
+	
+	void parseJSON(JSONObject json) {
 		try {
-			generator = new MelodyGenerator(50, 50, 50);
+			JSONObject weights = (JSONObject)json.get("weights");
+			int happiness = (Integer)weights.get("happiness");
+			int excitement = (Integer)weights.get("excitement");
+			int randomness = (Integer)weights.get("randomness");
+			System.out.println("In request: happiness:"+happiness+", excitement:"+excitement+" randomness:"+randomness);
+			generator = new MelodyGenerator(happiness, excitement, randomness);
 			generator.generateMelody();
 			//GeneratorTest.testGenerator(generator);
 		} catch (Exception e) {
