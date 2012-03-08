@@ -96,6 +96,7 @@ public class TwitterPdOSC {
 	
 	public void writeMelodyGenerator(MelodyGenerator m) {
 		try {
+			
 			TwitterPdOSC pdosc = this;
 			pdosc.setParameter("tempo-ms", 300);
 
@@ -171,8 +172,11 @@ public class TwitterPdOSC {
 		try {
 			TwitterPdOSC pdosc = new TwitterPdOSC();
 			
-			MelodyGenerator m = new MelodyGenerator(100, 100, 0);
+
+			MelodyGenerator m = new MelodyGenerator(20, 80, 0);
+
 			m.generateMelody();
+			GeneratorTest.testGenerator(m); // To output all MelodyGenerator values
 			
 			pdosc.setParameter("tempo-ms", 300);
 

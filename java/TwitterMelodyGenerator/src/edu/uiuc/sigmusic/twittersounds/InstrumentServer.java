@@ -41,8 +41,9 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 	@Override
 	public void inRequest(JSONObject json) {
 		try {
-			generator = new MelodyGenerator();
+			generator = new MelodyGenerator(50, 50, 50);
 			generator.generateMelody();
+			//GeneratorTest.testGenerator(generator);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,7 +54,6 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 	public void acceptMessage(Date time, OSCMessage message) {
 		try {
 			System.out.println("SDKLFJLKSDJFDS MESSAGEEEEEEEE +"+message.getAddress());
-
 			if (message.getAddress().equals("/phrasedone")) {
 				System.out.println("Params:" +Arrays.toString(message.getArguments()));
 				int phrase = (Integer)message.getArguments()[0];
