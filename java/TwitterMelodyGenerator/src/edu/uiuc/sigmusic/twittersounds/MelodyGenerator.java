@@ -253,9 +253,9 @@ public class MelodyGenerator {
 
 	public void generateKey() {
 		//double random = Math.random();
-		if (!fileRead) { // If we can't read the melody generated from before
+		//if (!fileRead) { // If we can't read the melody generated from before
 			key = 0;
-		}
+		//}
 		/*if (fileRead && currentMelody == 1) { // If we're on a new
 												// progression...
 			if (excitement - prev.excitement >= 5) { // Things are getting more
@@ -345,11 +345,39 @@ public class MelodyGenerator {
 					}
 				}
 			}
+			if(happiness > 50){
+				for(int i = 0; i < 4; i++){
+					scaleType[i] = 1;
+				}
+			}
+			else if(happiness > 25){
+				if(Math.random() > .5){
+					scaleType[0] = 4;
+					scaleType[3] = 4;
+					
+					scaleType[1] = 1 + (int)Math.random()*5;
+					scaleType[2] = scaleType[1];
+				}
+				else{
+					scaleType[0] = 1;
+					scaleType[3] = 1;
+					
+					scaleType[1] = 1 + (int)Math.random()*4;
+					scaleType[2] = scaleType[1];
+				}
+			}
+			else{
+				scaleType[0] = 4;
+				scaleType[3] = 4;
+				
+				scaleType[1] = 4 + (int)Math.random()*3;
+				scaleType[2] = scaleType[1];
+			}
 		} else {
 			for (int i = 0; i < 4; i++)
 				chordProgression[i] = prev.chordProgression[i];
 		}
-		for (int i = 0; i < 4; i++) { // Determines scale type
+		/*for (int i = 0; i < 4; i++) { // Determines scale type
 			if ((i == 0 || i == 3) && happiness > 15) { // First and last measure are always in the major scale
 				scaleType[i] = 1;
 			}
@@ -357,7 +385,7 @@ public class MelodyGenerator {
 				scaleType[i] = 1;
 			else 
 				scaleType[i] = (int)(Math.random() * 3 + happiness/25); // Second and third measure are in a mode
-		}																// determined by the current happiness level
+		}*/																// determined by the current happiness level
 	}
 
 	/**
@@ -673,24 +701,23 @@ public class MelodyGenerator {
 					}
 				}
 				if(Math.random() < .5){
-					if(i != 63 && i != 0 && synth[i - 1] != -1 && synth[i + 1] != 1 && excitement > 70){
+					if(i != 63 && i != 0 && synth[i - 1] != -1 && synth[i + 1] != -1 && excitement > 70){
 						bass[i] = (Math.max(synth[i + 1], synth[i - 1]) - Math.min(synth[i + 1], synth[i - 1])) + Math.min(synth[i + 1], synth[i - 1]);
 						if(i % 2 == 1){
 							bass[i + 1] = bass[i];
 						}
 					}
 				}
-				if(i % 2 == 1){
-					if(Math.random() > ((double)excitement)/125){
-						bass[i] = -1;
+				if(i % 2 == 1){/*
+					 * Let's put in some sweet drum fills here!
+					 */
+					if((Math.random() > ((double)excitement)/125 && synth[i - 1] != -1) || (bass[i - 1] != -1 && Math.random() < .8)){
+						bass[i - 1] = synth[i - 1];
+						bass[i] = synth[i - 1];
 					}
 				}
 			}	
 		}
-			for (int i = 1; i < 64; i++)
-			if (bass[i] == -1)
-				if (bass[i - 1] != -1)
-					bass[i] = bass[i - 1];
 	}
 
 	/**
@@ -709,9 +736,9 @@ public class MelodyGenerator {
 			drumBeatSelector = temp;
 		
 		if(currentMelody == 4){
-			/*
-			 * Let's put in some sweet drum fills here!
-			 */
+			for(int i = 60; i < 64; i++){
+				snare[i] = 1;
+			}
 		}
 		
 	}
@@ -883,8 +910,8 @@ public class MelodyGenerator {
 			synthTremeloDepth = confusion/2;
 			synthTremeloSpeed = excitement/2;
 
-			bassAttack = excitement;
-			bassDecay = 100-confusion;
+			bassAttack = 20 + confusion + (((100 - happiness)/4));
+			bassDecay = 100 - confusion;
 			bassSustain = 80 - happiness + 80 - excitement;
 			bassRelease = confusion/4;
 			

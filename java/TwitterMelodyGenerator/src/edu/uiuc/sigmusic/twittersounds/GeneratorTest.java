@@ -15,7 +15,7 @@ public class GeneratorTest {
 	public static void testGenerator(MelodyGenerator m) throws Exception{
 		
 		System.out.print("Current Happiness, Excitement, Confusion: " + m.happiness + ", " + m.excitement + ", " + m.confusion + '\n');
-		System.out.print("Current Melody: " + m.currentMelody + '\n');
+		System.out.print("Current Melody: " + m.prev.currentMelody + '\n');
 		System.out.print("Chord Progression: \n");
 		for(int i = 0; i < 4; i++){
 			System.out.print(m.chordProgression[i] + " ");
