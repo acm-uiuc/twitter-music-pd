@@ -169,7 +169,7 @@ public class TwitterPdOSC {
 		try {
 			TwitterPdOSC pdosc = new TwitterPdOSC();
 			
-			MelodyGenerator m = new MelodyGenerator(60, 60, 0);
+			MelodyGenerator m = new MelodyGenerator(50, 50, 100);
 			m.generateMelody();
 			GeneratorTest.testGenerator(m); // To output all MelodyGenerator values
 			

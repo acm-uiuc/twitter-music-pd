@@ -356,7 +356,7 @@ public class MelodyGenerator {
 			else if (i == 1 || happiness > 70)
 				scaleType[i] = 1;
 			else 
-				scaleType[i] = (int)(Math.random() * 3 + happiness/25); // Second and third measure are in a mode
+				scaleType[i] = 7 - ((int)(Math.random() * 3 + happiness/25)); // Second and third measure are in a mode
 		}																// determined by the current happiness level
 	}
 
@@ -380,7 +380,7 @@ public class MelodyGenerator {
 				if(i % 4 == 0){
 					if(i == 0){
 						if (confusion > 80) { // Still play the root at the beginning all
-							// time, unless things get really confusing
+											  // the time, unless things get really confusing
 							if (Math.random() < .75) {
 								synth[0] = 0;
 							} 
@@ -603,41 +603,48 @@ public class MelodyGenerator {
 			 * get elongated properly, but I can't find a good way to do so. 
 			 * Let's try to get this working before EOH.
 			 */
-
-		/*	for (int i = 4; i < 60; i++) { // Randomly elongates each note of the melody
-				if (synth[i] == -1) {
-					double frequencyModifier = .0;
-					if (synth[i + 1] == -1 && synth[i- 1] == -1)
-						frequencyModifier += 0.05;
-					if (synth[i + 2] == -1 && synth[i - 2] == -1 && frequencyModifier > 0)
-						frequencyModifier += 0.05;
-					if (synth[i + 3] == -1 && synth[i - 3] == -1 && frequencyModifier > 0)
-						frequencyModifier += 0.05;
-					if (Math.random() > (excitement/100 - frequencyModifier) && synth[i] == -1) {
-						if (synth[i - 1] != -1)
-							synth[i] = synth[i - 1];
-						/*else if (synth[i - 2] != -1)
-							synth[i] = synth[i - 2];
-						else if (synth[i - 3] != -1)
-							synth[i] = synth[i - 3];
-						else if (synth[i - 4] != -1)
-							synth[i] = synth[i - 4];
-					}
+			if (excitement < 75) {
+				for (int i = 4; i < 60; i++) { // Randomly elongates each note of the melody
+					if (synth[i] == -1) {
+						double frequencyModifier = .0;
+						if (synth[i + 1] == -1 && synth[i- 1] == -1)
+							frequencyModifier += 0.05;
+						if (synth[i + 2] == -1 && synth[i - 2] == -1 && frequencyModifier > 0)
+							frequencyModifier += 0.05;
+						if (synth[i + 3] == -1 && synth[i - 3] == -1 && frequencyModifier > 0)
+							frequencyModifier += 0.05;
+						if (Math.random() > -excitement/100 + frequencyModifier && synth[i] == -1) {
+							if (synth[i - 1] != -1)
+								synth[i] = synth[i - 1];
+							else if (synth[i - 2] != -1)
+								synth[i] = synth[i - 2];
+							else if (synth[i - 3] != -1)
+								synth[i] = synth[i - 3];
+							else if (synth[i - 4] != -1)
+								synth[i] = synth[i - 4];
+							}
+						}
 				}
-			}*/
+			}
 			
 			int offset = 12;
 			
-			if(excitement > 50 && confusion > 40 && happiness > 20){
-				if(Math.random() > .5)
-					offset = 13;
+			if(currentMelody != 0) {
+				if(excitement > 50 && confusion > 40 && happiness > 20){
+					// if(Math.random() > .5)
+						offset = 12;
+				}
+				for (int i = 0; i < 13; i++){ 	// Last measure mirrors the first and is 
+										  		// offset by one eighth at times
+					synth[i + 48] = synth[offset - i];
+					chordProgression[0] = chordProgression[3]; // First and last measure 
+				}											   // are on the same chord
+				for (int i = 13; i < 15; i++)
+					synth[i + 48] = synth[i + 47];
 			}
-			for (int i = 0; i < 13; i++){ // Last measure mirrors the first and is 
-										  // offset by one sixteenth at times
-				synth[i + 48] = synth[offset - i];
-			}
-			for (int i = 13; i < 15; i++)
-				synth[i + 48] = synth[i + 47];
+			else
+				for (int i = 0; i < 16; i++)
+					synth[i + 48] = synth[i];
 			
 			/*
 			 * If the we're not in the first melody of the progression, copy over the first part
@@ -649,8 +656,8 @@ public class MelodyGenerator {
 				
 				for(int i = 32; i < 40; i++){
 					synth[i] = prev.synth[i];
-				}
 			}
+		}
 			
 	}
 	
@@ -844,16 +851,16 @@ public class MelodyGenerator {
 			reverbDamping = (100 - confusion);
 			globalVolume = 50 + happiness + excitement;
 			
-			tempo = 400 - (happiness + excitement);
+			tempo = 400 - (happiness + excitement*2);
 
-			synthAttack = 20 + confusion + (((100 - happiness)/4));
-			synthDecay = 100 - confusion;
-			synthSustain = 80 - happiness + 80 - excitement;
-			synthRelease = confusion/4;
-			synthGlissando = confusion/8; 					// I minimized the range of these three attributes
-			synthVibratoDepth = confusion/8; 				// because they seem to muddy up the pitch a bit
-			synthVibratoSpeed = confusion/8 + excitement/8; // too much.
-			if(happiness < 50 && excitement < 30){
+			synthAttack = 0;
+			synthDecay = 0;
+			synthSustain = 100;
+			synthRelease = 105;
+			synthGlissando = confusion/10; 					  // I minimized the range of these three attributes
+			synthVibratoDepth = confusion/10; 				  // because they seem to muddy up the pitch a bit
+			synthVibratoSpeed = confusion/20 + excitement/20; // too much.
+			if(happiness + excitement < 120){
 				synthVibratoWaveform = 0;
 				synthTremeloWaveform = 0;
 				synthWaveform = 0;
@@ -862,7 +869,7 @@ public class MelodyGenerator {
 					for(int i = 0; i < 64; i++)
 						synthvel[i] = .5f;
 			}
-			else if(happiness < 75 && excitement < 80){
+			else {
 				synthVibratoWaveform = 1;
 				synthTremeloWaveform = 1;
 				synthWaveform = 1;
@@ -870,15 +877,6 @@ public class MelodyGenerator {
 				if(synthvel[0] != .5f)
 					for(int i = 0; i < 64; i++)
 						synthvel[i] = .5f;
-			}
-			else{
-				synthVibratoWaveform = 2;
-				synthTremeloWaveform = 2;
-				synthWaveform = 2;
-				
-				if(synthvel[0] != .4f)
-					for(int i = 0; i < 64; i++)
-						synthvel[i] = .4f;
 			}
 			synthTremeloDepth = confusion/2;
 			synthTremeloSpeed = excitement/2;
