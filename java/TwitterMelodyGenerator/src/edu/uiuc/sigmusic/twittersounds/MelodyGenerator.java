@@ -123,8 +123,8 @@ public class MelodyGenerator {
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
 		{{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-		 {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}},
+		 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		 {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0}},
 		{{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0},
 		 {1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0},
 		 {0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0}},
@@ -734,10 +734,10 @@ public class MelodyGenerator {
 			 * of the 1st and 3rd measures to the current melody, this will add a ton of structure
 			 */
 			if(fileRead && currentMelody != 1){
-				for(int i = 0; i < 8; i++)
+				for(int i = 0; i < 16; i++)
 					synth[i] = prev.synth[i];
 				
-				for(int i = 32; i < 40; i++){
+				for(int i = 32; i < 48; i++){
 					synth[i] = prev.synth[i];
 			}
 		}
@@ -914,7 +914,7 @@ public class MelodyGenerator {
 			reverbDamping = (100 - confusion);
 			globalVolume = 100 + excitement/2;
 			
-			tempo = 400 - (happiness/8 + (int)(excitement*1.3));
+			tempo = 375 - (happiness/10 + excitement);
 
 			synthAttack = 0;
 			synthDecay = 0;
@@ -923,26 +923,34 @@ public class MelodyGenerator {
 			synthGlissando = confusion/10; 					  
 			synthVibratoDepth = confusion/10; 				  
 			synthVibratoSpeed = confusion/20 + excitement/20;
-			if(happiness + excitement < 120){
+			synthTremeloDepth = confusion/2;
+			synthTremeloSpeed = excitement/2;
+			
+			if (happiness + excitement < 120){
 				synthVibratoWaveform = 0;
 				synthTremeloWaveform = 0;
 				synthWaveform = 0;
-				
-				if(synthvel[0] != .5f)
-					for(int i = 0; i < 64; i++)
-						synthvel[i] = .5f;
 			}
 			else {
 				synthVibratoWaveform = 1;
 				synthTremeloWaveform = 1;
 				synthWaveform = 1;
-				
-				if(synthvel[0] != .5f)
-					for(int i = 0; i < 64; i++)
-						synthvel[i] = .5f;
 			}
-			synthTremeloDepth = confusion/2;
-			synthTremeloSpeed = excitement/2;
+			
+			if (excitement > 70) {
+				synthVibratoDepth = 0;
+				synthVibratoSpeed = 0;
+				synthGlissando = 0;
+				synthWaveform = 2;
+				synthTremeloDepth = 0;
+				synthTremeloSpeed = 0;
+			}
+			for (int i = 0; i < 64; i++) {
+				if (excitement > 70)
+					synthvel[i] = .12f;
+				else
+					synthvel[i] = .5f;
+			}
 
 			bassAttack = 20 + confusion + (((100 - happiness)/4));
 			bassDecay = 100 - confusion;
