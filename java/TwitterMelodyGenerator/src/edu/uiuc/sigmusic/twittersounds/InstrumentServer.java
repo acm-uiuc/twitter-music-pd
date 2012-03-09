@@ -132,13 +132,17 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 				else if (c < 0) c = 0;
 				
 				// Test generator
-				generator = new MelodyGenerator(0, 75, 50);
+				//generator = new MelodyGenerator(0, 75, 50);
 				// Generating new melody based on the current modifications
-				//generator = new MelodyGenerator(h, e, c);
+				generator = new MelodyGenerator(h, e, c);
 				generator.generateMelody();
 				generator.print();
 				tpo.writeMelodyGenerator(generator);
 				animation.updatePhrase(phrase, generator);
+				
+				currH = 0;
+				currE = 0;
+				currC = 0;
 			} else if (message.getAddress().equals("/beat")) {
 				int beat = (Integer)message.getArguments()[0];
 				animation.updateBeat(beat, generator);
