@@ -734,10 +734,10 @@ public class MelodyGenerator {
 			 * of the 1st and 3rd measures to the current melody, this will add a ton of structure
 			 */
 			if(fileRead && currentMelody != 1){
-				for(int i = 0; i < 16; i++)
+				for(int i = 0; i < 8; i++)
 					synth[i] = prev.synth[i];
 				
-				for(int i = 32; i < 48; i++){
+				for(int i = 32; i < 40; i++){
 					synth[i] = prev.synth[i];
 			}
 		}
@@ -803,7 +803,7 @@ public class MelodyGenerator {
 				fillChooser = 9;
 			for (int i = 48; i < 64; i++) {
 				hihat[i] = drumFills[fillChooser][0][i%16];
-				snare[i] = drumFills[fillChooser][1][i%16];
+				//snare[i] = drumFills[fillChooser][1][i%16];
 				kick[i] = drumFills[fillChooser][2][i%16];
 				hihatvel[i] = .6f;
 				snarevel[i] = .6f;
@@ -884,7 +884,7 @@ public class MelodyGenerator {
 		for (int i = 0; i < 64; i++) {
 			kick[i] = kickGrooves[drumBeatSelector/2][i % 16];
 			if (kick[i] != 0) {
-				if (i % 4 == 0)
+				if (i % 4 == 0) 
 					kickvel[i] = kickvel[i] + .1f; // Quarter notes are amplified
 				else
 					kickvel[i] = kickvel[i] - .05f; // Sixteenth notes are quieted
@@ -910,6 +910,7 @@ public class MelodyGenerator {
 			if (bitCrusherCrush < 0)
 				bitCrusherCrush = 0;
 			bitCrusherDepth = bitCrusherCrush;
+			reverbRoom = 100-(int)(excitement*1.2);
 			reverbMix = confusion + (50 - happiness);	
 			reverbDamping = (100 - confusion);
 			globalVolume = 100 + excitement/2;
@@ -989,6 +990,7 @@ public class MelodyGenerator {
 				snareSound = 6;
 			else if (excitement < 85)
 				snareSound = 5;
+				
 			else
 				snareSound = 4;
 				*/
@@ -1082,6 +1084,7 @@ public class MelodyGenerator {
 			output.append(bitCrusherDepth + " ");
 			output.append(reverbMix + " ");
 			output.append(reverbDamping + " ");
+			output.append(reverbRoom + " ");
 			output.append(globalVolume + " ");
 			output.append(tempo + " ");
 
@@ -1152,6 +1155,7 @@ public class MelodyGenerator {
 			bitCrusherDepth = in.nextInt();
 			reverbMix = in.nextInt();
 			reverbDamping = in.nextInt();
+			reverbRoom = in.nextInt();
 			globalVolume = in.nextInt();
 			tempo = in.nextInt();
 

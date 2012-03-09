@@ -1,4 +1,4 @@
-#N canvas 209 83 1051 674 10;
+#N canvas 209 83 1051 660 10;
 #X obj -105 135 dac~;
 #X obj -87 14 effectbitcrush 0 1 3;
 #X obj 270 36 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
@@ -55,19 +55,19 @@
 #X obj -87 -226 / 10;
 #X obj -53 -207 / 80;
 #X obj -87 -364 vsl 15 128 0 127 0 0 empty synth-vibrato-speed empty
-0 -9 0 10 -262144 -1 -1 5000 1;
+0 -9 0 10 -262144 -1 -1 0 1;
 #X obj -67 -364 vsl 15 128 0 127 0 0 empty synth-vibrato-depth empty
-0 -9 0 10 -262144 -1 -1 2500 1;
+0 -9 0 10 -262144 -1 -1 0 1;
 #X obj -12 -364 vsl 15 128 0 127 0 0 empty synth-tremolo-speed empty
-0 -9 0 10 -262144 -1 -1 2500 1;
+0 -9 0 10 -262144 -1 -1 0 1;
 #X obj 7 -364 vsl 15 128 0 127 0 0 empty synth-tremolo-depth empty
-0 -9 0 10 -262144 -1 -1 2500 1;
+0 -9 0 10 -262144 -1 -1 0 1;
 #X obj -49 -304 vradio 15 1 0 4 empty synth-vibrato-waveform empty
-0 -8 0 10 -262144 -1 -1 3;
+0 -8 0 10 -262144 -1 -1 0;
 #X obj -30 -304 vradio 15 1 0 4 empty synth-waveform empty 0 -8 0 10
--262144 -1 -1 1;
+-262144 -1 -1 0;
 #X obj 24 -304 vradio 15 1 0 4 empty synth-tremolo-waveform empty 0
--8 0 10 -262144 -1 -1 3;
+-8 0 10 -262144 -1 -1 0;
 #X obj -3 -207 sig~;
 #X obj 27 -207 / 127;
 #X obj -9 -228 / 5;
@@ -75,19 +75,19 @@
 #X obj 166 -205 / 10;
 #X obj 196 -185 / 80;
 #X obj 166 -343 vsl 15 128 0 127 0 0 empty bass-vibrato-speed empty
-0 -9 0 10 -262144 -1 -1 5000 1;
+0 -9 0 10 -262144 -1 -1 0 1;
 #X obj 185 -343 vsl 15 128 0 127 0 0 empty bass-vibrato-depth empty
-0 -9 0 10 -262144 -1 -1 2500 1;
+0 -9 0 10 -262144 -1 -1 0 1;
 #X obj 239 -343 vsl 15 128 0 127 0 0 empty bass-tremolo-speed empty
-0 -9 0 10 -262144 -1 -1 2500 1;
+0 -9 0 10 -262144 -1 -1 0 1;
 #X obj 257 -343 vsl 15 128 0 127 0 0 empty bass-tremolo-depth empty
-0 -9 0 10 -262144 -1 -1 2500 1;
+0 -9 0 10 -262144 -1 -1 0 1;
 #X obj 203 -283 vradio 15 1 0 4 empty bass-vibrato-waveform empty 0
--8 0 10 -262144 -1 -1 1;
+-8 0 10 -262144 -1 -1 0;
 #X obj 221 -283 vradio 15 1 0 4 empty bass-waveform empty 0 -8 0 10
--262144 -1 -1 1;
+-262144 -1 -1 0;
 #X obj 276 -283 vradio 15 1 0 4 empty bass-tremolo-waveform empty 0
--8 0 10 -262144 -1 -1 3;
+-8 0 10 -262144 -1 -1 0;
 #X obj 250 -186 sig~;
 #X obj 279 -186 / 127;
 #X obj 251 -207 / 5;
@@ -245,31 +245,31 @@
 #X obj 402 108 / 127;
 #X text 442 103 room;
 #X obj 270 129 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 5000 1;
+-1 -1 0 1;
 #X obj 403 129 / 127;
 #X text 443 124 damping;
 #X obj -84 -163 simple_adsr 1 0 0 100 0;
 #X obj 43 -365 vsl 15 128 0 127 0 0 empty synth-attack empty 0 -9 0
-10 -262144 -1 -1 5000 1;
+10 -262144 -1 -1 0 1;
 #X obj 62 -365 vsl 15 128 0 127 0 0 empty synth-decay empty 0 -9 0
-10 -262144 -1 -1 5000 1;
+10 -262144 -1 -1 0 1;
 #X obj 81 -365 vsl 15 128 0 127 0 0 empty synth-sustain empty 0 -9
-0 10 -262144 -1 -1 6000 1;
+0 10 -262144 -1 -1 0 1;
 #X obj 100 -365 vsl 15 128 0 127 0 0 empty synth-release empty 0 -9
-0 10 -262144 -1 -1 1200 1;
+0 10 -262144 -1 -1 0 1;
 #X obj 36 -229 * 2;
 #X obj 60 -229 * 2;
 #X obj 84 -228 / 1.27;
 #X obj 103 -209 * 2;
 #X obj 208 -142 simple_adsr 1 0 0 100 0;
 #X obj 294 -346 vsl 15 128 0 127 0 0 empty bass-attack empty 0 -9 0
-10 -262144 -1 -1 5000 1;
+10 -262144 -1 -1 0 1;
 #X obj 313 -346 vsl 15 128 0 127 0 0 empty bass-decay empty 0 -9 0
-10 -262144 -1 -1 5000 1;
+10 -262144 -1 -1 0 1;
 #X obj 332 -346 vsl 15 128 0 127 0 0 empty bass-sustain empty 0 -9
-0 10 -262144 -1 -1 6000 1;
+0 10 -262144 -1 -1 0 1;
 #X obj 351 -346 vsl 15 128 0 127 0 0 empty bass-release empty 0 -9
-0 10 -262144 -1 -1 1200 1;
+0 10 -262144 -1 -1 0 1;
 #X obj 282 -210 * 2;
 #X obj 306 -210 * 2;
 #X obj 330 -209 / 1.27;
@@ -278,11 +278,11 @@
 #X obj -102 -138 *~;
 #X obj -87 33 clip~ -0.9 0.9;
 #X obj -105 -364 vsl 15 128 0 127 0 0 empty synth-glissando empty 0
--9 0 10 -262144 -1 -1 2500 1;
+-9 0 10 -262144 -1 -1 0 1;
 #X obj -111 -211 * 2;
 #X obj 146 -163 chiptune_synth 2 2 2;
 #X obj 148 -343 vsl 15 128 0 127 0 0 empty bass-glissando empty 0 -9
-0 10 -262144 -1 -1 2500 1;
+0 10 -262144 -1 -1 0 1;
 #X obj 140 -185 * 2;
 #X obj -83 -56 +~;
 #N canvas 346 188 798 463 osc 1;
@@ -459,7 +459,7 @@
 #X obj -104 108 *~ 1;
 #X obj -6 106 *~ 1;
 #X obj -3 127 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 12700 1;
+-1 -1 0 1;
 #X obj -43 127 / 127;
 #X obj 30 105 r global-volume;
 #X obj -87 -8 *~ 0.3;
@@ -618,6 +618,7 @@
 #X connect 57 0 56 0;
 #X connect 59 0 44 0;
 #X connect 64 0 49 0;
+#X connect 64 0 0 0;
 #X connect 64 1 65 0;
 #X connect 65 0 142 0;
 #X connect 69 0 70 0;

@@ -1,11 +1,20 @@
 package edu.uiuc.sigmusic.twittersounds;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.illposed.osc.OSCListener;
@@ -48,15 +57,16 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 	@Override
 	public void inRequest(JSONObject json) {
 		inQueue.add(json);
+		sendTweetsToNode( (JSONObject)json.get("input") );
 	}
 	
 	void parseJSON(JSONObject json) {
 		try {
 			
 			JSONObject weights = (JSONObject)json.get("weights");
-			int happiness = (Integer)weights.get("happiness");
-			int excitement = (Integer)weights.get("excitement");
-			int randomness = (Integer)weights.get("randomness");
+			int happiness = (int)(long)(Long)weights.get("happiness");
+			int excitement =(int)(long)(Long)weights.get("excitement");
+			int randomness = (int)(long)(Long)weights.get("randomness");
 			System.out.println("In request: happiness:"+happiness+", excitement:"+excitement+" confusion:"+randomness);
 			
 			currE += excitement;
@@ -71,6 +81,87 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 			e.printStackTrace();
 		}
 	}
+	
+	public void sendParametersToNode(int happiness, int excitement, int confusion) {
+		JSONObject obj = new JSONObject();
+		obj.put("happiness", happiness);
+		obj.put("excitement", excitement);
+		obj.put("confusion", confusion);
+		System.out.println(String.format("Sending parameters: happiness: %d, excitement: %d, confusion: %d",happiness,excitement, confusion));
+		sendParametersToNode(obj);
+	}
+	public void sendParametersToNode(JSONObject weights) {
+		String weightsstr = weights.toJSONString();
+		String request = "http://localhost:8081/params";
+		sendPostRequest( weightsstr, request);
+	}	
+	public void sendNotesToNode(MelodyGenerator g) {
+		JSONObject obj = new JSONObject();
+		fuckfuckfuckfuck(obj, "melody", g.synth);
+		fuckfuckfuckfuck(obj, "bass", g.bass);
+		fuckfuckfuckfuck(obj, "snare", g.snare);
+		fuckfuckfuckfuck(obj, "bassdrum", g.kick);
+		fuckfuckfuckfuck(obj, "hihat", g.hihat);
+		
+		sendNotesToNode(obj);
+	}
+	private void fuckfuckfuckfuck(JSONObject obj, String key, int[] array) {
+		JSONArray j = new JSONArray();
+		for (int i=0; i<16; i++) j.add(array[i]%8);
+		obj.put(key, j);
+	}
+	public void sendNotesToNode(JSONObject notes) {
+		System.out.println("Sending NOTES: "+notes.toJSONString());
+		String notesstr = notes.toJSONString();
+		String request = "http://localhost:8081/notes";
+		sendPostRequest( notesstr, request);
+	}
+	
+	 public static String sendPostRequest(String data, String requestURL) {
+
+         String result="";
+        try {
+
+            // Send the request
+            URL url = new URL(requestURL);
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+            OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+
+            //write parameters
+            writer.write(data);
+            writer.flush();
+
+            // Get the response
+            StringBuffer answer = new StringBuffer();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                answer.append(line);
+            }
+            writer.close();
+            reader.close();
+
+            //Output the response
+            System.out.println(answer.toString());
+            result = answer.toString();
+
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+         return result;
+    }
+
+	public void sendTweetsToNode(JSONObject tweets) {
+		String tweetsstr = tweets.toJSONString();
+		String request = "http://localhost:8081/tweets";
+		sendPostRequest( tweetsstr, request);
+	}
+
 
 
 	@Override
@@ -94,16 +185,16 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 				System.out.println("Tweets Parsed: " + parsed);
 				
 				// Scaling curr values down to the amount of tweets
-				if(parsed > 3){
-					currH = currH/((int)(parsed/3));
-					currE = currE/((int)(parsed/3));
-					currC = currC/((int)(parsed/3));
-				}
+				if(parsed > 0){
+					currH = currH/((int)(parsed));
+					currE = currE/((int)(parsed));
+					currC = currC/((int)(parsed));
+				}	
 				
 				System.out.print("Change in attributes: ");
 				System.out.print("Happiness: " + currH + ", Excitment: " + currE + ", Confusion: " + currC);
-				if(parsed > 3){
-					System.out.println(" (scaled by down a factor of " + (int)(parsed/3) + ")");
+				if(parsed > 0){
+					System.out.println(" (scaled by down a factor of " + (int)(parsed) + ")");
 				}
 				else{
 					System.out.println(" (not scaled)");
@@ -133,13 +224,14 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 				
 				// Test generator
 				//generator = new MelodyGenerator(0, 75, 50);
-				// Generating new melody based on the current modifications
+				// Generating new melody based on thparamse current modifications
 				generator = new MelodyGenerator(h, e, c);
 				generator.generateMelody();
 				generator.print();
 				tpo.writeMelodyGenerator(generator);
 				animation.updatePhrase(phrase, generator);
-				
+				sendParametersToNode(h,e,c);
+				sendNotesToNode(generator);
 				currH = 0;
 				currE = 0;
 				currC = 0;
