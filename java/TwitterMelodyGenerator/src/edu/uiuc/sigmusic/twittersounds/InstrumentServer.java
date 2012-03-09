@@ -76,7 +76,7 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 	@Override
 	public void acceptMessage(Date time, OSCMessage message){
 		try {
-			System.out.println("SDKLFJLKSDJFDS MESSAGEEEEEEEE +"+message.getAddress());
+			//System.out.println("SDKLFJLKSDJFDS MESSAGEEEEEEEE +"+message.getAddress());
 			if (message.getAddress().equals("/phrasedone")) {
 				System.out.println("Params:" +Arrays.toString(message.getArguments()));
 				int phrase = (Integer)message.getArguments()[0];
@@ -100,10 +100,10 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 					currC = currC/((int)(parsed/3));
 				}
 				
-				System.out.println("Change in attributes: ");
+				System.out.print("Change in attributes: ");
 				System.out.print("Happiness: " + currH + ", Excitment: " + currE + ", Confusion: " + currC);
 				if(parsed > 3){
-					System.out.println(" (scaled by a factor of " + (int)(parsed/3) + ")");
+					System.out.println(" (scaled by down a factor of " + (int)(parsed/3) + ")");
 				}
 				else{
 					System.out.println(" (not scaled)");
@@ -132,7 +132,7 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 				else if (c < 0) c = 0;
 				
 				// Test generator
-				generator = new MelodyGenerator(30, 30, 0);
+				generator = new MelodyGenerator(0, 75, 50);
 				// Generating new melody based on the current modifications
 				//generator = new MelodyGenerator(h, e, c);
 				generator.generateMelody();

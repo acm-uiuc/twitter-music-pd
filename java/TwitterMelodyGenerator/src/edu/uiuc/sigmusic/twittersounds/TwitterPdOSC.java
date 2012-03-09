@@ -98,62 +98,62 @@ public class TwitterPdOSC {
 		try {
 			
 			TwitterPdOSC pdosc = this;
-			pdosc.setParameter("tempo-ms", 300);
+			pdosc.setParameter("tempo-ms", m.tempo);
 
 			pdosc.setNotes("synth", m.synth);
 			pdosc.setVelocities("synth", m.synthvel);
-			pdosc.setParameter("synth-attack", 10);
-			pdosc.setParameter("synth-decay", 10);
-			pdosc.setParameter("synth-sustain", 75);
-			pdosc.setParameter("synth-release", 0);
-			pdosc.setParameter("synth-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("synth-glissando", 20); 
-			pdosc.setParameter("synth-vibrato-depth", 12);
-			pdosc.setParameter("synth-vibrato-speed", 50);
-			pdosc.setParameter("synth-vibrato-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("synth-tremolo-depth", 22);
-			pdosc.setParameter("synth-tremolo-speed", 10);
-			pdosc.setParameter("synth-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("synth-attack", m.synthAttack);
+			pdosc.setParameter("synth-decay", m.synthDecay);
+			pdosc.setParameter("synth-sustain", m.synthSustain);
+			pdosc.setParameter("synth-release", m.synthRelease);
+			pdosc.setParameter("synth-waveform", m.synthWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("synth-glissando", m.synthGlissando); 
+			pdosc.setParameter("synth-vibrato-depth", m.synthVibratoDepth);
+			pdosc.setParameter("synth-vibrato-speed", m.synthVibratoSpeed);
+			pdosc.setParameter("synth-vibrato-waveform", m.synthVibratoWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("synth-tremolo-depth", m.synthTremeloDepth);
+			pdosc.setParameter("synth-tremolo-speed", m.synthTremeloSpeed);
+			pdosc.setParameter("synth-tremolo-waveform", m.synthTremeloWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
 			pdosc.setParameter("synth-volume", 100);
 
 			pdosc.setNotes("bass", m.bass);
 			pdosc.setVelocities("bass", m.bassvel);
-			pdosc.setParameter("bass-attack", 30);
-			pdosc.setParameter("bass-decay", 20);
-			pdosc.setParameter("bass-sustain", 100);
-			pdosc.setParameter("bass-release", 50);
-			pdosc.setParameter("bass-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("bass-glissando", 1); 
-			pdosc.setParameter("bass-vibrato-depth", 16);
-			pdosc.setParameter("bass-vibrato-speed", 70);
-			pdosc.setParameter("bass-vibrato-waveform", 2); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("bass-tremolo-depth", 12);
-			pdosc.setParameter("bass-tremolo-speed", 20);
-			pdosc.setParameter("bass-tremolo-waveform", 1); //0 = sine 1 = triangle 2 = square 3 = saw
-			pdosc.setParameter("bass-volume", 50);
+			pdosc.setParameter("bass-attack", m.bassAttack);
+			pdosc.setParameter("bass-decay", m.bassDecay);
+			pdosc.setParameter("bass-sustain", m.bassSustain);
+			pdosc.setParameter("bass-release", m.bassRelease);
+			pdosc.setParameter("bass-waveform", m.bassWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("bass-glissando", m.bassGlissando); 
+			pdosc.setParameter("bass-vibrato-depth", m.bassVibratoDepth);
+			pdosc.setParameter("bass-vibrato-speed", m.bassVibratoSpeed);
+			pdosc.setParameter("bass-vibrato-waveform", m.bassVibratoWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("bass-tremolo-depth", m.bassTremeloDepth);
+			pdosc.setParameter("bass-tremolo-speed", m.bassTremeloSpeed);
+			pdosc.setParameter("bass-tremolo-waveform", m.synthTremeloWaveform); //0 = sine 1 = triangle 2 = square 3 = saw
+			pdosc.setParameter("bass-volume", 70);
 
 			pdosc.setNotes("kick", m.kick);
 			pdosc.setVelocities("kick", m.kickvel);
-			pdosc.setParameter("kick-select", 8);
+			pdosc.setParameter("kick-select", m.kickSound);
 			
 			pdosc.setNotes("snare", m.snare);
 			pdosc.setVelocities("snare", m.snarevel);
-			pdosc.setParameter("snare-select", 5);
+			pdosc.setParameter("snare-select", m.snareSound);
 			
 			pdosc.setNotes("highhat", m.hihat);
 			pdosc.setVelocities("highhat", m.hihatvel);
-			pdosc.setParameter("highhat-select", 2);
+			pdosc.setParameter("highhat-select", m.hihatSound);
 			
 			pdosc.setParameter("drums-volume", 200);
 
-			pdosc.setParameter("bitcrusher-crush", 0);
-			pdosc.setParameter("bitcrusher-depth", 0);
+			pdosc.setParameter("bitcrusher-crush", m.bitCrusherCrush);
+			pdosc.setParameter("bitcrusher-depth", m.bitCrusherDepth);
 			
-			pdosc.setParameter("reverb-mix", 30);
-			pdosc.setParameter("reverb-room", 20);
-			pdosc.setParameter("reverb-damping", 10);
+			pdosc.setParameter("reverb-mix", m.reverbMix);
+			pdosc.setParameter("reverb-room", m.reverbRoom);
+			pdosc.setParameter("reverb-damping", m.reverbDamping);
 			
-			pdosc.setParameter("global-volume", 100);
+			pdosc.setParameter("global-volume", m.globalVolume);
 			//pdosc.setParameter("start", 1);
 
 		} catch (Exception e) {
@@ -173,7 +173,7 @@ public class TwitterPdOSC {
 			TwitterPdOSC pdosc = new TwitterPdOSC();
 			
 
-			MelodyGenerator m = new MelodyGenerator(20, 80, 0);
+			MelodyGenerator m = new MelodyGenerator(20, 100, 50);
 
 			m.generateMelody();
 			GeneratorTest.testGenerator(m); // To output all MelodyGenerator values

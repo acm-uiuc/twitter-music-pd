@@ -320,6 +320,20 @@ public class MelodyGenerator {
 	 */
 
 	public void generateProgression() {
+		
+		/*
+		 * New progression generation
+		 */
+		
+		for(int i = 0; i < 4; i++){
+			chordProgression[i] = 0;
+			scaleType[i] = 6 - happiness/15;
+		}
+		
+		/*
+		 * Old progression generation
+		 */
+		/*
 		if (!fileRead || currentMelody == 1) {
 			if (happiness > 66) { // Things are pretty happy!
 				chordProgression[0] = 0; // Always start with the root
@@ -393,24 +407,6 @@ public class MelodyGenerator {
 							chordProgression[i] = 4;
 						}
 					}
-					/*
-					double chordPicker = Math.random() * 100;
-					if (chordPicker < 20) {
-						chordProgression[i] = 0;
-					} else if (chordPicker < 40) {
-						chordProgression[i] = 2;
-					} else if (chordPicker < 60) {
-						chordProgression[i] = 3;
-					} else if (chordPicker < 80) {
-						chordProgression[i] = 1;
-					} else {
-						if (Math.random() > .5) {
-							chordProgression[i] = 1;
-						} else {
-							chordProgression[i] = 0;
-						}
-					}
-					*/
 				}
 			}
 			if(happiness > 50){
@@ -447,6 +443,7 @@ public class MelodyGenerator {
 				scaleType[i] = prev.scaleType[i];
 			}
 		}
+		*/
 	}
 
 	/**
@@ -909,7 +906,7 @@ public class MelodyGenerator {
 			currentMelody = (currentMelody + 1) % 5;
 			if(currentMelody == 0) currentMelody = 1;
 			start = 1;
-			bitCrusherCrush = (excitement - happiness)/5 + confusion/25;
+			bitCrusherCrush = (excitement - 25 - happiness)/5;
 			if (bitCrusherCrush < 0)
 				bitCrusherCrush = 0;
 			bitCrusherDepth = bitCrusherCrush;
@@ -917,7 +914,7 @@ public class MelodyGenerator {
 			reverbDamping = (100 - confusion);
 			globalVolume = 100 + excitement/2;
 			
-			tempo = 400 - (happiness + excitement*2);
+			tempo = 400 - (happiness/8 + (int)(excitement*1.3));
 
 			synthAttack = 0;
 			synthDecay = 0;
@@ -968,24 +965,31 @@ public class MelodyGenerator {
 			bassTremeloDepth = confusion/2;
 			bassTremeloSpeed = excitement/2;
 			
+			kickSound = 8;
+			snareSound = 5;
+			hihatSound = 2;
+			/*
 			if (excitement < 15)
 				hihatSound = 2;
 			else if (excitement < 85)
 				hihatSound = 1;
 			else
 				hihatSound = 3;
-			
+				*/
+			/*
 			if (excitement < 15)
 				snareSound = 6;
 			else if (excitement < 85)
 				snareSound = 5;
 			else
 				snareSound = 4;
-			
+				*/
+			/*
 			if (excitement < 75)
 				kickSound = 8;
 			else
 				kickSound = 3;
+				*/
 		//}
 	}
 	/**
@@ -1113,7 +1117,7 @@ public class MelodyGenerator {
 			}
 
 			out.write(output.toString());
-			System.out.println("Success");
+			System.out.println("Success loading the Melody.");
 			out.close();
 		} catch (IOException e) {
 
