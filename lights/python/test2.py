@@ -25,4 +25,4 @@ if __name__ == "__main__":
         pix = [(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0)]
         pix = c.render(pix)
         octoapi.write(pix)
-        time.sleep(0.2)
+        time.sleep(0.1)
