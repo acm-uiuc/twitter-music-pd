@@ -325,11 +325,14 @@ public class MelodyGenerator {
 		 * New progression generation
 		 */
 		
-		for(int i = 0; i < 4; i++){
+		for (int i = 0; i < 4; i++)
 			chordProgression[i] = 0;
-			scaleType[i] = 6 - happiness/15;
-		}
 		
+		scaleType[0] = 6 - happiness/15;
+		scaleType[1] = (8 - confusion/30) - happiness/15;
+		scaleType[2] = 6 - happiness/15;
+		scaleType[3] = (8 - confusion/30) - happiness/15;
+	
 		/*
 		 * Old progression generation
 		 */

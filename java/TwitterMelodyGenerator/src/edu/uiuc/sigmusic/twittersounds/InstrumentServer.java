@@ -132,9 +132,9 @@ public class InstrumentServer implements JSONInterface, OSCListener {
 				else if (c < 0) c = 0;
 				
 				// Test generator
-				//generator = new MelodyGenerator(0, 75, 50);
+				generator = new MelodyGenerator(100, 25, 100);
 				// Generating new melody based on the current modifications
-				generator = new MelodyGenerator(h, e, c);
+				// generator = new MelodyGenerator(h, e, c);
 				generator.generateMelody();
 				generator.print();
 				tpo.writeMelodyGenerator(generator);
