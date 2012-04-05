@@ -3,7 +3,7 @@
 #define latchpin 9 // LI
 #define datapin 11 // DI
  
-#define NumLEDs 16
+#define NumLEDs 24
  
 int LEDChannels[NumLEDs][3] = {0};
 int SB_CommandMode;
@@ -24,7 +24,7 @@ void setup() {
    Serial.begin(115200);
    for (int i = 1; i < NumLEDs; i++)
     {
-      setLED(i, 0, 1023, 1023);
+      setLED(i, 1023, 1023, 0);
     }
     WriteLEDArray();
 }
