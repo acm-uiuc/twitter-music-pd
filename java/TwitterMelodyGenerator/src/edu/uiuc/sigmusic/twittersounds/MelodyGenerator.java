@@ -313,8 +313,12 @@ public class MelodyGenerator {
 	/**
 	 * Generates the progression
 	 * 
-	 * Some popular 4 chord progressions: I - IV - V - V I - I - IV - V I - IV -
-	 * I - V I - IV - V - IV
+	 * Some popular 4 chord progressions: 
+	 * 
+	 * I - IV - V - V
+	 * I - I - IV - V 
+	 * I - IV - I - V 
+	 * I - IV - V - IV
 	 * 
 	 * NOTE: I = 0, IV = 3, and such, it'll make transposing much easier.
 	 */
@@ -325,13 +329,44 @@ public class MelodyGenerator {
 		 * New progression generation
 		 */
 		
-		for (int i = 0; i < 4; i++)
-			chordProgression[i] = 0;
+		for (int i = 0; i < 4; i++) // Chooses mode
+			if (i % 2 == 0)
+				scaleType[i] = 1;
+			else
+				scaleType[i] = (6 - confusion/30) - happiness/15;
+			
+		double chordPicker = Math.random(); // Chooses chord progression
 		
-		scaleType[0] = 6 - happiness/15;
-		scaleType[1] = (8 - confusion/30) - happiness/15;
-		scaleType[2] = 6 - happiness/15;
-		scaleType[3] = (8 - confusion/30) - happiness/15;
+		if (chordPicker > .8) {
+			chordProgression[0] = 0;
+			chordProgression[1] = 3;
+			chordProgression[2] = 4;
+			chordProgression[3] = 4;
+		}
+		else if (chordPicker > .6) {
+			chordProgression[0] = 0;
+			chordProgression[1] = 0;
+			chordProgression[2] = 3;
+			chordProgression[3] = 4;
+		}
+		else if (chordPicker > .4) {
+			chordProgression[0] = 0;
+			chordProgression[1] = 3;
+			chordProgression[2] = 0;
+			chordProgression[3] = 4;
+		}
+		else if (chordPicker > .2) {
+			chordProgression[0] = 0;
+			chordProgression[1] = 3;
+			chordProgression[2] = 4;
+			chordProgression[3] = 3;
+		}
+		else {
+			chordProgression[0] = 0;
+			chordProgression[1] = 3;
+			chordProgression[2] = 4;
+			chordProgression[3] = 0;
+		}
 	
 		/*
 		 * Old progression generation
@@ -339,7 +374,7 @@ public class MelodyGenerator {
 		/*
 		if (!fileRead || currentMelody == 1) {
 			if (happiness > 66) { // Things are pretty happy!
-				chordProgression[0] = 0; // Always start with the root
+				 	[0] = 0; // Always start with the root
 				// Generate a semi-random progressions of I, IV, and V
 				for (int i = 1; i < 3; i++) {
 					double chordPicker = Math.random() * 100;
@@ -1019,26 +1054,19 @@ public class MelodyGenerator {
 
 		for (int i = 0; i < 4; i++) {
 			if (scaleType[i] == 0)
-				scaleValues[i] = new int[] { 0, 2, 4, 6, 7, 9, 11, 12 }; // Lydian
-																			// -
-																			// "brightest"
+				scaleValues[i] = new int[] { 0, 2, 4, 6, 7, 9, 11, 12 }; // Lydian - "brightest"
 			if (scaleType[i] == 1)
-				scaleValues[i] = new int[] { 0, 2, 4, 5, 7, 9, 11, 12 }; // Ionian
-																			// (major)
+				scaleValues[i] = new int[] { 0, 2, 4, 5, 7, 9, 11, 12 }; // Ionian (major)
 			if (scaleType[i] == 2)
 				scaleValues[i] = new int[] { 0, 2, 4, 5, 7, 9, 10, 12 }; // Mixolydian
 			if (scaleType[i] == 3)
 				scaleValues[i] = new int[] { 0, 2, 3, 5, 7, 9, 10, 12 }; // Dorian
 			if (scaleType[i] == 4)
-				scaleValues[i] = new int[] { 0, 2, 3, 5, 7, 8, 10, 12 }; // Aeolian
-																			// (natural
-																			// minor)
+				scaleValues[i] = new int[] { 0, 2, 3, 5, 7, 8, 10, 12 }; // Aeolian (natural minor)
 			if (scaleType[i] == 5)
 				scaleValues[i] = new int[] { 0, 1, 3, 5, 7, 8, 10, 12 }; // Phrygian
 			if (scaleType[i] == 6)
-				scaleValues[i] = new int[] { 0, 1, 3, 5, 6, 8, 10, 12 }; // Locrian
-																			// -
-																			// "darkest"
+				scaleValues[i] = new int[] { 0, 1, 3, 5, 6, 8, 10, 12 }; // Locrian - "darkest"
 		}
 
 		int c = -1; // Current place in the progression that the note will be
