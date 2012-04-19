@@ -4,7 +4,7 @@ public class GeneratorTest {
 	
 	public static void main(String args[]) throws Exception{
 		try{
-			MelodyGenerator m = new MelodyGenerator(50, 50, 50);
+			MelodyGenerator m = new MelodyGenerator(50, 50, 0);
 			m.generateMelody();
 			testGenerator(m);
 		}
