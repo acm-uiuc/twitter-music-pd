@@ -329,49 +329,24 @@ public class MelodyGenerator {
 		 * New progression generation
 		 */
 		
+		int[][] chordProgressions = {{0, 3, 4, 4}, {0, 0, 3, 4}, {0, 3, 0, 4},
+									 {0, 3, 4, 3}, {0, 3, 4, 0}, {0, 4, 0, 3}};
+		
 		for (int i = 0; i < 4; i++) // Chooses mode
 			if (i % 2 == 0)
 				scaleType[i] = 1;
 			else
 				scaleType[i] = (6 - confusion/30) - happiness/15;
 			
-		double chordPicker = Math.random(); // Chooses chord progression
+		double chordPicker = Math.random() * 6; // Chooses chord progression
 		
-		if (chordPicker > .8) {
-			chordProgression[0] = 0;
-			chordProgression[1] = 3;
-			chordProgression[2] = 4;
-			chordProgression[3] = 4;
-		}
-		else if (chordPicker > .6) {
-			chordProgression[0] = 0;
-			chordProgression[1] = 0;
-			chordProgression[2] = 3;
-			chordProgression[3] = 4;
-		}
-		else if (chordPicker > .4) {
-			chordProgression[0] = 0;
-			chordProgression[1] = 3;
-			chordProgression[2] = 0;
-			chordProgression[3] = 4;
-		}
-		else if (chordPicker > .2) {
-			chordProgression[0] = 0;
-			chordProgression[1] = 3;
-			chordProgression[2] = 4;
-			chordProgression[3] = 3;
-		}
-		else {
-			chordProgression[0] = 0;
-			chordProgression[1] = 3;
-			chordProgression[2] = 4;
-			chordProgression[3] = 0;
-		}
+		for (int i = 0; i < 4; i++)
+			chordProgression[0] = chordProgressions[(int)chordPicker][i];
 	
 		/*
 		 * Old progression generation
-		 */
 		/*
+	
 		if (!fileRead || currentMelody == 1) {
 			if (happiness > 66) { // Things are pretty happy!
 				 	[0] = 0; // Always start with the root
@@ -494,6 +469,11 @@ public class MelodyGenerator {
 		 * then the rest will be put through a loop to be generated based off of
 		 * notes 0 - 15.
 		 */
+		
+		int[][] happyNotes = { {0, 2, 4, 5, 7}, {0, 2, 3, 4, 5, 7}, {0, 2, 3, 4, 5, 7}, {0, 2, 3, 4, 5, 7},
+							  {0, 2, 3, 4, 7}, {0, 2, 3, 4, 7}, {0, 2, 3, 7} };
+		int[][] sadNotes = { {1, 3, 6}, {1, 6}, {1, 6}, {1, 6}, {1, 5, 6}, {1, 5, 6}, {1, 4, 5, 6}};
+		
 		double noteChooser = 0.0;
 		//double hModifier = 0.0;
 
@@ -526,48 +506,17 @@ public class MelodyGenerator {
 						if(Math.random() < ((double)happiness)/100){ // See if we're going to choose a happy or sad note
 							if(Math.random() < .75 + frequencyModifier + ((double)excitement)/400){ // See if we're going to play a note or not
 								noteChooser = Math.random();
-									if(noteChooser < .30){
-										synth[i] = 0;
-									}
-									else if(noteChooser < .60){
-										synth[i] = 2;
-									}
-									else if(noteChooser < .80){
-										synth[i] = 4;
-									}
-									else if(noteChooser < .90){
-										synth[i] = 6;
-									}
-									else{
-										synth[i] = 7;
-									}
+								synth[i] = happyNotes[scaleType[i/16]][(int)(noteChooser * happyNotes[scaleType[i/16]].length)];
 							}
-							else{
-									synth[i] = -1;
+							else {
+								synth[i] = -1;
 							}
 						}
 
 						else{ // Sad tier of notes
-							if(Math.random() < .6 + ((double)excitement)/400){ // Less of a chance to play a note
+							if(Math.random() < .6 + ((double)excitement)/400) { // Less of a chance to play a note
 								noteChooser = Math.random();
-								if(noteChooser < .10){
-									synth[i] = 0;
-								}
-								if(noteChooser < .30){
-									synth[i] = 1;
-								}
-								else if(noteChooser < .45){
-									synth[i] = 2;
-								}
-								else if(noteChooser < .60){
-									synth[i] = 3;
-								}
-								else if(noteChooser < .70){
-									synth[i] = 4;
-								}
-								else{
-									synth[i] = 5;
-								}
+								synth[i] = sadNotes[scaleType[i/16]][(int)(noteChooser * sadNotes[scaleType[i/16]].length)];
 							}
 						}
 					}
@@ -596,21 +545,7 @@ public class MelodyGenerator {
 						else if(Math.random() < ((double)happiness)/100){ // See if we're going to choose a happy or sad note
 							if(Math.random() < .75 + frequencyModifier + ((double)excitement)/400){ // See if we're going to play a note or not
 								noteChooser = Math.random();
-									if(noteChooser < .30){
-										synth[i] = 0;
-									}
-									else if(noteChooser < .60){
-										synth[i] = 2;
-									}
-									else if(noteChooser < .80){
-										synth[i] = 4;
-									}
-									else if(noteChooser < .90){
-										synth[i] = 6;
-									}
-									else {
-										synth[i] = 7;
-									}
+								synth[i] = happyNotes[scaleType[i/16]][(int)(noteChooser * happyNotes[scaleType[i/16]].length)];
 							}
 							else {
 								synth[i] = -1;
@@ -619,18 +554,7 @@ public class MelodyGenerator {
 						else{ // Sad tier of notes
 							if(Math.random() < .5 + ((double)excitement)/400){ // Less of a chance to play a note
 								noteChooser = Math.random();
-								if(noteChooser < .30){
-									synth[i] = 1;
-								}
-								else if(noteChooser < .60){
-									synth[i] = 2;
-								}
-								else if(noteChooser < .90){
-									synth[i] = 3;
-								}
-								else{
-									synth[i] = 5;
-								}
+								synth[i] = sadNotes[scaleType[i/16]][(int)(noteChooser * sadNotes[scaleType[i/16]].length)];
 							}
 						}
 					}
@@ -671,36 +595,11 @@ public class MelodyGenerator {
 							if(excitement > 80 && confusion > 80){
 								if(Math.random() < ((double)happiness)/100){ // See if we're going to choose a happy or sad note
 									noteChooser = Math.random();
-									if(noteChooser < .30){
-										synth[i] = 0;
-									}
-									else if(noteChooser < .60){
-										synth[i] = 2;
-									}
-									else if(noteChooser < .80){
-										synth[i] = 4;
-									}
-									else if(noteChooser < .90){
-										synth[i] = 6;
-									}
-									else{
-										synth[i] = 7;
-									}
+									synth[i] = happyNotes[scaleType[i/16]][(int)(noteChooser * happyNotes[scaleType[i/16]].length)];
 								}
 								else{ // sad tier
 									noteChooser = Math.random();
-									if(noteChooser < .30){
-										synth[i] = 1;
-									}
-									else if(noteChooser < .60){
-										synth[i] = 2;
-									}
-									else if(noteChooser < .90){
-										synth[i] = 3;
-									}
-									else{
-										synth[i] = 5;
-									}
+									synth[i] = sadNotes[scaleType[i/16]][(int)(noteChooser * sadNotes[scaleType[i/16]].length)];
 								}
 							}
 						}
@@ -818,40 +717,6 @@ public class MelodyGenerator {
 				}
 			}	
 		}
-	}
-	
-	
-	public int generateHappyPitch(){
-		/*
-		int pitch = 0;
-		if(Math.random() < .75 + frequencyModifier + ((double)excitement)/400){ // See if we're going to play a note or not
-			noteChooser = Math.random();
-				if(noteChooser < .30){
-					pitch = 0;
-				}
-				else if(noteChooser < .60){
-					pitch = 2;
-				}
-				else if(noteChooser < .80){
-					pitch = 4;
-				}
-				else if(noteChooser < .90){
-					pitch = 6;
-				}
-				else{
-					pitch = 7;
-				}
-		}
-		else{
-				pitch = -1;
-		}
-		return pitch;
-		*/
-		return 0;
-	}
-	
-	public int generateSadPitch(){
-		return 0;
 	}
 
 	/**
