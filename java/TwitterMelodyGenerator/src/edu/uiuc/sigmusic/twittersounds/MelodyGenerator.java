@@ -340,12 +340,12 @@ public class MelodyGenerator {
 			if (i % 2 == 0)
 				scaleType[i] = 1;
 			else
-				scaleType[i] = (6 - confusion/30) - happiness/15;
+				scaleType[i] = (6 - confusion/60) - happiness/20;
 			
 		double chordPicker = Math.random() * 6; // Chooses chord progression
 		
 		for (int i = 0; i < 4; i++)
-			chordProgression[0] = chordProgressions[(int)chordPicker][i];
+			chordProgression[i] = chordProgressions[(int)chordPicker][i];
 	
 		/*
 		 * Old progression generation
@@ -473,9 +473,7 @@ public class MelodyGenerator {
 		 * then the rest will be put through a loop to be generated based off of
 		 * notes 0 - 15.
 		 */
-		
-		
-		
+			
 		double noteChooser = 0.0;
 		//double hModifier = 0.0;
 
@@ -651,7 +649,7 @@ public class MelodyGenerator {
 			
 			int offset = 12;
 			
-			if(currentMelody != 0) {
+			if(currentMelody != 1) {
 				if(excitement > 50 && confusion > 40 && happiness > 20){
 					// if(Math.random() > .5)
 						offset = 12;
@@ -672,6 +670,7 @@ public class MelodyGenerator {
 			 * If the we're not in the first melody of the progression, copy over the first part
 			 * of the 1st and 3rd measures to the current melody, this will add a ton of structure
 			 */
+			
 			if (fileRead && currentMelody != 1){
 				for(int i = 0; i < 8; i++)
 					synth[i] = prev.synth[i];
