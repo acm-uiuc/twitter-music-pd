@@ -50,6 +50,10 @@ public class MelodyGenerator {
 	public int currentMelody; // Each progression consists of four melodies (16
 								// measures total), it's incremented by 1 every
 								// time a melody is generated
+	
+	public int[][] happyNotes = { {0, 2, 4, 5, 7}, {0, 2, 3, 4, 5, 7}, {0, 2, 3, 4, 5, 7}, {0, 2, 3, 4, 5, 7},
+			  {0, 2, 3, 4, 7}, {0, 2, 3, 4, 7}, {0, 2, 3, 7} };
+	public int[][] sadNotes = { {1, 3, 6}, {1, 6}, {1, 6}, {1, 6}, {1, 5, 6}, {1, 5, 6}, {1, 4, 5, 6}};
 	public int start;
 
 	/**
@@ -470,9 +474,7 @@ public class MelodyGenerator {
 		 * notes 0 - 15.
 		 */
 		
-		int[][] happyNotes = { {0, 2, 4, 5, 7}, {0, 2, 3, 4, 5, 7}, {0, 2, 3, 4, 5, 7}, {0, 2, 3, 4, 5, 7},
-							  {0, 2, 3, 4, 7}, {0, 2, 3, 4, 7}, {0, 2, 3, 7} };
-		int[][] sadNotes = { {1, 3, 6}, {1, 6}, {1, 6}, {1, 6}, {1, 5, 6}, {1, 5, 6}, {1, 4, 5, 6}};
+		
 		
 		double noteChooser = 0.0;
 		//double hModifier = 0.0;
@@ -657,7 +659,7 @@ public class MelodyGenerator {
 				for (int i = 0; i < 13; i++){ 	// Last measure mirrors the first and is 
 										  		// offset by one eighth at times
 					synth[i + 48] = synth[offset - i];
-					chordProgression[0] = chordProgression[3]; // First and last measure 
+					// chordProgression[0] = chordProgression[3]; // First and last measure 
 				}											   // are on the same chord
 				for (int i = 13; i < 15; i++)
 					synth[i + 48] = synth[i + 47];
@@ -670,7 +672,7 @@ public class MelodyGenerator {
 			 * If the we're not in the first melody of the progression, copy over the first part
 			 * of the 1st and 3rd measures to the current melody, this will add a ton of structure
 			 */
-			if(fileRead && currentMelody != 1){
+			if (fileRead && currentMelody != 1){
 				for(int i = 0; i < 8; i++)
 					synth[i] = prev.synth[i];
 				
