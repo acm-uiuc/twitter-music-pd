@@ -51,8 +51,9 @@ public class MelodyGenerator {
 								// measures total), it's incremented by 1 every
 								// time a melody is generated
 	
-	public int[][] happyNotes = { {0, 2, 4, 5, 7}, {0, 2, 3, 4, 5, 7}, {0, 2, 3, 4, 5, 7}, {0, 2, 3, 4, 5, 7},
-			  {0, 2, 3, 4, 7}, {0, 2, 3, 4, 7}, {0, 2, 3, 7} };
+	public int[][] happyNotes = { {0, 0, 2, 4, 5, 5, 7, 7}, {0, 0, 2, 3, 4, 5, 5, 7, 7}, {0, 0, 2, 3, 4, 5, 5, 7, 7}, 
+								  {0, 0, 2, 3, 4, 5, 5, 7, 7}, {0, 0, 2, 3, 4, 7, 7},
+								  {0, 0, 2, 3, 4, 7, 7}, {0, 0, 2, 3, 7, 7} };
 	public int[][] sadNotes = { {1, 3, 6}, {1, 6}, {1, 6}, {1, 6}, {1, 5, 6}, {1, 5, 6}, {1, 4, 5, 6}};
 	public int start;
 
@@ -503,7 +504,7 @@ public class MelodyGenerator {
 						if(synth[i - 4] == -1){ // If the quarter note previous isn't resting
 							frequencyModifier = .25;
 						}
-						if(Math.random() < ((double)happiness)/100){ // See if we're going to choose a happy or sad note
+						if (Math.random() / 2 < ((double)happiness)/100){ // See if we're going to choose a happy or sad note
 							if(Math.random() < .75 + frequencyModifier + ((double)excitement)/400){ // See if we're going to play a note or not
 								noteChooser = Math.random();
 								synth[i] = happyNotes[scaleType[i/16]][(int)(noteChooser * happyNotes[scaleType[i/16]].length)];
@@ -513,7 +514,7 @@ public class MelodyGenerator {
 							}
 						}
 
-						else{ // Sad tier of notes
+						else { // Sad tier of notes
 							if(Math.random() < .6 + ((double)excitement)/400) { // Less of a chance to play a note
 								noteChooser = Math.random();
 								synth[i] = sadNotes[scaleType[i/16]][(int)(noteChooser * sadNotes[scaleType[i/16]].length)];
